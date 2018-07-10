@@ -1,5 +1,10 @@
- language: node_js
- node_js: node
- cache:
-   directories:
-     - node_modules
+language: node_js
+node_js: node
+cache:
+  directories:
+  - node_modules
+deploy:
+  provider: heroku
+  app: tranquil-bayou-96032
+  api_key:
+    secure: TYZkJYpVdn+MDTZ4TEOKkWjwai/cfHEbGnXHMhFRtbvfIBnmmj4w9jKjZmtnMhjzIwyCIi52Gh7OB5isnX2uuQSuL4V7Ldu//3PoQ0bxNZXBsKqW5mA7ReHivlM1ISfHOYicjuLBlDt77usPGQzV6zvZuk6ou2Bf5CZodArUW27Elw1D6PVag9A8xqcqmAoJprF7ko4wa9P2+r0oKng7vagfD9MAjs+hWwpuqGklDF/jltuRL/BJNPpdE3XrGYHAZPEdGkVDcPDCEgDEpKLRT7/Zsu3mcuy6irzaAp7yWoUZbSUP9eCkjjDiMW62IKgE7VmyHNkEzQne/7i8ZTEfP5i3HTs0cM2yBQQMzbGZS1zQq6EG13/MqCiDIq6PdoIY9AdyhZ1joavPQGNOqEU7Bq16ZvjRwkvwqgyZ4Rl6AXZp6LL0UCHlRG/H/kT8aZfAR36eiLqJpnVlStoP1e/OeZqpkDWzxbabybg5ctULzR/tFznOk8m5JWzmabjMHx7IYf+f5EDk4Vek3wLJ6bLNMKMIoQOa+gilOw068UAJcsVLB0ZW+jOxzjNtKxzfB3ExSU9d3t17U4ThaJNAt/jGgHByvvYvQJ1zXCv3sVmNNB+RCOCPLT/Vje6UXu+KHU++pVfCUDKhBDWpqqzA714P4TVKBuk0vbRCggeQIslsa0I=
