@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import SearchForm from './search-form';
 
 class MainNav extends Component {
   render() {
@@ -8,14 +9,7 @@ class MainNav extends Component {
         <div>
           <h1><Link to="/">Movie Keeper</Link></h1>
         </div>
-        <div>
-          <form id="search">
-            <fieldset>
-              <input type="text" />
-              <input type="submit" />
-            </fieldset>
-          </form>
-        </div>
+        <SearchForm />
         <div>
           <a href="">Dashboard</a>
           <a href="">Log Out</a>

@@ -10,17 +10,14 @@ class DiscoverMovies extends Component {
   }
 
   render() {
-    const movieList = this.props.data.map((movie, index) => (
+    const movieList = this.props.discoverList.map((movie, index) => (
       <li key={movie.id}>
-        <img src={`https://image.tmdb.org/t/p/w154/${movie.poster_path}`}/>
+        <Link to={`/movie/${movie.id}`}><img src={`https://image.tmdb.org/t/p/w154${movie.poster_path}`}/></Link>
       </li>
     ))
 
-    console.log(this.props);
-
     return (
       <div>
-      <p>not working</p>
         {movieList}
       </div>
     )
@@ -28,7 +25,7 @@ class DiscoverMovies extends Component {
 }
 
 const mapStateToProps = state => ({
-  data: state.data
+  discoverList: state.discoverList
 })
 
 export default connect(mapStateToProps)(DiscoverMovies);
