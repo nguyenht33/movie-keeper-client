@@ -1,19 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {withRouter} from 'react-router';
-
+import { withRouter } from 'react-router';
 import { searchMovie } from '../../actions';
 
 class SearchForm extends Component {
+  slugifiy(query) {
+    return query
+      .toLowerCase()
+      .replace(/ /g,'-')
+      .replace(/[^\w-]+/g,'');
+  }
+
   handleSubmit(event) {
     event.preventDefault();
     const query = this.textInput.value.trim();
+    const slug = this.slugifiy(query);
     this.props.dispatch(searchMovie(query));
     this.props.history.push({
-      pathname:'/search-results',
-      state:{
-        results: this.props.movieResults
-      }
+      pathname:`/results/${slug}`
     });
   }
 
@@ -32,14 +36,13 @@ class SearchForm extends Component {
             <input type="submit"/>
           </fieldset>
         </form>
-        {}
       </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  movieResults: state.movieResults
+  searchResults: state.searchResults
 })
 
-export default connect(mapStateToProps)(SearchForm);
+export default withRouter(connect(mapStateToProps)(SearchForm));

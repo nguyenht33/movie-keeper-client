@@ -8,7 +8,6 @@ import Dashboard from './dashboard';
 import LoginForm from './login-form';
 import SearchResults from './search-results';
 import HomeNav from './header-components/home-nav';
-import {API_KEY} from '../config';
 
 class App extends Component {
   render() {
@@ -17,10 +16,10 @@ class App extends Component {
         <div className="App">
           <Route name="home" exact path="/" component={HomePage} />
           <Route exact path="/login" component={LoginForm} />
-          <Route exact path="/front" component={FrontPage} />
+          <Route exact path="/browse" component={FrontPage} />
           <Route exact path="/dashboard" component={Dashboard} />
           <Route exact path="/movie/:movieId" component={MoviePage} />
-          <Route exact path="/search-results" component={SearchResults} />
+          <Route exact path="/results/:movieName" component={SearchResults} />
         </div>
       </Router>
     );

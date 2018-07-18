@@ -14,19 +14,27 @@ class MoviePage extends Component {
   }
 
   render() {
+    const isLoading = this.props.loading,
+          movieInfo = this.props.movieInfo,
+          title = movieInfo.title,
+          backdrop = `${BACKDROP_URL}${movieInfo.backdrop_path}`,
+          poster = `${THUMBNAIL_URL}${movieInfo.poster_path}`,
+          year = movieInfo.release_date,
+          overview = movieInfo.overview;
+
     return (
       <div>
         <MainNav />
         <div>
-          <img src={this.props.backdrop}
-               alt={`${this.props.title}-movie-backdrop`} />
+          <img src={isLoading ? '' : backdrop}
+               alt={`${title}-movie-backdrop`} />
           <div>
             <h1>
-              {this.props.title}
-              <span> ({this.props.year})</span>
+              {title}
+              <span>({year.slice(0, 4)})</span>
             </h1>
-            <img src={this.props.poster}
-                 alt={`${this.props.title}-movie-poster`}/>
+            <img src={isLoading ? '' : poster}
+                 alt={`${title}-movie-poster`}/>
           </div>
           <div>
             <button>Watched</button>
@@ -34,7 +42,7 @@ class MoviePage extends Component {
           </div>
           <div>
             <h2>Overview</h2>
-            <p>{this.props.overview}</p>
+            <p>{overview}</p>
           </div>
         </div>
       </div>
@@ -43,15 +51,9 @@ class MoviePage extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const movieInfo = state.movieInfo;
   return {
-    movieId: ownProps.match.params.movieId,
-    movieInfo: movieInfo,
-    title: movieInfo.title,
-    backdrop: `${BACKDROP_URL}${movieInfo.backdrop_path}`,
-    poster: `${THUMBNAIL_URL}${movieInfo.poster_path}`,
-    year: movieInfo.release_date,
-    overview: movieInfo.overview
+    loading: state.loading,
+    movieInfo: state.movieInfo,
   }
 }
 

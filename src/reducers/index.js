@@ -1,32 +1,40 @@
 import { FETCH_MOVIES_SUCCESS,
+         FETCH_MOVIE_INFO_REQUEST,
          FETCH_MOVIE_INFO_SUCCESS,
          SEARCH_MOVIE_SUCCESS
        } from '../actions';
 
 const initialState = {
-  discoverList: [],
+  browseList: [],
   movieInfo: {},
-  movieResults: []
+  searchResults: [],
+  loading: false
 }
 
 export const movieReducer = (state=initialState, action) => {
-  if (action.type === FETCH_MOVIES_SUCCESS) {
-    return Object.assign({}, state, {
-      discoverList: action.movies.results
-    });
-  }
+  switch (action.type) {
+    case FETCH_MOVIES_SUCCESS:
+      return Object.assign({}, state, {
+        browseList: action.movies.results
+      })
 
-  if (action.type === FETCH_MOVIE_INFO_SUCCESS) {
-    return Object.assign({}, state, {
-      movieInfo: action.movie
-    });
-  }
+    case FETCH_MOVIE_INFO_REQUEST:
+      return Object.assign({}, state, {
+        loading: true
+      })
 
-  if (action.type === SEARCH_MOVIE_SUCCESS) {
-    console.log(action.movies.results);
-    return Object.assign({}, state, {
-      movieResults: action.movies.results
-    });
-  }
-  return state;
+    case FETCH_MOVIE_INFO_SUCCESS:
+      return Object.assign({}, state, {
+        loading: false,
+        movieInfo: action.movie
+      })
+
+    case SEARCH_MOVIE_SUCCESS:
+      return Object.assign({}, state, {
+        searchResults: action.movies.results
+      })
+
+    default:
+      return state;
+    }
 }

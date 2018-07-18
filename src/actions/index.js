@@ -6,6 +6,11 @@ export const fetchMoviesSuccess = movies => ({
   movies
 });
 
+export const FETCH_MOVIE_INFO_REQUEST = 'FETCH_MOVIE_INFO_REQUEST';
+export const fetchMovieInfoRequest = () => ({
+  type: FETCH_MOVIE_INFO_REQUEST
+})
+
 export const FETCH_MOVIE_INFO_SUCCESS = 'FETCH_MOVIE_INFO_SUCCESS';
 export const fetchMovieInfoSuccess = movie => ({
   type: FETCH_MOVIE_INFO_SUCCESS,
@@ -45,6 +50,7 @@ export const fetchMovies = () => dispatch => {
 };
 
 export const fetchMovieInfo = movieId => dispatch => {
+  dispatch(fetchMovieInfoRequest());
   fetch(`${MOVIE_URL}/movie/${movieId}?api_key=${API_KEY}`)
     .then(res => {
       if (!res.ok) {
