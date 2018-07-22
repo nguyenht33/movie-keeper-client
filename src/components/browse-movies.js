@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, Link } from 'react-router-dom';
-import { fetchMovies } from '../actions';
+import { fetchMovies } from '../actions/movies';
 import { THUMBNAIL_URL} from '../config';
+import { Spinner } from './spinner';
 
 class BrowseMovies extends Component {
   componentDidMount() {
-    this.props.dispatch(fetchMovies());
+    this.props.fetchMovies();
   }
 
   render() {
@@ -28,11 +29,16 @@ class BrowseMovies extends Component {
         </ul>
       </div>
     )
-  }
-}
+  };
+};
 
 const mapStateToProps = state => ({
-  browseList: state.browseList
-})
+  browseList: state.movies.browseList,
+  loading: state.movies.loading
+});
 
-export default connect(mapStateToProps)(BrowseMovies);
+const mapDispatchToProps = dispatch => ({
+  fetchMovies: () => dispatch(fetchMovies())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(BrowseMovies);

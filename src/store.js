@@ -1,8 +1,17 @@
-import {createStore, applyMiddleware} from 'redux';
+import {createStore, applyMiddleware, combineReducers} from 'redux';
 import thunk from 'redux-thunk';
 import { loadState } from './local-storage';
-
-import {movieReducer} from './reducers';
+import moviesReducer from './reducers/movies';
+import listsReducer from './reducers/lists';
 const persistedState = loadState();
 
-export default createStore(movieReducer, persistedState, applyMiddleware(thunk));
+const store = createStore(
+  combineReducers({
+    movies: moviesReducer,
+    lists: listsReducer
+  }),
+  persistedState,
+  applyMiddleware(thunk)
+);
+
+export default store;

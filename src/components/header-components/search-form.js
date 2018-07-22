@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { searchMovie } from '../../actions';
+import { searchMovie } from '../../actions/movies';
 
 class SearchForm extends Component {
   slugifiy(query) {
@@ -15,10 +15,12 @@ class SearchForm extends Component {
     event.preventDefault();
     const query = this.textInput.value.trim();
     const slug = this.slugifiy(query);
-    this.props.dispatch(searchMovie(query));
-    this.props.history.push({
-      pathname:`/results/${slug}`
-    });
+    if(query) {
+      this.props.searchMovie(query);
+      this.props.history.push({
+        pathname:`/results/${slug}`
+      });
+    }
   }
 
   render() {
@@ -38,11 +40,15 @@ class SearchForm extends Component {
         </form>
       </div>
     )
-  }
-}
+  };
+};
 
 const mapStateToProps = state => ({
-  searchResults: state.searchResults
-})
+  searchResults: state.movies.searchResults
+});
 
-export default withRouter(connect(mapStateToProps)(SearchForm));
+const mapDispatchToProps = (dispatch) => ({
+  searchMovie: (query) => dispatch(searchMovie(query))
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SearchForm));

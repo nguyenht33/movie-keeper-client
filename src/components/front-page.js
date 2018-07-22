@@ -1,16 +1,32 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Route, Link } from 'react-router-dom';
-import MainNav from './header-components/main-nav';
+import NavBar from './header-components/nav-bar';
+import { Spinner } from './spinner';
 import BrowseMovies from './browse-movies';
 
 class FrontPage extends Component {
   render() {
+    // if(this.props.loading) {
+    //   return (
+    //     <div>
+    //       <NavBar />
+    //       <Spinner />
+    //     </div>
+    //   )
+    // }
     return (
       <div>
-        <MainNav />
+        <NavBar />
         <BrowseMovies />
       </div>
     )
   }
 }
-export default FrontPage;
+
+const mapStateToProps = state => ({
+  browseList: state.browseList,
+  loading: state.loading
+})
+
+export default connect(mapStateToProps)(FrontPage);

@@ -7,14 +7,13 @@ import store from './store';
 import { saveState } from './local-storage';
 import throttle from 'lodash/throttle';
 
-store.subscribe(throttle(() => {
+store.subscribe(() => {
   saveState({
-    movieResults: store.getState().movieResults,
-    browseList: store.getState().browseList,
-    movieInfo: store.getState().movieInfo,
-    searchResults: store.getState().searchResults
+    movies: store.getState().movies,
+    lists: store.getState().lists
   });
-}, 1000));
+});
+
 
 ReactDOM.render(
   <Provider store={store}>

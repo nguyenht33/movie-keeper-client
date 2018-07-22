@@ -24,7 +24,7 @@ class HomePage extends Component {
             Start your collection today!
             </h3>
           </header>
-          <form class='signup-form'>
+          <form className='signup-form'>
             <div>
               <label for="username">Email</label>
               <input type="text" name='username' id='username' />

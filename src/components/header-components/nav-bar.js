@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import SearchForm from './search-form';
 
-class MainNav extends Component {
+class NavBar extends Component {
   render() {
     return (
-      <nav role="navigation">
+      <nav>
         <div>
           <h1><Link to="/">Movie Keeper</Link></h1>
         </div>
@@ -19,4 +19,4 @@ class MainNav extends Component {
   }
 }
 
-export default MainNav;
+export default NavBar;

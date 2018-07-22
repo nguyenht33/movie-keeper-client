@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
-import MainNav from './header-components/main-nav';
+import NavBar from './header-components/nav-bar';
 
 class Dashboard extends Component {
   render() {
     return (
       <div>
-        <MainNav />
+        <NavBar />
         Dashboard
       </div>
     )
   }
 }
+
 export default Dashboard;

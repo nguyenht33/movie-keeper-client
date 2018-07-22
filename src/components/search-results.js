@@ -1,14 +1,23 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-
 import { connect } from 'react-redux';
+import NavBar from './header-components/nav-bar'
+import { Spinner } from './spinner';
 import { THUMBNAIL_URL} from '../config';
 
 class SearchResults extends Component {
   render() {
+    if (this.props.loading) {
+      return (
+        <div>
+          <NavBar />
+          <Spinner />
+        </div>
+      )
+    }
+
     const results = this.props.searchResults;
     const query = this.props.match.params.movieName.replace(/-/g, ' ');
-
     const movieList = results.map(movie => (
       <li key={movie.id}>
         <Link to={`/movie/${movie.id}`}>
@@ -26,6 +35,7 @@ class SearchResults extends Component {
 
     return (
       <div>
+        <NavBar />
         <h2>
           Found {results.length} titles for '{query}'
         </h2>
@@ -38,7 +48,8 @@ class SearchResults extends Component {
 }
 
 const mapStateToProps = state => ({
-  searchResults: state.searchResults
+  searchResults: state.movies.searchResults,
+  loading: state.movies.loading
 });
 
 export default connect(mapStateToProps)(SearchResults);
