@@ -7,19 +7,41 @@ import { Spinner } from './spinner';
 import { fetchMovieInfo } from '../actions/movies';
 import AddMovie from './add-movie';
 import { BACKDROP_URL, THUMBNAIL_URL} from '../config';
+import { API_BASE_URL } from '../config';
+
 
 class MoviePage extends Component {
   constructor() {
     super();
     this.state = {
       showForm: false,
-      message: ''
+      message: '',
+      watched: '',
+      watchlist: ''
     };
   }
 
   componentDidMount() {
     const movieId = this.props.match.params.movieId;
     this.props.fetchMovieInfo(movieId);
+    this.checkUsersWatched();
+  }
+
+  checkUsersWatched() {
+    const movieId = this.props.match.params.movieId;
+    const userId = '5b50daefc2f89310d0729736';
+    fetch(`${API_BASE_URL}/watched/${userId}/${movieId}`)
+      .then(res => {
+        if (!res.ok) {
+          return Promise.reject(res.statusText);
+        }
+        return res.json();
+      })
+      .then(status => {
+        this.setState({
+          watched: status.watched
+        });
+      });
   }
 
   toggleAddForm() {
@@ -29,10 +51,13 @@ class MoviePage extends Component {
   }
 
   showStatus(status) {
-    console.log(status)
     this.setState({
       message: status
     });
+  }
+
+  removeWatched() {
+    console.log('removing movie')
   }
 
   render() {
@@ -46,7 +71,9 @@ class MoviePage extends Component {
     }
 
     const loading = this.props.loading,
-          movie = this.props.movieInfo;
+          movie = this.props.movieInfo,
+          watched = this.state.watched;
+          console.log(watched)
 
     return (
       <div>
@@ -63,7 +90,15 @@ class MoviePage extends Component {
                  alt={`${movie.title}-movie-poster`}/>
           </div>
           <div>
-            <button onClick={this.toggleAddForm.bind(this)}>Watched</button>
+            <button
+              onClick={!watched ? (
+                this.toggleAddForm.bind(this)
+              ) : (
+                this.removeWatched.bind(this)
+              )}
+            >
+              {!watched ? 'Watched' : 'Unwatch'}
+            </button>
             <button>Watch-List</button>
             {this.state.message.length > 0 &&
                <p>{this.state.message}</p>
