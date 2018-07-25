@@ -18,8 +18,7 @@ class AddMovie extends Component {
     const userId = '5b50daefc2f89310d0729736';
     const reqBody = this.retrieveMovieInfo();
     this.props.addWatched(userId, reqBody);
-    this.props.closeAddForm();
-    this.props.showStatus(this.props.watchedStatus.message);
+    this.props.addWatchedSubmit();
   }
 
   retrieveMovieInfo() {
