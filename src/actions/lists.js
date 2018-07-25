@@ -100,3 +100,41 @@ export const removeWatchlist = (userId, movieId) => dispatch => {
       dispatch(removeWatchlistSuccess(status));
     });
 }
+
+export const CHECK_WATCHED_SUCCESS = 'CHECK_WATCHED_SUCCESS';
+export const checkWatchedSuccess = status => ({
+  type: CHECK_WATCHED_SUCCESS,
+  status
+});
+
+export const checkWatched = (userId, movieId) => dispatch => {
+  fetch(`${API_BASE_URL}/watched/${userId}/${movieId}`)
+    .then(res => {
+      if (!res.ok) {
+        return Promise.reject(res.statusText);
+      }
+      return res.json();
+    })
+    .then(status => {
+      dispatch(checkWatchedSuccess(status));
+    });
+}
+
+export const CHECK_WATCHLIST_SUCCESS = 'CHECK_WATCHLIST_SUCCESS';
+export const checkWatchlistSuccess = status => ({
+  type: CHECK_WATCHLIST_SUCCESS,
+  status
+});
+
+export const checkWatchlist = (userId, movieId) => dispatch => {
+  fetch(`${API_BASE_URL}/watched/${userId}/${movieId}`)
+    .then(res => {
+      if (!res.ok) {
+        return Promise.reject(res.statusText);
+      }
+      return res.json();
+    })
+    .then(status => {
+      dispatch(checkWatchlistSuccess(status));
+    });
+}

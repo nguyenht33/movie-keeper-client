@@ -2,12 +2,16 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { Route, Link } from 'react-router-dom';
 import './movie-page.css'
-import NavBar from './header-components/nav-bar';
-import { Spinner } from './spinner';
+
 import { fetchMovieInfo } from '../actions/movies';
 import { addWatchlist, removeWatched, removeWatchlist } from '../actions/lists';
+
+import NavBar from './header-components/nav-bar';
+import { Spinner } from './spinner';
 import { StatusMessage } from './status-message';
+import { WatchButtons } from './watch-buttons';
 import AddMovie from './add-movie';
+
 import { BACKDROP_URL, THUMBNAIL_URL} from '../config';
 import { API_BASE_URL } from '../config';
 
@@ -91,7 +95,6 @@ class MoviePage extends Component {
   }
 
   toggleWatchlistStatus() {
-    console.log('toggling button')
     this.setState({
       watchlist: !this.state.watchlist
     });
@@ -134,7 +137,6 @@ class MoviePage extends Component {
   render() {
     const loading = this.props.loading,
           movie = this.props.movieInfo;
-    const { watched, watchlist, message } = this.state;
 
     if (this.props.loading) {
       return (
@@ -156,24 +158,14 @@ class MoviePage extends Component {
             <img src={loading ? '' : movie.poster}
                  alt={`${movie.title}-movie-poster`}/>
           </div>
-          <div className="watch-btns">
-            <button
-              onClick={!watched ?
-                this.toggleAddForm.bind(this)
-                :
-                this.handleRemoveWatched.bind(this)
-              }>
-              {!watched ? 'Add To Watched' : 'Remove From Watched'}
-            </button>
-            <button
-              onClick={!watchlist ?
-                this.handleAddWatchlist.bind(this)
-                :
-                this.removeWatchlist.bind(this)
-              }>
-              {!watchlist ? 'Add To Watchlist' : 'Remove From Watchlist'}
-            </button>
-          </div>
+          <WatchButtons className="watch-btns"
+            watched={this.state.watched}
+            watchlist={this.state.watchlist}
+            handleAddWatched={this.toggleAddForm.bind(this)}
+            handleRemoveWatched={this.handleRemoveWatched.bind(this)}
+            handleAddWatchlist={this.handleAddWatchlist.bind(this)}
+            handleRemoveWatchlist={this.removeWatchlist.bind(this)}
+          />
           <StatusMessage className="status-message"
             showMessage={this.state.showMessage}
             messageFor={this.state.messageFor}
