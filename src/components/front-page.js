@@ -25,8 +25,7 @@ class FrontPage extends Component {
 }
 
 const mapStateToProps = state => ({
-  browseList: state.browseList,
-  loading: state.loading
+  loading: state.movies.loading
 })
 
 export default connect(mapStateToProps)(FrontPage);
