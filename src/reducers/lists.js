@@ -78,14 +78,15 @@ export default function reducer(state=initialState, action){
     case GET_WATCHED_SUCCESS: {
       return Object.assign({}, state, {
         loading: false,
-        moviesWatched: action.movies
+        moviesWatched: action.json.movies
       });
     }
 
     case GET_WATCHLIST_SUCCESS: {
+      console.log(action.json)
       return Object.assign({}, state, {
         loading: false,
-        moviesWatchlist: action.movies
+        moviesWatchlist: action.json.movies
       });
     }
 

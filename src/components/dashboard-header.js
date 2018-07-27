@@ -1,21 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Route, Link } from 'react-router-dom';
 import { getWatched, getWatchlist } from '../actions/lists';
-import NavBar from './header-components/nav-bar';
+import { TEST_USER } from '../config';
 
 class DashboardHeader extends Component {
   render() {
-    const userId = '5b50daefc2f89310d0729736';
-
+    const userId = TEST_USER;
     return (
       <div>
         <h1>Username</h1>
         <div>
-          <button onClick={() => this.props.getWatched(userId)}>
+          <button onClick={() => this.props.showWatched()}>
             Watched
           </button>
-          <button onClick={() => this.props.getWatchlist(userId)}>
+          <button onClick={() => this.props.showWatchlist()}>
             Watchlist
           </button>
         </div>
