@@ -1,14 +1,52 @@
 import {API_KEY, MOVIE_URL, API_BASE_URL} from '../config';
 
+export const CHECK_WATCHED_SUCCESS = 'CHECK_WATCHED_SUCCESS';
+export const checkWatchedSuccess = json => ({
+  type: CHECK_WATCHED_SUCCESS,
+  json
+});
+
+export const checkWatched = (userId, movieId) => dispatch => {
+  fetch(`${API_BASE_URL}/watched/${userId}/${movieId}`)
+    .then(res => {
+      if (!res.ok) {
+        return Promise.reject(res.statusText);
+      }
+      return res.json();
+    })
+    .then(json => {
+      dispatch(checkWatchedSuccess(json));
+    });
+}
+
+export const CHECK_WATCHLIST_SUCCESS = 'CHECK_WATCHLIST_SUCCESS';
+export const checkWatchlistSuccess = json => ({
+  type: CHECK_WATCHLIST_SUCCESS,
+  json
+});
+
+export const checkWatchlist = (userId, movieId) => dispatch => {
+  fetch(`${API_BASE_URL}/watched/${userId}/${movieId}`)
+    .then(res => {
+      if (!res.ok) {
+        return Promise.reject(res.statusText);
+      }
+      return res.json();
+    })
+    .then(json => {
+      dispatch(checkWatchlistSuccess(json));
+    });
+}
+
 export const ADD_WATCHED_REQUEST = 'ADD_WATCHED_REQUEST';
 export const addWatchedRequest = () => ({
   type: ADD_WATCHED_REQUEST
 });
 
 export const ADD_WATCHED_SUCCESS = 'ADD_WATCHED_SUCCESS';
-export const addWatchedSuccess = status => ({
+export const addWatchedSuccess = json => ({
   type: ADD_WATCHED_SUCCESS,
-  status
+  json
 });
 
 export const addWatched = (userId, reqBody) => dispatch => {
@@ -25,10 +63,10 @@ export const addWatched = (userId, reqBody) => dispatch => {
       if (!res.ok) {
         return Promise.reject(res.statusText);
       }
-      return res;
+      return res.json();
     })
-    .then(res => {
-      dispatch(addWatchedSuccess(res.status));
+    .then(json => {
+      dispatch(addWatchedSuccess(json));
     });
 }
 
@@ -55,9 +93,9 @@ export const removeWatched = (userId, movieId) => dispatch => {
 }
 
 export const ADD_WATCHLIST_SUCCESS = 'ADD_WATCHLIST_SUCCESS';
-export const addWatchlistSuccess = status => ({
+export const addWatchlistSuccess = json => ({
   type: ADD_WATCHLIST_SUCCESS,
-  status
+  json
 });
 
 export const addWatchlist = (userId, reqBody) => dispatch => {
@@ -73,10 +111,10 @@ export const addWatchlist = (userId, reqBody) => dispatch => {
       if (!res.ok) {
         return Promise.reject(res.statusText);
       }
-      return res.status;
+      return res.json();
     })
-    .then(status => {
-      dispatch(addWatchlistSuccess(status))
+    .then(json => {
+      dispatch(addWatchlistSuccess(json))
     });
 }
 
@@ -127,7 +165,6 @@ export const getWatchlistSuccess = movies => ({
 });
 
 export const getWatchlist = userId => dispatch => {
-
   fetch(`${API_BASE_URL}/watchlist/${userId}`)
     .then(res => {
       if (!res.ok) {
@@ -139,53 +176,3 @@ export const getWatchlist = userId => dispatch => {
       dispatch(getWatchlistSuccess(res.watchlist));
     });
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-// export const CHECK_WATCHED_SUCCESS = 'CHECK_WATCHED_SUCCESS';
-// export const checkWatchedSuccess = status => ({
-//   type: CHECK_WATCHED_SUCCESS,
-//   status
-// });
-//
-// export const checkWatched = (userId, movieId) => dispatch => {
-//   fetch(`${API_BASE_URL}/watched/${userId}/${movieId}`)
-//     .then(res => {
-//       if (!res.ok) {
-//         return Promise.reject(res.statusText);
-//       }
-//       return res.json();
-//     })
-//     .then(status => {
-//       dispatch(checkWatchedSuccess(status));
-//     });
-// }
-//
-// export const CHECK_WATCHLIST_SUCCESS = 'CHECK_WATCHLIST_SUCCESS';
-// export const checkWatchlistSuccess = status => ({
-//   type: CHECK_WATCHLIST_SUCCESS,
-//   status
-// });
-//
-// export const checkWatchlist = (userId, movieId) => dispatch => {
-//   fetch(`${API_BASE_URL}/watched/${userId}/${movieId}`)
-//     .then(res => {
-//       if (!res.ok) {
-//         return Promise.reject(res.statusText);
-//       }
-//       return res.json();
-//     })
-//     .then(status => {
-//       dispatch(checkWatchlistSuccess(status));
-//     });
-// }

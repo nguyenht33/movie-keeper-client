@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import { Route, Link } from 'react-router-dom';
 import './movie-page.css'
 
 import { fetchMovieInfo } from '../actions/movies';
-import { addWatchlist, removeWatched, removeWatchlist } from '../actions/lists';
+import { checkWatched, checkWatchlist, addWatchlist, removeWatched, removeWatchlist } from '../actions/lists';
 
 import NavBar from './header-components/nav-bar';
 import { Spinner } from './spinner';
@@ -12,7 +12,7 @@ import { StatusMessage } from './status-message';
 import { WatchButtons } from './watch-buttons';
 import AddMovie from './add-movie';
 
-import { BACKDROP_URL, THUMBNAIL_URL} from '../config';
+import { TEST_USER } from '../config';
 import { API_BASE_URL } from '../config';
 
 class MoviePage extends Component {
@@ -28,44 +28,25 @@ class MoviePage extends Component {
   }
 
   componentDidMount() {
-    const movieId = this.props.movieInfo.id;
+    const movieId = this.props.match.params.movieId;
     this.props.fetchMovieInfo(movieId);
-    this.checkUsersWatched();
-    this.checkUsersWatchlist();
+    this.checkUsersLists();
   }
 
-  checkUsersWatched() {
-    const movieId = this.props.movieInfo.id;
-    const userId = '5b50daefc2f89310d0729736';
-    fetch(`${API_BASE_URL}/watched/${userId}/${movieId}`)
-      .then(res => {
-        if (!res.ok) {
-          return Promise.reject(res.statusText);
-        }
-        return res.json();
-      })
-      .then(status => {
-        this.setState({
-          watched: status.watched
-        });
-      });
+  checkUsersLists() {
+    const movieId = this.props.match.params.movieId;
+    const userId = TEST_USER;
+    this.props.checkWatched(userId, movieId);
+    this.props.checkWatchlist(userId, movieId);
   }
 
-  checkUsersWatchlist() {
-    const movieId = this.props.movieInfo.id;
-    const userId = '5b50daefc2f89310d0729736';
-    fetch(`${API_BASE_URL}/watchlist/${userId}/${movieId}`)
-      .then(res => {
-        if (!res.ok) {
-          return Promise.reject(res.statusText);
-        }
-        return res.json();
-      })
-      .then(status => {
-        this.setState({
-          watchlist: status.watchlist
-        });
-      });
+  componentWillReceiveProps(nextProps){
+    if(nextProps.watchedCheck !== this.props.watchedCheck){
+      this.setState({ watched: nextProps.watchedCheck });
+    }
+    if(nextProps.watchlistCheck !== this.props.watchlistCheck){
+      this.setState({ watchlist: nextProps.watchlistCheck });
+    }
   }
 
   toggleAddForm() {
@@ -80,12 +61,28 @@ class MoviePage extends Component {
     this.showMessage('watched');
   }
 
-  handleRemoveWatched() {
-    const movieId = this.props.match.params.movieId;
-    const userId = '5b50daefc2f89310d0729736';
+  addWatchlistClick() {
+    const userId = TEST_USER;
+    const reqBody = this.retrieveMovieInfo();
+    this.props.addWatchlist(userId, reqBody);
+    this.toggleWatchlistStatus();
+    this.showMessage('watchlist');
+  }
+
+  removeWatched() {
+    const movieId = this.props.watchedMovieId;
+    const userId = TEST_USER;
     this.props.removeWatched(userId, movieId);
     this.toggleWatchedStatus();
     this.showMessage('watched');
+  }
+
+  removeWatchlist() {
+    const movieId = this.props.watchedMovieId;
+    const userId = TEST_USER;
+    this.props.removeWatchlist(userId, movieId);
+    this.toggleWatchlistStatus();
+    this.showMessage('watchlist');
   }
 
   toggleWatchedStatus() {
@@ -107,14 +104,6 @@ class MoviePage extends Component {
     });
   }
 
-  handleAddWatchlist() {
-    const userId = '5b50daefc2f89310d0729736';
-    const reqBody = this.retrieveMovieInfo();
-    this.props.addWatchlist(userId, reqBody);
-    this.toggleWatchlistStatus();
-    this.showMessage('watchlist');
-  }
-
   retrieveMovieInfo() {
     let today = new Date();
     return {
@@ -124,14 +113,6 @@ class MoviePage extends Component {
       poster_path: this.props.movieInfo.poster_path,
       date: today.toISOString()
     }
-  }
-
-  removeWatchlist() {
-    const movieId = this.props.movieInfo.id;
-    const userId = '5b50daefc2f89310d0729736';
-    this.props.removeWatchlist(userId, movieId);
-    this.toggleWatchlistStatus();
-    this.showMessage('watchlist');
   }
 
   render() {
@@ -161,10 +142,10 @@ class MoviePage extends Component {
           <WatchButtons className="watch-btns"
             watched={this.state.watched}
             watchlist={this.state.watchlist}
-            handleAddWatched={this.toggleAddForm.bind(this)}
-            handleRemoveWatched={this.handleRemoveWatched.bind(this)}
-            handleAddWatchlist={this.handleAddWatchlist.bind(this)}
-            handleRemoveWatchlist={this.removeWatchlist.bind(this)}
+            addWatched={this.toggleAddForm.bind(this)}
+            removeWatched={this.removeWatched.bind(this)}
+            addWatchlist={this.addWatchlistClick.bind(this)}
+            removeWatchlist={this.removeWatchlist.bind(this)}
           />
           <StatusMessage className="status-message"
             showMessage={this.state.showMessage}
@@ -200,13 +181,19 @@ const mapStateToProps = (state, ownProps) => {
   return {
     loading: state.movies.loading,
     movieInfo: state.movies.movieInfo,
+    watchedCheck: state.lists.watchedCheck,
+    watchlistCheck: state.lists.watchlistCheck,
     watchedStatus: state.lists.watchedStatus,
-    watchlistStatus: state.lists.watchlistStatus
+    watchlistStatus: state.lists.watchlistStatus,
+    watchedMovieId: state.lists.watchedMovieId,
+    watchlistMovieId: state.lists.watchlistMovieId
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
   fetchMovieInfo: (movieId) => dispatch(fetchMovieInfo(movieId)),
+  checkWatched: (userId, movieId) => dispatch(checkWatched(userId, movieId)),
+  checkWatchlist: (userId, movieId) => dispatch(checkWatchlist(userId, movieId)),
   removeWatched: (userId, movieId) => dispatch(removeWatched(userId, movieId)),
   addWatchlist: (userId, movieId) => dispatch(addWatchlist(userId, movieId)),
   removeWatchlist: (userId, movieId) => dispatch(removeWatchlist(userId, movieId))

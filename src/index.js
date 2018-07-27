@@ -9,8 +9,7 @@ import throttle from 'lodash/throttle';
 
 store.subscribe(() => {
   saveState({
-    movies: store.getState().movies,
-    lists: store.getState().lists
+    movies: store.getState().movies
   });
 });
 

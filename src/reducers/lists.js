@@ -1,4 +1,6 @@
-import { ADD_WATCHED_REQUEST,
+import { CHECK_WATCHED_SUCCESS,
+         CHECK_WATCHLIST_SUCCESS,
+         ADD_WATCHED_REQUEST,
          ADD_WATCHED_SUCCESS,
          REMOVE_WATCHED_SUCCESS,
          ADD_WATCHLIST_SUCCESS,
@@ -8,8 +10,12 @@ import { ADD_WATCHED_REQUEST,
        } from '../actions/lists';
 
 const initialState = {
+  watchedCheck: '',
+  watchlistCheck: '',
   watchedStatus: '',
   watchlistStatus: '',
+  watchedMovieId: '',
+  watchlistMovieId: '',
   moviesWatched: '',
   moviesWatchlist: '',
   loading: false
@@ -17,6 +23,22 @@ const initialState = {
 
 export default function reducer(state=initialState, action){
   switch (action.type) {
+    case CHECK_WATCHED_SUCCESS: {
+      return Object.assign({}, state, {
+        loading: false,
+        watchedCheck: action.json.watched,
+        watchedMovieId: action.json.id,
+      });
+    }
+
+    case CHECK_WATCHED_SUCCESS: {
+      return Object.assign({}, state, {
+        loading: false,
+        watchlistCheck: action.json.watched,
+        watchlistMovieId: action.json.id,
+      });
+    }
+
     case ADD_WATCHED_REQUEST: {
       return Object.assign({}, state, {
         loading: true
@@ -26,7 +48,8 @@ export default function reducer(state=initialState, action){
     case ADD_WATCHED_SUCCESS: {
       return Object.assign({}, state, {
         loading: false,
-        watchedStatus: action.status
+        watchedStatus: action.json.status,
+        watchedMovieId: action.json.movieId
       });
     }
 
@@ -40,7 +63,8 @@ export default function reducer(state=initialState, action){
     case ADD_WATCHLIST_SUCCESS: {
       return Object.assign({}, state, {
         loading: false,
-        watchlistStatus: action.status
+        watchlistStatus: action.json.status,
+        watchedMovieId: action.json.movieId
       });
     }
 
@@ -59,7 +83,6 @@ export default function reducer(state=initialState, action){
     }
 
     case GET_WATCHLIST_SUCCESS: {
-      console.log(action.movies)
       return Object.assign({}, state, {
         loading: false,
         moviesWatchlist: action.movies

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { API_BASE_URL } from '../config';
+import { TEST_USER } from '../config';
 import { addWatched } from '../actions/lists';
 
 class AddMovie extends Component {
@@ -15,7 +15,7 @@ class AddMovie extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const userId = '5b50daefc2f89310d0729736';
+    const userId = TEST_USER;
     const reqBody = this.retrieveMovieInfo();
     this.props.addWatched(userId, reqBody);
     this.props.addWatchedSubmit();

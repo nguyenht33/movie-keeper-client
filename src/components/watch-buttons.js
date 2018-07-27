@@ -5,17 +5,17 @@ export function WatchButtons(props) {
     <div className="watch-btns">
       <button
         onClick={!props.watched ?
-          props.handleAddWatched
+          props.addWatched
           :
-          props.handleRemoveWatched
+          props.removeWatched
         }>
         {!props.watched ? 'Add To Watched' : 'Remove From Watched'}
       </button>
       <button
         onClick={!props.watchlist ?
-          props.handleAddWatchlist
+          props.addWatchlist
           :
-          props.handleRemoveWatchlist
+          props.removeWatchlist
         }>
         {!props.watchlist ? 'Add To Watchlist' : 'Remove From Watchlist'}
       </button>
