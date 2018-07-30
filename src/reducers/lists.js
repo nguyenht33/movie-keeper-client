@@ -6,7 +6,9 @@ import { CHECK_WATCHED_SUCCESS,
          ADD_WATCHLIST_SUCCESS,
          REMOVE_WATCHLIST_SUCCESS,
          GET_WATCHED_SUCCESS,
-         GET_WATCHLIST_SUCCESS
+         GET_WATCHED_ERROR,
+         GET_WATCHLIST_SUCCESS,
+         GET_WATCHLIST_ERROR
        } from '../actions/lists';
 
 const initialState = {
@@ -18,7 +20,8 @@ const initialState = {
   watchlistMovieId: '',
   moviesWatched: '',
   moviesWatchlist: '',
-  loading: false
+  loading: false,
+  error: null
 }
 
 export default function reducer(state=initialState, action){
@@ -31,7 +34,7 @@ export default function reducer(state=initialState, action){
       });
     }
 
-    case CHECK_WATCHED_SUCCESS: {
+    case CHECK_WATCHLIST_SUCCESS: {
       return Object.assign({}, state, {
         loading: false,
         watchlistCheck: action.json.watched,
@@ -82,11 +85,25 @@ export default function reducer(state=initialState, action){
       });
     }
 
+    case GET_WATCHED_ERROR: {
+      return Object.assign({}, state, {
+        loading: false,
+        error: action.error
+      });
+    }
+
     case GET_WATCHLIST_SUCCESS: {
-      console.log(action.json)
       return Object.assign({}, state, {
         loading: false,
         moviesWatchlist: action.json.movies
+      });
+    }
+
+    case GET_WATCHLIST_ERROR: {
+      console.log(action.error)
+      return Object.assign({}, state, {
+        loading: false,
+        error: action.error
       });
     }
 

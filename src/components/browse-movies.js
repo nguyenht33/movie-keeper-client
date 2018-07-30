@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { fetchMovies } from '../actions/movies';
 import { THUMBNAIL_URL} from '../config';
 import { Spinner } from './spinner';

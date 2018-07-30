@@ -1,4 +1,5 @@
-import {API_KEY, MOVIE_URL, API_BASE_URL} from '../config';
+import { API_KEY, MOVIE_URL, API_BASE_URL } from '../config';
+import { normalizeResponseErrors } from './utils';
 
 // check if a user have a movie in their watched collection
 export const checkWatched = (userId, movieId) => dispatch => {
@@ -119,9 +120,9 @@ export const removeWatchedSuccess = status => ({
   status
 });
 
-
 // remove a movie from a user's watchlist collection
 export const removeWatchlist = (userId, movieId) => dispatch => {
+  console.log('removing watchlist')
   fetch(`${API_BASE_URL}/watchlist/${userId}/${movieId}`, {
     method: 'DELETE'
   })
@@ -144,38 +145,45 @@ export const removeWatchlistSuccess = status => ({
 // get movies from user's watched collection
 export const getWatched = userId => dispatch => {
   fetch(`${API_BASE_URL}/watched/${userId}/1`)
-    .then(res => {
-      if (!res.ok) {
-        return Promise.reject(res.statusText);
-      }
-      return res.json();
-    })
+    .then(res => normalizeResponseErrors(res))
+    .then(res => res.json())
     .then(json => {
       dispatch(getWatchedSuccess(json));
-    });
+    })
+    .catch(err => {
+      dispatch(getWatchedError(err))
+    })
 }
 export const GET_WATCHED_SUCCESS = 'GET_WATCHED_SUCCESS';
 export const getWatchedSuccess = json => ({
   type: GET_WATCHED_SUCCESS,
   json
 });
+export const GET_WATCHED_ERROR = 'GET_WATCHED_ERROR';
+export const getWatchedError = error => ({
+  type: GET_WATCHED_ERROR,
+  error
+});
 
 // get movies from user's watchlist collection
 export const getWatchlist = userId => dispatch => {
   fetch(`${API_BASE_URL}/watchlist/${userId}/1`)
-    .then(res => {
-      if (!res.ok) {
-        return Promise.reject(res.statusText);
-      }
-      return res.json();
-    })
+    .then(res => normalizeResponseErrors(res))
+    .then(res => res.json())
     .then(json => {
-      console.log(json)
       dispatch(getWatchlistSuccess(json));
-    });
+    })
+    .catch(err => {
+      dispatch(getWatchlistError(err))
+    })
 }
 export const GET_WATCHLIST_SUCCESS = 'GET_WATCHLIST_SUCCESS';
 export const getWatchlistSuccess = json => ({
   type: GET_WATCHLIST_SUCCESS,
   json
+});
+export const GET_WATCHLIST_ERROR = 'GET_WATCHLIST_ERROR';
+export const getWatchlistError = error => ({
+  type: GET_WATCHLIST_ERROR,
+  error
 });

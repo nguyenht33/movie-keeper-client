@@ -13,7 +13,7 @@ export const fetchMoviesSuccess = movies => ({
 
 export const fetchMovies = () => dispatch => {
   dispatch(fetchMoviesRequest());
-  fetch(`${MOVIE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_video=false&page=5`)
+  fetch(`${MOVIE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_video=false`)
     .then(res => {
       if (!res.ok) {
         return Promise.reject(res.statusText);

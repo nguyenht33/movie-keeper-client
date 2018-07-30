@@ -34,6 +34,8 @@ class DashboardContent extends Component {
       movieList = this.props.moviesWatchlist;
     }
 
+    console.log(movieList)
+
     let movies;
     if (this.props.moviesWatched === '' || this.props.moviesWatchlist === '') {
       movies = null;

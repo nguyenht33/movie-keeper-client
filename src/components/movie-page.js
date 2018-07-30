@@ -41,10 +41,10 @@ class MoviePage extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-    if(nextProps.watchedCheck !== this.props.watchedCheck){
+    if (nextProps.watchedCheck !== this.props.watchedCheck) {
       this.setState({ watched: nextProps.watchedCheck });
     }
-    if(nextProps.watchlistCheck !== this.props.watchlistCheck){
+    if (nextProps.watchlistCheck !== this.props.watchlistCheck) {
       this.setState({ watchlist: nextProps.watchlistCheck });
     }
   }
@@ -78,7 +78,7 @@ class MoviePage extends Component {
   }
 
   removeWatchlist() {
-    const movieId = this.props.watchedMovieId;
+    const movieId = this.props.watchlistMovieId;
     const userId = TEST_USER;
     this.props.removeWatchlist(userId, movieId);
     this.toggleWatchlistStatus();
@@ -119,7 +119,7 @@ class MoviePage extends Component {
     const loading = this.props.loading,
           movie = this.props.movieInfo;
 
-    if (this.props.loading) {
+    if (loading) {
       return (
         <div>
           <NavBar />
