@@ -12,7 +12,6 @@ export const fetchMoviesSuccess = movies => ({
 });
 
 export const fetchMovies = (page) => dispatch => {
-  console.log(page)
   dispatch(fetchMoviesRequest());
   fetch(`${MOVIE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_video=false&page=${page}`)
     .then(res => {
@@ -38,9 +37,10 @@ export const searchMovieSuccess = movies => ({
   movies
 })
 
-export const searchMovie = query => dispatch => {
+export const searchMovie = (query, page) => dispatch => {
+  console.log(page, query)
   dispatch(searchMovierRequest());
-  fetch(`${MOVIE_URL}/search/movie?api_key=${API_KEY}&query=${query}`)
+  fetch(`${MOVIE_URL}/search/movie?api_key=${API_KEY}&query=${query}&page=${page}`)
     .then(res => {
       if (!res.ok) {
         return Promise.reject(res.statusText);
@@ -48,6 +48,7 @@ export const searchMovie = query => dispatch => {
       return res.json();
     })
     .then(movies => {
+      console.log(movies)
       dispatch(searchMovieSuccess(movies));
     });
 }

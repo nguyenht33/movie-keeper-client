@@ -11,6 +11,8 @@ const initialState = {
   browsePageNumber: null,
   movieInfo: {},
   searchResults: [],
+  totalResults: null,
+  resultsPages: null,
   loading: false
 }
 
@@ -68,7 +70,9 @@ export default function reducer(state=initialState, action) {
     case SEARCH_MOVIE_SUCCESS: {
       return Object.assign({}, state, {
         loading: false,
-        searchResults: action.movies.results
+        searchResults: action.movies.results,
+        totalResults: action.movies.total_results,
+        resultsPages: action.movies.total_pages,
       });
     }
 

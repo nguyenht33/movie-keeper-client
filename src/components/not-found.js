@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
-export function NoMatch(props) {
+export function NotFound(props) {
   return (
     <div>
-      no match
+      NOT FOUND
     </div>
   );
 }

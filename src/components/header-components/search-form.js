@@ -15,11 +15,10 @@ class SearchForm extends Component {
     event.preventDefault();
     const query = this.textInput.value.trim();
     const slug = this.slugifiy(query);
-    if(query) {
+    if (query) {
       this.props.searchMovie(query);
-      this.props.history.push({
-        pathname:`/results/${slug}`
-      });
+      this.props.history.push(`/results/?q=${slug}`);
+      this.textInput.value = ''
     }
   }
 
@@ -48,7 +47,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  searchMovie: (query) => dispatch(searchMovie(query))
+  searchMovie: (query, page) => dispatch(searchMovie(query, page))
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SearchForm));

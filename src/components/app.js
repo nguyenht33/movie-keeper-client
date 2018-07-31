@@ -8,7 +8,7 @@ import Dashboard from './dashboard';
 import LoginForm from './login-form';
 import SearchResults from './search-results';
 import UsersLists from './users-lists';
-import { NoMatch } from './no-match';
+import { NotFound} from './not-found';
 
 class App extends Component {
   render() {
@@ -21,10 +21,10 @@ class App extends Component {
             <Route path="/browse" component={BrowseMovies} />
             <Route exact path="/dashboard" component={Dashboard} />
             <Route exact path="/movie/:movieId" component={MoviePage} />
-            <Route exact path="/results/:movieName" component={SearchResults} />
+            <Route exact path="/results" component={SearchResults} />
             <Route exact path="/watched" component={UsersLists} />
             <Route exact path="/watchlist" component={UsersLists} />
-            <Route component={NoMatch} />
+            <Route component={NotFound} />
           </Switch>
         </div>
       </Router>

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router';
+import queryString from 'query-string';
 import NavBar from './header-components/nav-bar';
 import BrowseList from './browse-list';
 import ReactPaginate from 'react-paginate';
@@ -9,20 +11,16 @@ import { THUMBNAIL_URL} from '../config';
 import { Spinner } from './spinner';
 
 class BrowseMovies extends Component {
-  constructor() {
-    super();
-    this.state = {
-      pageCount: 200,
-    };
-  }
-
   componentDidMount() {
-    this.props.fetchMovies(1);
+    const parsed = queryString.parse(this.props.location.search);
+    const page = parsed.page;
+    page ? this.props.fetchMovies(page) : this.props.fetchMovies(1);
   }
 
   handlePageClick(data) {
     const page = data.selected + 1;
     this.props.fetchMovies(page)
+    this.props.history.push(`/browse?page=${page}`)
   }
 
   render() {
@@ -45,7 +43,7 @@ class BrowseMovies extends Component {
           nextLabel={'>'}
           breakLabel={<a href="">...</a>}
           breakClassName={'break-me'}
-          pageCount={this.state.pageCount}
+          pageCount={200}
           marginPagesDisplayed={2}
           pageRangeDisplayed={5}
           onPageChange={this.handlePageClick.bind(this)}
@@ -69,4 +67,4 @@ const mapDispatchToProps = dispatch => ({
   fetchMovies: (page) => dispatch(fetchMovies(page))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(BrowseMovies);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BrowseMovies));
