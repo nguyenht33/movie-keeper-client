@@ -13,18 +13,18 @@ class UsersLists extends Component {
     this.requestAPI(this.props.listType);
   }
 
+  componentWillReceiveProps(nextProps){
+    if (nextProps.listType !== this.props.listType) {
+      this.requestAPI(nextProps.listType);
+    }
+  }
+
   requestAPI(listType) {
     if (listType === 'watched') {
       this.props.getWatched(TEST_USER)
     }
     if (listType === 'watchlist') {
       this.props.getWatchlist(TEST_USER)
-    }
-  }
-
-  componentWillReceiveProps(nextProps){
-    if (nextProps.listType !== this.props.listType) {
-      this.requestAPI(nextProps.listType);
     }
   }
 

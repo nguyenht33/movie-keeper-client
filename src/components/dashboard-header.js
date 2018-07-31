@@ -12,10 +12,10 @@ class DashboardHeader extends Component {
       <div>
         <h1>Username</h1>
         <div>
-          <Link to={`/watched`}>
+          <Link to='/watched'>
             Watched
           </Link>
-          <Link to={`/watchlist`}>
+          <Link to='/watchlist'>
             Watchlist
           </Link>
         </div>

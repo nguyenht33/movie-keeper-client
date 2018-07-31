@@ -8,6 +8,7 @@ import { BACKDROP_URL, THUMBNAIL_URL} from '../config';
 
 const initialState = {
   browseList: [],
+  browsePageNumber: null,
   movieInfo: {},
   searchResults: [],
   loading: false
@@ -24,7 +25,8 @@ export default function reducer(state=initialState, action) {
     case FETCH_MOVIES_SUCCESS: {
       return Object.assign({}, state, {
         loading: false,
-        browseList: action.movies.results
+        browseList: action.movies.results,
+        browsePageNumber: action.movies.page
       });
     }
 
@@ -64,7 +66,6 @@ export default function reducer(state=initialState, action) {
     }
 
     case SEARCH_MOVIE_SUCCESS: {
-      console.log(action.movies.results);
       return Object.assign({}, state, {
         loading: false,
         searchResults: action.movies.results

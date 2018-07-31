@@ -100,7 +100,6 @@ export default function reducer(state=initialState, action){
     }
 
     case GET_WATCHLIST_ERROR: {
-      console.log(action.error)
       return Object.assign({}, state, {
         loading: false,
         error: action.error

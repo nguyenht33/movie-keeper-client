@@ -11,11 +11,13 @@ export const fetchMoviesSuccess = movies => ({
   movies
 });
 
-export const fetchMovies = () => dispatch => {
+export const fetchMovies = (page) => dispatch => {
+  console.log(page)
   dispatch(fetchMoviesRequest());
-  fetch(`${MOVIE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_video=false`)
+  fetch(`${MOVIE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_video=false&page=${page}`)
     .then(res => {
       if (!res.ok) {
+        console.log(res)
         return Promise.reject(res.statusText);
       }
       return res.json();

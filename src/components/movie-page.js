@@ -127,7 +127,7 @@ class MoviePage extends Component {
         </div>
       )
     }
-
+    console.log(this.props.watchedCheck)
     return (
       <div>
         <NavBar />
@@ -168,6 +168,7 @@ class MoviePage extends Component {
             poster={movie.poster}
             poster_path={movie.poster_path}
             year={movie.year}
+            closeAddForm={this.toggleAddForm.bind(this)}
             addWatchedSubmit={this.addWatchedSubmit.bind(this)}
           />
           : null

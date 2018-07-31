@@ -11,7 +11,7 @@ class NavBar extends Component {
         </div>
         <SearchForm />
         <div>
-          <a href="">Dashboard</a>
+          <Link to='/dashboard'>Dashboard</Link>
           <a href="">Log Out</a>
         </div>
       </nav>

@@ -23,7 +23,7 @@ export const checkWatchedSuccess = json => ({
 
 // check if a user have a movie in their watchlist collection
 export const checkWatchlist = (userId, movieId) => dispatch => {
-  fetch(`${API_BASE_URL}/watched/check/${userId}/${movieId}`)
+  fetch(`${API_BASE_URL}/watchlist/check/${userId}/${movieId}`)
     .then(res => {
       if (!res.ok) {
         return Promise.reject(res.statusText);
@@ -122,7 +122,6 @@ export const removeWatchedSuccess = status => ({
 
 // remove a movie from a user's watchlist collection
 export const removeWatchlist = (userId, movieId) => dispatch => {
-  console.log('removing watchlist')
   fetch(`${API_BASE_URL}/watchlist/${userId}/${movieId}`, {
     method: 'DELETE'
   })
