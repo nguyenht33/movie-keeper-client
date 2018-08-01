@@ -6,8 +6,10 @@ import NavBar from './header-components/nav-bar';
 import { Spinner } from './spinner';
 import { THUMBNAIL_URL, TEST_USER} from '../config';
 
+/// update this with recent activities for each list
 class DashboardContent extends Component {
   componentDidMount() {
+    console.log(this.props)
     if (this.props.content === 'watched') {
       this.props.getWatched(TEST_USER)
     }
@@ -34,13 +36,13 @@ class DashboardContent extends Component {
       movieList = this.props.moviesWatchlist;
     }
 
-    console.log(movieList)
 
     let movies;
-    if (this.props.moviesWatched === '' || this.props.moviesWatchlist === '') {
+    if (movieList === null || movieList === null) {
       movies = null;
     } else {
-      movies = this.props.moviesWatched.map((movie, index) => (
+      console.log('else')
+      movies = movieList.map((movie, index) => (
         <li key={movie.movieId}>
           <Link to={`/movie/${movie.movieId}`}>
             <h3> {movie.title} </h3>

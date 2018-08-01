@@ -73,11 +73,11 @@ class MoviePage extends Component {
     this.props.removeWatched(userId, movieId);
     this.toggleWatchedStatus();
     this.showMessage('watched');
+    this.checkUsersLists();
   }
 
   removeWatchlist() {
     const movieId = this.props.watchlistMovieId;
-    console.log(movieId);
     const userId = TEST_USER;
     this.props.removeWatchlist(userId, movieId);
     this.toggleWatchlistStatus();
@@ -103,6 +103,14 @@ class MoviePage extends Component {
     });
   }
 
+  changeRating(rating) {
+    if (this.props.watchedCheck) {
+     console.log(this.props.watchedCheck)
+   } else {
+     this.toggleAddForm();
+   }
+  }
+
   retrieveMovieInfo() {
     let today = new Date();
     return {
@@ -115,7 +123,8 @@ class MoviePage extends Component {
   }
 
   render() {
-    console.log(this.props.rating)
+    console.log(this.props.watchedCheck)
+
     const loading = this.props.loading,
           movie = this.props.movieInfo;
 
@@ -157,7 +166,7 @@ class MoviePage extends Component {
           />
 
           <MovieRatings className="movie-rating"
-            currentRating={this.props.rating ? this.props.rating : null}
+            changeRating={this.changeRating.bind(this)}
           />
 
           <StatusMessage className="status-message"

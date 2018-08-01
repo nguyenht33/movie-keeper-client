@@ -28,7 +28,6 @@ class Dashboard extends Component {
   }
 
   render() {
-    console.log('this is dashboard -', this.state.showContent)
     return (
       <div>
         <NavBar />

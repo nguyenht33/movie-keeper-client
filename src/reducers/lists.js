@@ -55,20 +55,25 @@ export default function reducer(state=initialState, action){
     case ADD_WATCHED_SUCCESS: {
       return Object.assign({}, state, {
         loading: false,
+        watchedCheck: true,
         watchedStatus: action.json.status,
-        watchedMovieId: action.json.movieId
+        watchedMovieId: action.json.movieId,
+        rating: action.json.rating,
+        review: action.json.review
       });
     }
 
     case REMOVE_WATCHED_SUCCESS: {
       return Object.assign({}, state, {
         loading: false,
-        watchedStatus: action.status
+        watchedCheck: false,
+        watchedStatus: action.status,
+        rating: null,
+        review: null
       });
     }
 
     case ADD_WATCHLIST_SUCCESS: {
-      console.log(action.json)
       return Object.assign({}, state, {
         loading: false,
         watchlistStatus: action.json.status,
@@ -79,7 +84,8 @@ export default function reducer(state=initialState, action){
     case REMOVE_WATCHLIST_SUCCESS: {
       return Object.assign({}, state, {
         loading: false,
-        watchlistStatus: action.status
+        watchlistStatus: action.status,
+        watchlistCheck: false
       });
     }
 
