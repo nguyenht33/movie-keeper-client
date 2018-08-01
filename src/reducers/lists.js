@@ -12,14 +12,16 @@ import { CHECK_WATCHED_SUCCESS,
        } from '../actions/lists';
 
 const initialState = {
-  watchedCheck: '',
-  watchlistCheck: '',
-  watchedStatus: '',
-  watchlistStatus: '',
-  watchedMovieId: '',
-  watchlistMovieId: '',
-  moviesWatched: '',
-  moviesWatchlist: '',
+  watchedCheck: null,
+  watchlistCheck: null,
+  watchedStatus: null,
+  watchlistStatus: null,
+  watchedMovieId: null,
+  rating: null,
+  review: null,
+  watchlistMovieId: null,
+  moviesWatched: null,
+  moviesWatchlist: null,
   loading: false,
   error: null
 }
@@ -31,13 +33,15 @@ export default function reducer(state=initialState, action){
         loading: false,
         watchedCheck: action.json.watched,
         watchedMovieId: action.json.id,
+        rating: action.json.rating,
+        review: action.json.review,
       });
     }
 
     case CHECK_WATCHLIST_SUCCESS: {
       return Object.assign({}, state, {
         loading: false,
-        watchlistCheck: action.json.watched,
+        watchlistCheck: action.json.watchlist,
         watchlistMovieId: action.json.id,
       });
     }
@@ -64,10 +68,11 @@ export default function reducer(state=initialState, action){
     }
 
     case ADD_WATCHLIST_SUCCESS: {
+      console.log(action.json)
       return Object.assign({}, state, {
         loading: false,
         watchlistStatus: action.json.status,
-        watchedMovieId: action.json.movieId
+        watchlistMovieId: action.json.movieId
       });
     }
 

@@ -1,23 +1,26 @@
 import React, { Component } from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Redirect, Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { searchMovie } from '../actions/movies';
 import queryString from 'query-string';
 import NavBar from './header-components/nav-bar'
 import { Spinner } from './spinner';
 import { THUMBNAIL_URL} from '../config';
-import { NotFound } from '../not-found';
+import { NotFound } from './not-found';
 import ReactPaginate from 'react-paginate';
 
 class SearchResults extends Component {
   componentDidMount() {
-    const parsed = queryString.parse(this.props.location.search);
-    const query = parsed.q.replace(/-/g, ' ');
-    const page = parsed.page;
-    if (query) {
-      this.props.searchMovie(query, page);
+    const queries = this.props.queries;
+    let query, page;
+
+    if (!queries.q) {
+      console.log('wrong');
     } else {
-      <Route render={()=> <NotFound/>} />
+      query = queries.q.replace(/-/g, ' ');
+      page = queries.page;
+      console.log(query)
+      this.props.searchMovie(query, page)
     }
   }
 
@@ -26,14 +29,20 @@ class SearchResults extends Component {
     const query = parsed.q.replace(/-/g, ' ');
     const page = data.selected + 1;
     this.props.searchMovie(query, page);
-    this.props.history.push(`/results/?search=${query}?page=${page}`)
+    this.props.history.push(`/results?q=${query}&page=${page}`)
   }
 
 
   render() {
     const {searchResults, totalResults, resultsPages, loading} = this.props;
-    const parsed = queryString.parse(this.props.location.search);
-    const query = parsed.q.replace(/-/g, ' ');
+    const queries = this.props.queries;
+    let query, page;
+
+    if (!queries.q) {
+      return <NotFound />
+    } else {
+      query = queries.q;
+    }
 
     if (loading) {
       return (
@@ -63,35 +72,39 @@ class SearchResults extends Component {
       <div>
         <NavBar />
         <h2>
-          Found {totalResults} titles for '{query}'
+          Found {totalResults} titles for "{query}"
         </h2>
         <ul>
           {movieList}
         </ul>
-        <ReactPaginate
-          previousLabel={'<'}
-          nextLabel={'>'}
-          breakLabel={<a href="">...</a>}
-          breakClassName={'break-me'}
-          pageCount={200}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
-          onPageChange={this.handlePageClick.bind(this)}
-          containerClassName={"pagination"}
-          subContainerClassName={"pages pagination"}
-          activeClassName={"active"}
-          forcePage={this.props.pageNumber}
-        />
+        {movieList.length ?
+          <ReactPaginate
+            previousLabel={'<'}
+            nextLabel={'>'}
+            breakLabel={<a href="">...</a>}
+            breakClassName={'break-me'}
+            pageCount={this.props.resultsPages}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={this.handlePageClick.bind(this)}
+            containerClassName={"pagination"}
+            subContainerClassName={"pages pagination"}
+            activeClassName={"active"}
+            forcePage={this.props.pageNumber}
+          /> : null
+        }
       </div>
     )
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, ownProps) => ({
   searchResults: state.movies.searchResults,
   totalResults: state.movies.totalResults,
   resultsPages: state.movies.resultsPages,
-  loading: state.movies.loading
+  pageNumber: state.movies.resultsPageNumber - 1,
+  loading: state.movies.loading,
+  queries: queryString.parse(ownProps.location.search)
 });
 
 const mapDispatchToProps = (dispatch) => ({

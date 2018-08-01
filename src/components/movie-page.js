@@ -2,16 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, Link } from 'react-router-dom';
 import './movie-page.css'
-
 import { fetchMovieInfo } from '../actions/movies';
 import { checkWatched, checkWatchlist, addWatchlist, removeWatched, removeWatchlist } from '../actions/lists';
-
 import NavBar from './header-components/nav-bar';
 import { Spinner } from './spinner';
 import { StatusMessage } from './status-message';
 import { WatchButtons } from './watch-buttons';
+import MovieRatings from './movie-ratings';
 import AddMovie from './add-movie';
-
 import { TEST_USER } from '../config';
 import { API_BASE_URL } from '../config';
 
@@ -79,6 +77,7 @@ class MoviePage extends Component {
 
   removeWatchlist() {
     const movieId = this.props.watchlistMovieId;
+    console.log(movieId);
     const userId = TEST_USER;
     this.props.removeWatchlist(userId, movieId);
     this.toggleWatchlistStatus();
@@ -116,6 +115,7 @@ class MoviePage extends Component {
   }
 
   render() {
+    console.log(this.props.rating)
     const loading = this.props.loading,
           movie = this.props.movieInfo;
 
@@ -127,18 +127,26 @@ class MoviePage extends Component {
         </div>
       )
     }
-    console.log(this.props.watchedCheck)
+
+    const genres = movie.genres.map(genre => (
+      <li key={genre.id}>
+        {genre.name}
+      </li>
+    ))
+
     return (
       <div>
         <NavBar />
         <div>
           <img src={loading || !movie.backdrop ? movie.poster : movie.backdrop}
                alt={`${movie.title}-movie-backdrop`} />
+
           <div>
             <h1>{movie.title}<span> ({movie.year})</span></h1>
             <img src={loading ? '' : movie.poster}
                  alt={`${movie.title}-movie-poster`}/>
           </div>
+
           <WatchButtons className="watch-btns"
             watched={this.state.watched}
             watchlist={this.state.watchlist}
@@ -147,6 +155,11 @@ class MoviePage extends Component {
             addWatchlist={this.addWatchlistClick.bind(this)}
             removeWatchlist={this.removeWatchlist.bind(this)}
           />
+
+          <MovieRatings className="movie-rating"
+            currentRating={this.props.rating ? this.props.rating : null}
+          />
+
           <StatusMessage className="status-message"
             showMessage={this.state.showMessage}
             messageFor={this.state.messageFor}
@@ -154,12 +167,21 @@ class MoviePage extends Component {
             watchlistStatus={this.props.watchlistStatus}
             title={movie.title}
           />
+
           <div className="overview">
-            <h2>Overview</h2>
+            <h3>Overview:</h3>
             <p>{!movie.overview ?
                 'No overview available for this title': movie.overview}
             </p>
           </div>
+
+          <div className="genres">
+            <h3>Genres:</h3>
+            <ul>
+              {genres}
+            </ul>
+          </div>
+
         </div>
         {this.state.showForm ?
           <AddMovie
@@ -183,10 +205,12 @@ const mapStateToProps = (state, ownProps) => {
     loading: state.movies.loading,
     movieInfo: state.movies.movieInfo,
     watchedCheck: state.lists.watchedCheck,
-    watchlistCheck: state.lists.watchlistCheck,
     watchedStatus: state.lists.watchedStatus,
-    watchlistStatus: state.lists.watchlistStatus,
     watchedMovieId: state.lists.watchedMovieId,
+    rating: state.lists.rating,
+    review: state.lists.review,
+    watchlistCheck: state.lists.watchlistCheck,
+    watchlistStatus: state.lists.watchlistStatus,
     watchlistMovieId: state.lists.watchlistMovieId
   }
 }

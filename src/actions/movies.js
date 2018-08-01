@@ -38,7 +38,6 @@ export const searchMovieSuccess = movies => ({
 })
 
 export const searchMovie = (query, page) => dispatch => {
-  console.log(page, query)
   dispatch(searchMovierRequest());
   fetch(`${MOVIE_URL}/search/movie?api_key=${API_KEY}&query=${query}&page=${page}`)
     .then(res => {
@@ -48,7 +47,6 @@ export const searchMovie = (query, page) => dispatch => {
       return res.json();
     })
     .then(movies => {
-      console.log(movies)
       dispatch(searchMovieSuccess(movies));
     });
 }

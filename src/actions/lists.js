@@ -132,6 +132,7 @@ export const removeWatchlist = (userId, movieId) => dispatch => {
       return res.status;
     })
     .then(status => {
+      console.log(status)
       dispatch(removeWatchlistSuccess(status));
     });
 }

@@ -13,6 +13,7 @@ const initialState = {
   searchResults: [],
   totalResults: null,
   resultsPages: null,
+  resultsPageNumber: null,
   loading: false
 }
 
@@ -39,7 +40,7 @@ export default function reducer(state=initialState, action) {
     }
 
     case FETCH_MOVIE_INFO_SUCCESS: {
-      let {id, title, backdrop_path, poster_path, release_date, overview} = action.movie;
+      let {id, title, backdrop_path, poster_path, release_date, overview, genres} = action.movie;
       let poster, backdrop;
       let year = release_date.slice(0, 4);
 
@@ -57,7 +58,7 @@ export default function reducer(state=initialState, action) {
 
       return Object.assign({}, state, {
         loading: false,
-        movieInfo: {id, title, backdrop, backdrop_path, poster, poster_path, year, overview}
+        movieInfo: {id, title, backdrop, backdrop_path, poster, poster_path, year, overview, genres}
       });
     }
 
@@ -73,6 +74,7 @@ export default function reducer(state=initialState, action) {
         searchResults: action.movies.results,
         totalResults: action.movies.total_results,
         resultsPages: action.movies.total_pages,
+        resultsPageNumber: action.movies.page
       });
     }
 

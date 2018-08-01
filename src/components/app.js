@@ -24,6 +24,7 @@ class App extends Component {
             <Route exact path="/results" component={SearchResults} />
             <Route exact path="/watched" component={UsersLists} />
             <Route exact path="/watchlist" component={UsersLists} />
+            <Route exact path="/notfound" component={NotFound} />
             <Route component={NotFound} />
           </Switch>
         </div>
