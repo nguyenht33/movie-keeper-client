@@ -132,7 +132,6 @@ export const removeWatchlist = (userId, movieId) => dispatch => {
       return res.status;
     })
     .then(status => {
-      console.log(status)
       dispatch(removeWatchlistSuccess(status));
     });
 }
@@ -186,4 +185,29 @@ export const GET_WATCHLIST_ERROR = 'GET_WATCHLIST_ERROR';
 export const getWatchlistError = error => ({
   type: GET_WATCHLIST_ERROR,
   error
+});
+
+// update movie watched with reviews or ratings
+export const updateWatched = (userId, movieId, reqBody) => dispatch => {
+  fetch(`${API_BASE_URL}/watched/${userId}/${movieId}`, {
+    method: 'PUT',
+    headers: {
+     'Accept': 'application/json',
+     'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(reqBody)
+  })
+  .then(res => normalizeResponseErrors(res))
+  .then(res => res.json())
+  .then(json => {
+    dispatch(updateWatchedSuccess(json));
+  })
+  .catch(err => {
+    console.log(err);
+  });
+}
+export const UPDATE_WATCHED_SUCCESS = 'UPDATE_WATCHED_SUCCESS';
+export const updateWatchedSuccess = json => ({
+  type: UPDATE_WATCHED_SUCCESS,
+  json
 });

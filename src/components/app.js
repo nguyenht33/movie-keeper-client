@@ -5,7 +5,7 @@ import HomePage from './home-page';
 import BrowseMovies from './browse-movies';
 import MoviePage from './movie-page';
 import Dashboard from './dashboard';
-import LoginForm from './login-form';
+import LoginPage from './login-page';
 import SearchResults from './search-results';
 import UsersLists from './users-lists';
 import { NotFound} from './not-found';
@@ -17,7 +17,7 @@ class App extends Component {
         <div className="App">
           <Switch>
             <Route name="home" exact path="/" component={HomePage} />
-            <Route exact path="/login" component={LoginForm} />
+            <Route exact path="/login" component={LoginPage} />
             <Route path="/browse" component={BrowseMovies} />
             <Route exact path="/dashboard" component={Dashboard} />
             <Route exact path="/movie/:movieId" component={MoviePage} />

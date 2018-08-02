@@ -14,7 +14,7 @@ const initialState = {
   totalResults: null,
   resultsPages: null,
   resultsPageNumber: null,
-  loading: false
+  loading: null
 }
 
 export default function reducer(state=initialState, action) {
@@ -55,7 +55,6 @@ export default function reducer(state=initialState, action) {
       } else {
         poster = null;
       }
-
       return Object.assign({}, state, {
         loading: false,
         movieInfo: {id, title, backdrop, backdrop_path, poster, poster_path, year, overview, genres}

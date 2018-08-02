@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect, Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import requiresLogin from './requires-login';
 import { searchMovie } from '../actions/movies';
 import queryString from 'query-string';
 import NavBar from './header-components/nav-bar'
@@ -111,4 +112,4 @@ const mapDispatchToProps = (dispatch) => ({
   searchMovie: (query, page) => dispatch(searchMovie(query, page))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchResults);
+export default requiresLogin()(connect(mapStateToProps, mapDispatchToProps)(SearchResults));

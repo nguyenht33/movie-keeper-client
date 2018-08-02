@@ -8,7 +8,8 @@ import { CHECK_WATCHED_SUCCESS,
          GET_WATCHED_SUCCESS,
          GET_WATCHED_ERROR,
          GET_WATCHLIST_SUCCESS,
-         GET_WATCHLIST_ERROR
+         GET_WATCHLIST_ERROR,
+         UPDATE_WATCHED_SUCCESS
        } from '../actions/lists';
 
 const initialState = {
@@ -26,7 +27,7 @@ const initialState = {
   error: null
 }
 
-export default function reducer(state=initialState, action){
+export default function reducer(state = initialState, action){
   switch (action.type) {
     case CHECK_WATCHED_SUCCESS: {
       return Object.assign({}, state, {
@@ -114,6 +115,14 @@ export default function reducer(state=initialState, action){
       return Object.assign({}, state, {
         loading: false,
         error: action.error
+      });
+    }
+
+    case UPDATE_WATCHED_SUCCESS: {
+      return Object.assign({}, state, {
+        loading: false,
+        rating: action.json.rating,
+        review: action.json.review
       });
     }
 

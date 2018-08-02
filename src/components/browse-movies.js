@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import requiresLogin from './requires-login';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import queryString from 'query-string';
@@ -67,4 +68,4 @@ const mapDispatchToProps = dispatch => ({
   fetchMovies: (page) => dispatch(fetchMovies(page))
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BrowseMovies));
+export default requiresLogin()(withRouter(connect(mapStateToProps, mapDispatchToProps)(BrowseMovies)));

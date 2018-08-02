@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import requiresLogin from './requires-login';
 import { getWatched, getWatchlist } from '../actions/lists';
 import { Link } from 'react-router-dom';
 import NavBar from './header-components/nav-bar';
@@ -101,4 +102,4 @@ const mapDispatchToProps = (dispatch) => ({
   getWatchlist: (userId) => dispatch(getWatchlist(userId))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersLists);
+export default requiresLogin()(connect(mapStateToProps, mapDispatchToProps)(UsersLists));

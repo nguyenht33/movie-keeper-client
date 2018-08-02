@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import requiresLogin from './requires-login';
 import { Route, Link } from 'react-router-dom';
 import './movie-page.css'
 import { fetchMovieInfo } from '../actions/movies';
-import { checkWatched, checkWatchlist, addWatchlist, removeWatched, removeWatchlist } from '../actions/lists';
+import { checkWatched, checkWatchlist, addWatchlist, removeWatched, removeWatchlist, updateWatched } from '../actions/lists';
 import NavBar from './header-components/nav-bar';
 import { Spinner } from './spinner';
 import { StatusMessage } from './status-message';
-import { WatchButtons } from './watch-buttons';
+import WatchButtons from './watch-buttons';
 import MovieRatings from './movie-ratings';
 import AddMovie from './add-movie';
 import { TEST_USER } from '../config';
@@ -19,9 +20,7 @@ class MoviePage extends Component {
     this.state = {
       showForm: false,
       showMessage: false,
-      messageFor: '',
-      watched: '',
-      watchlist: ''
+      messageFor: ''
     };
   }
 
@@ -38,15 +37,6 @@ class MoviePage extends Component {
     this.props.checkWatchlist(userId, movieId);
   }
 
-  componentWillReceiveProps(nextProps){
-    if (nextProps.watchedCheck !== this.props.watchedCheck) {
-      this.setState({ watched: nextProps.watchedCheck });
-    }
-    if (nextProps.watchlistCheck !== this.props.watchlistCheck) {
-      this.setState({ watchlist: nextProps.watchlistCheck });
-    }
-  }
-
   toggleAddForm() {
     this.setState({
       showForm: !this.state.showForm
@@ -55,7 +45,6 @@ class MoviePage extends Component {
 
   addWatchedSubmit() {
     this.toggleAddForm();
-    this.toggleWatchedStatus();
     this.showMessage('watched');
   }
 
@@ -63,7 +52,6 @@ class MoviePage extends Component {
     const userId = TEST_USER;
     const reqBody = this.retrieveMovieInfo();
     this.props.addWatchlist(userId, reqBody);
-    this.toggleWatchlistStatus();
     this.showMessage('watchlist');
   }
 
@@ -71,7 +59,6 @@ class MoviePage extends Component {
     const movieId = this.props.watchedMovieId;
     const userId = TEST_USER;
     this.props.removeWatched(userId, movieId);
-    this.toggleWatchedStatus();
     this.showMessage('watched');
     this.checkUsersLists();
   }
@@ -80,20 +67,7 @@ class MoviePage extends Component {
     const movieId = this.props.watchlistMovieId;
     const userId = TEST_USER;
     this.props.removeWatchlist(userId, movieId);
-    this.toggleWatchlistStatus();
     this.showMessage('watchlist');
-  }
-
-  toggleWatchedStatus() {
-    this.setState({
-      watched: !this.state.watched
-    });
-  }
-
-  toggleWatchlistStatus() {
-    this.setState({
-      watchlist: !this.state.watchlist
-    });
   }
 
   showMessage(list) {
@@ -103,12 +77,19 @@ class MoviePage extends Component {
     });
   }
 
-  changeRating(rating) {
+  changeRating(e) {
+    const rating = e.currentTarget.value;
+    const userId = TEST_USER;
+    const movieId = this.props.watchedMovieId;
+    const review = this.props.review;
+
+    console.log(rating);
     if (this.props.watchedCheck) {
-     console.log(this.props.watchedCheck)
-   } else {
-     this.toggleAddForm();
-   }
+      const reqBody = {rating, review};
+      this.props.updateWatched(userId, movieId, reqBody);
+    } else {
+      this.toggleAddForm();
+    }
   }
 
   retrieveMovieInfo() {
@@ -123,12 +104,9 @@ class MoviePage extends Component {
   }
 
   render() {
-    console.log(this.props.watchedCheck)
-
     const loading = this.props.loading,
           movie = this.props.movieInfo;
-
-    if (loading) {
+    if (!movie.id) {
       return (
         <div>
           <NavBar />
@@ -157,8 +135,6 @@ class MoviePage extends Component {
           </div>
 
           <WatchButtons className="watch-btns"
-            watched={this.state.watched}
-            watchlist={this.state.watchlist}
             addWatched={this.toggleAddForm.bind(this)}
             removeWatched={this.removeWatched.bind(this)}
             addWatchlist={this.addWatchlistClick.bind(this)}
@@ -166,7 +142,8 @@ class MoviePage extends Component {
           />
 
           <MovieRatings className="movie-rating"
-            changeRating={this.changeRating.bind(this)}
+            changeRating={e => this.changeRating(e)}
+            rating={this.props.rating}
           />
 
           <StatusMessage className="status-message"
@@ -190,7 +167,6 @@ class MoviePage extends Component {
               {genres}
             </ul>
           </div>
-
         </div>
         {this.state.showForm ?
           <AddMovie
@@ -230,7 +206,8 @@ const mapDispatchToProps = (dispatch) => ({
   checkWatchlist: (userId, movieId) => dispatch(checkWatchlist(userId, movieId)),
   removeWatched: (userId, movieId) => dispatch(removeWatched(userId, movieId)),
   addWatchlist: (userId, movieId) => dispatch(addWatchlist(userId, movieId)),
-  removeWatchlist: (userId, movieId) => dispatch(removeWatchlist(userId, movieId))
+  removeWatchlist: (userId, movieId) => dispatch(removeWatchlist(userId, movieId)),
+  updateWatched: (userId, movieId, reqBody) => dispatch(updateWatched(userId, movieId, reqBody))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MoviePage);
+export default requiresLogin()(connect(mapStateToProps, mapDispatchToProps)(MoviePage));

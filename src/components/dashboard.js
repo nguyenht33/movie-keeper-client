@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import requiresLogin from './requires-login';
 import { getWatched, getWatchlist } from '../actions/lists';
 import NavBar from './header-components/nav-bar';
 import DashboardHeader from './dashboard-header';
@@ -56,4 +57,4 @@ const mapDispatchToProps = (dispatch) => ({
   getWatchlist: (userId) => dispatch(getWatchlist(userId)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+export default requiresLogin()(connect(mapStateToProps, mapDispatchToProps)(Dashboard));
