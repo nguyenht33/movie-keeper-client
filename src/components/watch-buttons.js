@@ -11,7 +11,7 @@ class WatchButtons extends Component {
             :
             this.props.removeWatched
           }>
-          {!this.props.watchedCheck ? 'Add To Watched' : 'Remove From Watched'}
+          {!this.props.watchedCheck ? 'Add Watched' : 'Remove Watched'}
         </button>
         <button
           onClick={!this.props.watchlistCheck ?
@@ -19,7 +19,7 @@ class WatchButtons extends Component {
             :
             this.props.removeWatchlist
           }>
-          {!this.props.watchlistCheck ? 'Add To Watchlist' : 'Remove From Watchlist'}
+          {!this.props.watchlistCheck ? 'Add Watchlist' : 'Remove Watchlist'}
         </button>
       </div>
     )

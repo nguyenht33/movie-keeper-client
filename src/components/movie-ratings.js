@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import {connect} from 'react-redux';
+import './movie-rating.css';
 
 class MovieRatings extends Component {
   changeRating(e) {
-    console.log(e.target.value)
     this.props.changeRating(e);
   }
 
   render() {
-    console.log(this.props.rating)
     const ratingNumbers = [1, 2, 3, 4, 5];
     const ratingForm = ratingNumbers.map(rating => (
-      <div key={rating}>
+      <div key={rating} className="rating-btn">
         <label htmlFor={`rating-${rating}`}>{rating}</label>
         <Field name="rating"
           component="input"

@@ -42,8 +42,6 @@ class BrowseMovies extends Component {
         <ReactPaginate
           previousLabel={'<'}
           nextLabel={'>'}
-          breakLabel={<a href="">...</a>}
-          breakClassName={'break-me'}
           pageCount={200}
           marginPagesDisplayed={2}
           pageRangeDisplayed={5}

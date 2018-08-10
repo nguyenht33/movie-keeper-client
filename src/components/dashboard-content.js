@@ -5,17 +5,13 @@ import { Route, Link } from 'react-router-dom';
 import NavBar from './header-components/nav-bar';
 import { Spinner } from './spinner';
 import { THUMBNAIL_URL, TEST_USER} from '../config';
+import './dashboard-content.css';
 
 /// update this with recent activities for each list
 class DashboardContent extends Component {
   componentDidMount() {
-    console.log(this.props)
-    if (this.props.content === 'watched') {
-      this.props.getWatched(TEST_USER)
-    }
-    if (this.props.content === 'watchlist') {
-      this.props.getWatchlist(TEST_USER)
-    }
+    this.props.getWatched(1, 6)
+    this.props.getWatchlist(1, 6)
   }
 
   render() {
@@ -28,24 +24,11 @@ class DashboardContent extends Component {
       )
     }
 
-    let movieList;
-    if(this.props.content === 'watched') {
-      movieList = this.props.moviesWatched;
-    }
-    if(this.props.content === 'watchlist') {
-      movieList = this.props.moviesWatchlist;
-    }
-
-
-    let movies;
-    if (movieList === null || movieList === null) {
-      movies = null;
-    } else {
-      console.log('else')
-      movies = movieList.map((movie, index) => (
+    let moviesWatched;
+    if (this.props.moviesWatched) {
+      moviesWatched = this.props.moviesWatched.map((movie, index) => (
         <li key={movie.movieId}>
           <Link to={`/movie/${movie.movieId}`}>
-            <h3> {movie.title} </h3>
             <img
               src={movie.poster_path ? `${THUMBNAIL_URL}${movie.poster_path}` : 'missing-thumbnail'}
               alt={movie.poster_path ? `${movie.title}-thumbnail` : 'missing-thumbnail'}
@@ -53,13 +36,42 @@ class DashboardContent extends Component {
           </Link>
         </li>
       ))
+    } else {
+      moviesWatched = null;
+    }
+
+    let moviesWatchlist;
+    if (this.props.moviesWatchlist) {
+      moviesWatchlist = this.props.moviesWatchlist.map((movie, index) => (
+        <li key={movie.movieId}>
+          <Link to={`/movie/${movie.movieId}`}>
+            <img
+              src={movie.poster_path ? `${THUMBNAIL_URL}${movie.poster_path}` : 'missing-thumbnail'}
+              alt={movie.poster_path ? `${movie.title}-thumbnail` : 'missing-thumbnail'}
+            />
+          </Link>
+        </li>
+      ))
+    } else {
+      moviesWatchlist = null;
     }
 
     return (
       <div>
-        <ul>
-          {movies}
-        </ul>
+        <div>
+          <h2>Recently added to Watched:</h2>
+          <ul className="dashboard-list">
+            {moviesWatched}
+          </ul>
+          <button><Link to={'/watched'}>See More</Link></button>
+        </div>
+        <div>
+          <h2>Recently added to Watchlist:</h2>
+          <ul className="dashboard-list">
+            {moviesWatchlist}
+          </ul>
+          <button><Link to={'/watchlist'}>See More</Link></button>
+        </div>
       </div>
     )
   }
@@ -74,8 +86,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  getWatched: (userId) => dispatch(getWatched(userId)),
-  getWatchlist: (userId) => dispatch(getWatchlist(userId))
+  getWatched: (page, perPage) => dispatch(getWatched(page, perPage)),
+  getWatchlist: (page, perPage) => dispatch(getWatchlist(page, perPage))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DashboardContent);

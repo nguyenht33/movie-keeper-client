@@ -1,7 +1,88 @@
-.watch-btn {
-  background-color: pink;
+.movie-page {
+  text-align: center;
+  background-color: white;
+  width: 100%;
+  padding-bottom: 3em;
 }
 
-.unwatch-btn {
-  background-color: green;
+.movie-page h3, p {
+  margin: .2em 0;
+}
+
+.movie-page h1 span {
+  font-weight: 400;
+  font-size: .8em;
+}
+
+.backdrop {
+  position: relative;
+  width: 100%;
+  width: 100%;
+}
+
+.backdrop::before {
+  background-image: linear-gradient( top,
+          rgba( 255, 255, 255, 0 ) 0%, rgba( 255, 255, 255, 1 ) 100% );
+      background-image: -moz-linear-gradient( top,
+          rgba( 255, 255, 255, 0 ) 0%, rgba( 255, 255, 255, 1 ) 100% );
+      background-image: -ms-linear-gradient( top,
+          rgba( 255, 255, 255, 0 ) 0%, rgba( 255, 255, 255, 1 ) 100% );
+      background-image: -o-linear-gradient( top,
+          rgba( 255, 255, 255, 0 ) 0%, rgba( 255, 255, 255, 1 ) 100% );
+      background-image: -webkit-linear-gradient( top,
+          rgba( 255, 255, 255, 0 ) 0%, rgba( 255, 255, 255, 1 ) 100% );
+  content: "\00a0";
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+.backdrop img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  overflow: hidden;
+}
+
+.watch-container {
+  padding: 1em;
+  margin: 0 auto;
+}
+
+.watch-container button {
+  padding: .5em;
+  margin-right: .3em;
+  background-color: pink;
+  border: none;
+}
+
+.rating-btn {
+  display: inline;
+}
+
+.overview, .genres {
+  text-align: left;
+  padding: 0 1em;
+}
+
+.genres ul li {
+  display: inline;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.genres ul li:after {
+  content: ", ";
+}
+
+.genres ul li:last-child:after {
+  content: "";
+}
+
+@media only screen and (min-width: 640px) {
+	.movie-page{
+		width: 640px;
+		margin: 0 auto;
+	}
 }

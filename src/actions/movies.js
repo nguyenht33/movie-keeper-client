@@ -11,7 +11,7 @@ export const fetchMoviesSuccess = movies => ({
   movies
 });
 
-export const fetchMovies = (page) => dispatch => {
+export const fetchMovies = (page) => (dispatch, getState) => {
   dispatch(fetchMoviesRequest());
   fetch(`${MOVIE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_video=false&page=${page}`)
     .then(res => {

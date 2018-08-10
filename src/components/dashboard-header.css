@@ -1,0 +1,16 @@
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: .2em .5em;
+  border-bottom: 1px solid gainsboro;
+}
+
+.dashboard-header h2 {
+  margin: 0;
+}
+
+.dashboard-header li {
+  display: inline;
+  padding-right: .4em;
+}

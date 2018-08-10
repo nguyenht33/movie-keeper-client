@@ -1,0 +1,44 @@
+nav {
+  background-color: black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: .5em ;
+}
+
+nav button {
+  height: 30px;
+  background: none;
+  border: none;
+  color: white;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+a:visited { text-decoration: none; color: white; }
+
+nav img {
+  height: 2em;
+  color: red;
+}
+
+.search-bar  {
+  width: 100%;
+}
+
+.search-bar form {
+  width: 95%;
+}
+
+.search-bar input[type="search"] {
+  width: 90%;
+}
+
+.search-bar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}

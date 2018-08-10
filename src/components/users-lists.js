@@ -8,6 +8,8 @@ import { Spinner } from './spinner';
 import { ErrorMessage } from './error-message';
 import DashboardHeader from './dashboard-header';
 import { THUMBNAIL_URL, TEST_USER } from '../config';
+import ReactPaginate from 'react-paginate';
+import './users-lists.css';
 
 class UsersLists extends Component {
   componentDidMount() {
@@ -20,12 +22,23 @@ class UsersLists extends Component {
     }
   }
 
-  requestAPI(listType) {
+  requestAPI(listType, page) {
     if (listType === 'watched') {
-      this.props.getWatched(TEST_USER)
+      this.props.getWatched(1, 20)
     }
     if (listType === 'watchlist') {
-      this.props.getWatchlist(TEST_USER)
+      this.props.getWatchlist(1, 20)
+    }
+  }
+
+  handlePageClick(data) {
+    const page = data.selected + 1;
+    const perPage = 20;
+    if (this.props.listType === 'watched') {
+      this.props.getWatched(page, perPage)
+    }
+    if (this.props.listType === 'watchlist') {
+      this.props.getWatchlist(page, perPage)
     }
   }
 
@@ -65,7 +78,6 @@ class UsersLists extends Component {
       movies = moviesList.map((movie, index) => (
         <li key={movie.movieId}>
           <Link to={`/movie/${movie.movieId}`}>
-            <h3> {movie.title} </h3>
             <img
               src={movie.poster_path ? `${THUMBNAIL_URL}${movie.poster_path}` : 'missing-thumbnail'}
               alt={movie.poster_path ? `${movie.title}-thumbnail` : 'missing-thumbnail'}
@@ -75,13 +87,35 @@ class UsersLists extends Component {
       ))
     }
 
+    let pages;
+    if (this.props.listType === 'watched' && this.props.moviesWatchedPages) {
+      pages = this.props.moviesWatchedPages;
+    }
+    if (this.props.listType === 'watchlist' && this.props.moviesWatchlistPages) {
+      pages = this.props.moviesWatchlistPages
+    }
+
     return (
       <div>
         <NavBar />
         <DashboardHeader />
-        <ul>
+        <ul className="users-lists">
           {movies}
         </ul>
+        <ReactPaginate
+          previousLabel={'<'}
+          nextLabel={'>'}
+          breakLabel={<a href="">...</a>}
+          breakClassName={'break-me'}
+          pageCount={pages}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={this.handlePageClick.bind(this)}
+          containerClassName={"pagination"}
+          subContainerClassName={"pages pagination"}
+          activeClassName={"active"}
+          // forcePage={this.props.pageNumber}
+        />
       </div>
     )
   }
@@ -93,13 +127,15 @@ const mapStateToProps = (state, ownProps) => {
     error: state.lists.error,
     listType: ownProps.match.path.slice(1),
     moviesWatched: state.lists.moviesWatched,
-    moviesWatchlist: state.lists.moviesWatchlist
+    moviesWatchlist: state.lists.moviesWatchlist,
+    moviesWatchedPages: state.lists.moviesWatchedPages,
+    moviesWatchlistPages: state.lists.moviesWatchlistPages
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  getWatched: (userId) => dispatch(getWatched(userId)),
-  getWatchlist: (userId) => dispatch(getWatchlist(userId))
+  getWatched: (page, perPage) => dispatch(getWatched(page, perPage)),
+  getWatchlist: (page, perPage) => dispatch(getWatchlist(page, perPage))
 });
 
 export default requiresLogin()(connect(mapStateToProps, mapDispatchToProps)(UsersLists));

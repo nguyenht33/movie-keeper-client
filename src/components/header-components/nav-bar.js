@@ -1,14 +1,28 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import './nav-bar.css'
 import { Link } from 'react-router-dom';
 import SearchForm from './search-form';
 import { clearAuth } from '../../actions/auth';
 import { clearAuthToken } from '../../local-storage';
 
 class NavBar extends Component {
+  constructor() {
+    super();
+    this.state = {
+      searchBar: false
+    };
+  }
+
   logOut() {
     this.props.clearAuth();
     clearAuthToken();
+  }
+
+  toggleSearchBar() {
+    this.setState({
+      searchBar: !this.state.searchBar
+    });
   }
 
   render() {
@@ -16,23 +30,31 @@ class NavBar extends Component {
     if (this.props.loggedIn) {
       userContent =
         <div>
-          <button><Link to='/dashboard'>Dashboard</Link></button>
-          <button onClick={() => this.logOut()}>Log Out</button>
+          {!this.state.searchBar ?
+            <button onClick={() => this.toggleSearchBar()}>Search</button> : null
+          }
+          {!this.state.searchBar ?
+            <button><Link to='/dashboard'>Dashboard</Link></button> : null
+          }
+          {!this.state.searchBar ?
+            <button onClick={() => this.logOut()}>Log Out</button> : null
+          }
         </div>
     } else {
-      userContent = <p><Link to="/login">Login</Link></p>
+      userContent = <button><Link to="/login">Login</Link></button>
     }
 
     return (
       <nav>
         <div>
-          <h1>
             <Link to={this.props.loggedIn ? '/browse' : '/'}>
-              Movie Keeper
+              {!this.state.searchBar ?
+                <img src={require('../../images/logo.svg')} /> :
+                null
+              }
             </Link>
-          </h1>
         </div>
-        {this.props.loggedIn ? <SearchForm /> : null}
+        {this.state.searchBar ? <SearchForm closeSearch={this.toggleSearchBar.bind(this)}/> : null}
         {userContent}
       </nav>
     )

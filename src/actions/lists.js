@@ -2,17 +2,24 @@ import { API_KEY, MOVIE_URL, API_BASE_URL } from '../config';
 import { normalizeResponseErrors } from './utils';
 
 // check if a user have a movie in their watched collection
-export const checkWatched = (userId, movieId) => dispatch => {
-  fetch(`${API_BASE_URL}/watched/check/${userId}/${movieId}`)
-    .then(res => {
-      if (!res.ok) {
-        return Promise.reject(res.statusText);
+export const checkWatched = (movieId) => (dispatch, getState) => {
+  const authToken = getState().auth.authToken;
+  const userId = getState().auth.currentUser.id;
+
+  fetch(`${API_BASE_URL}/watched/check/${userId}/${movieId}`, {
+      method: 'GET',
+      headers: {
+       'Authorization': `Bearer ${authToken}`
       }
-      return res.json();
     })
-    .then(json => {
-      dispatch(checkWatchedSuccess(json));
-    });
+      .then(res => normalizeResponseErrors(res))
+      .then(res => res.json())
+      .then(json => {
+        dispatch(checkWatchedSuccess(json));
+      })
+      .catch(err => {
+        console.log(err)
+      })
 }
 
 export const CHECK_WATCHED_SUCCESS = 'CHECK_WATCHED_SUCCESS';
@@ -22,17 +29,25 @@ export const checkWatchedSuccess = json => ({
 });
 
 // check if a user have a movie in their watchlist collection
-export const checkWatchlist = (userId, movieId) => dispatch => {
-  fetch(`${API_BASE_URL}/watchlist/check/${userId}/${movieId}`)
-    .then(res => {
-      if (!res.ok) {
-        return Promise.reject(res.statusText);
+export const checkWatchlist = (movieId) => (dispatch, getState) => {
+  const authToken = getState().auth.authToken;
+  const userId = getState().auth.currentUser.id;
+
+  fetch(`${API_BASE_URL}/watchlist/check/${userId}/${movieId}`, {
+      method: 'GET',
+      headers: {
+       'Authorization': `Bearer ${authToken}`
       }
-      return res.json();
     })
-    .then(json => {
-      dispatch(checkWatchlistSuccess(json));
-    });
+      .then(res => normalizeResponseErrors(res))
+      .then(res => res.json())
+      .then(json => {
+        // console.log(json)
+        dispatch(checkWatchlistSuccess(json));
+      })
+      .catch(err => {
+        console.log(err)
+      })
 }
 
 export const CHECK_WATCHLIST_SUCCESS = 'CHECK_WATCHLIST_SUCCESS';
@@ -42,25 +57,29 @@ export const checkWatchlistSuccess = json => ({
 });
 
 // add a movie to a user's watched collection
-export const addWatched = (userId, reqBody) => dispatch => {
+export const addWatched = (reqBody) => (dispatch, getState) => {
+  const authToken = getState().auth.authToken;
+  const userId = getState().auth.currentUser.id;
+  const body = JSON.stringify(reqBody);
+
   dispatch(addWatchedRequest);
   fetch(`${API_BASE_URL}/watched/${userId}`, {
-    method: 'POST',
-    headers: {
-     'Accept': 'application/json',
-     'Content-Type': 'application/json'
-   },
-    body: JSON.stringify(reqBody)
-  })
-    .then(res => {
-      if (!res.ok) {
-        return Promise.reject(res.statusText);
-      }
-      return res.json();
+      method: 'POST',
+      headers: {
+       'Accept': 'application/json',
+       'Content-Type': 'application/json',
+       'Authorization': `Bearer ${authToken}`
+      },
+      body: JSON.stringify(reqBody)
     })
-    .then(json => {
-      dispatch(addWatchedSuccess(json));
-    });
+      .then(res => normalizeResponseErrors(res))
+      .then(res => res.json())
+      .then(json => {
+        dispatch(addWatchedSuccess(json));
+      })
+      .catch(err => {
+        console.log(err)
+      })
 }
 export const ADD_WATCHED_REQUEST = 'ADD_WATCHED_REQUEST';
 export const addWatchedRequest = () => ({
@@ -74,24 +93,27 @@ export const addWatchedSuccess = json => ({
 
 
 // add a movie to a user's watchlist collection
-export const addWatchlist = (userId, reqBody) => dispatch => {
+export const addWatchlist = (reqBody) => (dispatch, getState) => {
+  const authToken = getState().auth.authToken;
+  const userId = getState().auth.currentUser.id;
+
   fetch(`${API_BASE_URL}/watchlist/${userId}`, {
     method: 'POST',
     headers: {
      'Accept': 'application/json',
-     'Content-Type': 'application/json'
-   },
+     'Content-Type': 'application/json',
+     'Authorization': `Bearer ${authToken}`
+    },
     body: JSON.stringify(reqBody)
   })
-    .then(res => {
-      if (!res.ok) {
-        return Promise.reject(res.statusText);
-      }
-      return res.json();
-    })
+    .then(res => normalizeResponseErrors(res))
+    .then(res => res.json())
     .then(json => {
       dispatch(addWatchlistSuccess(json))
-    });
+    })
+    .catch(err => {
+      console.log(err)
+    })
 }
 export const ADD_WATCHLIST_SUCCESS = 'ADD_WATCHLIST_SUCCESS';
 export const addWatchlistSuccess = json => ({
@@ -100,19 +122,24 @@ export const addWatchlistSuccess = json => ({
 });
 
 // remove a movie from a user's watched collection
-export const removeWatched = (userId, movieId) => dispatch => {
+export const removeWatched = (movieId) => (dispatch, getState) => {
+  const authToken = getState().auth.authToken;
+  const userId = getState().auth.currentUser.id;
+
   fetch(`${API_BASE_URL}/watched/${userId}/${movieId}`, {
-    method: 'DELETE'
+    method: 'DELETE',
+    headers: {
+     'Authorization': `Bearer ${authToken}`
+    }
   })
-    .then(res => {
-      if (!res.ok) {
-        return Promise.reject(res.statusText);
-      }
-      return res.status;
-    })
+    .then(res => normalizeResponseErrors(res))
+    .then(res => res.status)
     .then(status => {
       dispatch(removeWatchedSuccess(status));
-    });
+    })
+    .catch(err => {
+      console.log(err)
+    })
 }
 export const REMOVE_WATCHED_SUCCESS = 'REMOVE_WATCHED_SUCCESS';
 export const removeWatchedSuccess = status => ({
@@ -121,19 +148,24 @@ export const removeWatchedSuccess = status => ({
 });
 
 // remove a movie from a user's watchlist collection
-export const removeWatchlist = (userId, movieId) => dispatch => {
+export const removeWatchlist = (movieId) => (dispatch, getState) => {
+  const authToken = getState().auth.authToken;
+  const userId = getState().auth.currentUser.id;
+
   fetch(`${API_BASE_URL}/watchlist/${userId}/${movieId}`, {
-    method: 'DELETE'
+    method: 'DELETE',
+    headers: {
+     'Authorization': `Bearer ${authToken}`
+    }
   })
-    .then(res => {
-      if (!res.ok) {
-        return Promise.reject(res.statusText);
-      }
-      return res.status;
-    })
+    .then(res => normalizeResponseErrors(res))
+    .then(res => res.status)
     .then(status => {
       dispatch(removeWatchlistSuccess(status));
-    });
+    })
+    .catch(err => {
+      console.log(err)
+    })
 }
 export const REMOVE_WATCHLIST_SUCCESS = 'REMOVE_WATCHLIST_SUCCESS';
 export const removeWatchlistSuccess = status => ({
@@ -142,8 +174,15 @@ export const removeWatchlistSuccess = status => ({
 });
 
 // get movies from user's watched collection
-export const getWatched = userId => dispatch => {
-  fetch(`${API_BASE_URL}/watched/${userId}/1`)
+export const getWatched = (page, perPage) => (dispatch, getState) => {
+  const authToken = getState().auth.authToken;
+  const userId = getState().auth.currentUser.id;
+
+  fetch(`${API_BASE_URL}/watched/list/${userId}/${page}/${perPage}`, {
+    headers: {
+     'Authorization': `Bearer ${authToken}`
+    }
+  })
     .then(res => normalizeResponseErrors(res))
     .then(res => res.json())
     .then(json => {
@@ -165,8 +204,15 @@ export const getWatchedError = error => ({
 });
 
 // get movies from user's watchlist collection
-export const getWatchlist = userId => dispatch => {
-  fetch(`${API_BASE_URL}/watchlist/${userId}/1`)
+export const getWatchlist = (page, perPage) => (dispatch, getState) => {
+  const authToken = getState().auth.authToken;
+  const userId = getState().auth.currentUser.id;
+
+  fetch(`${API_BASE_URL}/watchlist/list/${userId}/${page}/${perPage}`, {
+    headers: {
+      'Authorization': `Bearer ${authToken}`
+    }
+  })
     .then(res => normalizeResponseErrors(res))
     .then(res => res.json())
     .then(json => {
@@ -188,23 +234,26 @@ export const getWatchlistError = error => ({
 });
 
 // update movie watched with reviews or ratings
-export const updateWatched = (userId, movieId, reqBody) => dispatch => {
+export const updateWatched = (userId, movieId, reqBody) => (dispatch, getState) => {
+  const authToken = getState().auth.authToken;
+
   fetch(`${API_BASE_URL}/watched/${userId}/${movieId}`, {
     method: 'PUT',
     headers: {
      'Accept': 'application/json',
-     'Content-Type': 'application/json'
+     'Content-Type': 'application/json',
+     'Authorization': `Bearer ${authToken}`
     },
     body: JSON.stringify(reqBody)
   })
-  .then(res => normalizeResponseErrors(res))
-  .then(res => res.json())
-  .then(json => {
-    dispatch(updateWatchedSuccess(json));
-  })
-  .catch(err => {
-    console.log(err);
-  });
+    .then(res => normalizeResponseErrors(res))
+    .then(res => res.json())
+    .then(json => {
+      dispatch(updateWatchedSuccess(json));
+    })
+    .catch(err => {
+      console.log(err);
+    });
 }
 export const UPDATE_WATCHED_SUCCESS = 'UPDATE_WATCHED_SUCCESS';
 export const updateWatchedSuccess = json => ({

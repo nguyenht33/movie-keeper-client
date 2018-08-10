@@ -6,7 +6,7 @@ import NavBar from './header-components/nav-bar';
 import DashboardHeader from './dashboard-header';
 import DashboardContent from './dashboard-content';
 import { TEST_USER } from '../config';
-
+import { Footer } from './footer';
 
 class Dashboard extends Component {
   constructor() {
@@ -16,29 +16,12 @@ class Dashboard extends Component {
     };
   }
 
-  showWatched() {
-    this.setState({
-      showContent: 'watched'
-    });
-  }
-
-  showWatchlist() {
-    this.setState({
-      showContent: 'watchlist'
-    });
-  }
-
   render() {
     return (
       <div>
         <NavBar />
-        <DashboardHeader
-          showWatched={this.showWatched.bind(this)}
-          showWatchlist={this.showWatchlist.bind(this)}
-        />
-        <DashboardContent
-          content={this.state.showContent}
-        />
+        <DashboardHeader/>
+        <DashboardContent/>
       </div>
     )
   }

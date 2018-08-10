@@ -3,22 +3,21 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getWatched, getWatchlist } from '../actions/lists';
 import { TEST_USER } from '../config';
+import './dashboard-header.css';
 
 class DashboardHeader extends Component {
   render() {
-    const userId = TEST_USER;
-    const username = 'username';
     return (
-      <div>
-        <h1>Username</h1>
-        <div>
-          <Link to='/watched'>
+      <div className="dashboard-header">
+        <h2>{this.props.username}</h2>
+        <ul>
+          <li><Link to='/watched'>
             Watched
-          </Link>
-          <Link to='/watchlist'>
+          </Link></li>
+          <li><Link to='/watchlist'>
             Watchlist
-          </Link>
-        </div>
+          </Link></li>
+        </ul>
       </div>
     )
   }
@@ -27,6 +26,7 @@ class DashboardHeader extends Component {
 const mapStateToProps = (state) => {
   return {
     loading: state.lists.loading,
+    username: state.auth.currentUser.username
   }
 }
 

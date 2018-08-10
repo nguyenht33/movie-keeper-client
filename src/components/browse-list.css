@@ -1,0 +1,19 @@
+.browse-list {
+  padding: .5em;
+}
+
+.browse-list li {
+  display: inline;
+  padding: .2em;
+}
+
+.browse-list a {
+  text-decoration: underline;
+}
+
+@media only screen and (min-width: 640px) {
+	.browse-list {
+		width: 700px;
+		margin: 0 auto;
+	}
+}

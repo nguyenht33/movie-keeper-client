@@ -9,6 +9,7 @@ import LoginPage from './login-page';
 import SearchResults from './search-results';
 import UsersLists from './users-lists';
 import { NotFound} from './not-found';
+import { Footer } from './footer';
 
 class App extends Component {
   render() {
@@ -27,6 +28,7 @@ class App extends Component {
             <Route exact path="/notfound" component={NotFound} />
             <Route component={NotFound} />
           </Switch>
+          <Footer />
         </div>
       </Router>
     );

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { TEST_USER } from '../config';
 import { addWatched } from '../actions/lists';
+import './add-movie.css';
 
 class AddMovie extends Component {
   constructor() {
@@ -15,9 +16,8 @@ class AddMovie extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const userId = TEST_USER;
     const reqBody = this.retrieveMovieInfo();
-    this.props.addWatched(userId, reqBody);
+    this.props.addWatched(reqBody);
     this.props.addWatchedSubmit();
   }
 
@@ -46,42 +46,52 @@ class AddMovie extends Component {
 
   render() {
     return (
-      <div>
-        <h2>I Watched</h2>
-        <h3>
-          {this.props.title} <span>({this.props.year}) </span>
-        </h3>
-        <img
-          src={this.props.poster}
-          alt={`${this.props.title}-movie-poster`}
-        />
-        <form className="add-movie-form" onSubmit={e => this.handleSubmit(e)}>
-          <fieldset>
-            <div className="rating-button">
-              <input type="radio" name="rating" value="1" id="rating-1"
-                onChange={e => this.changeRating(e)}
-              />
-              <input type="radio" name="rating" value="2" id="rating-2"
-                onChange={e => this.changeRating(e)}
-              />
-              <input type="radio" name="rating" value="3" id="rating-3"
-                onChange={e => this.changeRating(e)}
-              />
-              <input type="radio" name="rating" value="4" id="rating-4"
-                onChange={e => this.changeRating(e)}
-              />
-              <input type="radio" name="rating" value="5" id="rating-5"
-                onChange={e => this.changeRating(e)}
-              />
-            </div>
-            <div>
-              <textarea placeholder="Write a review"
-                onChange={e => this.changeReview(e)} />
-            </div>
-            <input type="submit" />
-          </fieldset>
-        </form>
-        <button onClick={this.props.closeAddForm}>X</button>
+      <div className="add-movie">
+        <h2>
+          <em>I watched...</em>
+        </h2>
+        <div className="add-container">
+          <div className="add-left">
+            <img
+              src={this.props.poster}
+              alt={`${this.props.title}-movie-poster`}
+            />
+          </div>
+          <div className="add-right">
+            <h2>{this.props.title}</h2>
+            <form className="add-movie-form" onSubmit={e => this.handleSubmit(e)}>
+              <fieldset>
+                <div className="rating-button">
+                  <input type="radio" name="rating" value="1" id="rating-1"
+                    onChange={e => this.changeRating(e)}
+                  />
+                  <input type="radio" name="rating" value="2" id="rating-2"
+                    onChange={e => this.changeRating(e)}
+                  />
+                  <input type="radio" name="rating" value="3" id="rating-3"
+                    onChange={e => this.changeRating(e)}
+                  />
+                  <input type="radio" name="rating" value="4" id="rating-4"
+                    onChange={e => this.changeRating(e)}
+                  />
+                  <input type="radio" name="rating" value="5" id="rating-5"
+                    onChange={e => this.changeRating(e)}
+                  />
+                </div>
+                <div>
+                  <textarea placeholder="Write a review"
+                    onChange={e => this.changeReview(e)} />
+                </div>
+                <input type="submit" className="add-movie-submit"/>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+        <button
+          className="close-btn"
+          onClick={this.props.closeAddForm}>
+          X
+        </button>
       </div>
     )
   }
@@ -93,7 +103,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addWatched: (userId, reqBody) => dispatch(addWatched(userId, reqBody))
+  addWatched: (reqBody) => dispatch(addWatched(reqBody))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddMovie);

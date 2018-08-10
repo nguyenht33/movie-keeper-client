@@ -24,9 +24,9 @@ class SearchForm extends Component {
 
   render() {
     return (
-      <div>
+      <div className="search-bar">
+        <button onClick={this.props.closeSearch}>></button>
         <form onSubmit={e => this.handleSubmit(e)}>
-          <fieldset>
             <input
               type="search"
               id="search"
@@ -34,8 +34,7 @@ class SearchForm extends Component {
               placeholder="search movie"
               ref={input => this.textInput = input}
             />
-            <input type="submit"/>
-          </fieldset>
+            <input type="submit" value="search"/>
         </form>
       </div>
     )

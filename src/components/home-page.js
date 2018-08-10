@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
-import HomeNav from './header-components/home-nav';
+import NavBar from './header-components/nav-bar';
 import RegistrationForm from './registration-form';
 
 class HomePage extends Component {
@@ -12,7 +12,7 @@ class HomePage extends Component {
 
     return (
       <div>
-        <HomeNav />
+        <NavBar />
         <header role="banner">
           <h1>Movie Keeper</h1>
           <h3>VHS shelve for the new age!</h3>
