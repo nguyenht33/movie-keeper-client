@@ -10,6 +10,8 @@ import ReactPaginate from 'react-paginate';
 import { fetchMovies } from '../actions/movies';
 import { THUMBNAIL_URL} from '../config';
 import { Spinner } from './spinner';
+import { ErrorMessage } from './error-message';
+
 
 class BrowseMovies extends Component {
   componentDidMount() {
@@ -20,8 +22,8 @@ class BrowseMovies extends Component {
 
   handlePageClick(data) {
     const page = data.selected + 1;
-    this.props.fetchMovies(page)
-    this.props.history.push(`/browse?page=${page}`)
+    this.props.fetchMovies(page);
+    this.props.history.push(`/browse?page=${page}`);
   }
 
   render() {
@@ -31,6 +33,16 @@ class BrowseMovies extends Component {
         <div>
           <NavBar />
           <Spinner />
+        </div>
+      )
+    }
+    if (this.props.error) {
+      return (
+        <div>
+          <ErrorMessage
+            code={this.props.error.status_code}
+            message={this.props.error.status_message}
+          />
         </div>
       )
     }

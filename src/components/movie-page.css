@@ -60,7 +60,7 @@
   display: inline;
 }
 
-.overview, .genres {
+.review, .overview, .genres {
   text-align: left;
   padding: 0 1em;
 }

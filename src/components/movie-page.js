@@ -7,6 +7,7 @@ import { fetchMovieInfo } from '../actions/movies';
 import { checkWatched, checkWatchlist, addWatchlist, removeWatched, removeWatchlist, updateWatched } from '../actions/lists';
 import NavBar from './header-components/nav-bar';
 import { Spinner } from './spinner';
+import { ErrorMessage } from './error-message';
 import { StatusMessage } from './status-message';
 import WatchButtons from './watch-buttons';
 import MovieRatings from './movie-ratings';
@@ -46,23 +47,23 @@ class MoviePage extends Component {
   }
 
   addWatchlistClick() {
-    const movieId = this.props.movieInfo.id;
+    const movieId = this.props.movieId;
     const reqBody = this.retrieveMovieInfo();
     this.props.addWatchlist(reqBody);
     this.showMessage('watchlist');
-    this.props.checkWatchlist(movieId);
   }
 
   removeWatched() {
-    const movieId = this.props.watchedMovieId;
-    this.props.removeWatched(movieId);
+    const dbId = this.props.watchedMovieId;
+    const movieId = this.props.movieId;
+    this.props.removeWatched(dbId, movieId);
     this.showMessage('watched');
-    this.props.checkWatched(this.props.match.params.movieId);
   }
 
   removeWatchlist() {
-    const movieId = this.props.watchlistMovieId;
-    this.props.removeWatchlist(movieId);
+    const dbId = this.props.watchlistMovieId;
+    const movieId = this.props.movieId;
+    this.props.removeWatchlist(dbId, movieId);
     this.showMessage('watchlist');
   }
 
@@ -111,14 +112,22 @@ class MoviePage extends Component {
         </div>
       )
     }
+    if (this.props.error) {
+      return (
+        <div>
+          <ErrorMessage
+            code={this.props.error.code}
+            message={this.props.error.message}
+          />
+        </div>
+      )
+    }
 
     const genres = movie.genres.map(genre => (
       <li key={genre.id}>
         {genre.name}
       </li>
     ))
-
-    console.log(this.props.rating)
 
     return (
       <div>
@@ -154,14 +163,18 @@ class MoviePage extends Component {
               title={movie.title}
             />
           </div>
-
+          {!this.props.review ? null:
+            <div className="review">
+              <h3>Your Review:</h3>
+              <p>"{this.props.review}"</p>
+            </div>
+          }
           <div className="overview">
             <h3>Overview:</h3>
             <p>{!movie.overview ?
                 'No overview available for this title': movie.overview}
             </p>
           </div>
-
           <div className="genres">
             <h3>Genres:</h3>
             <ul>
@@ -191,6 +204,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     movieId: ownProps.match.params.movieId,
     loading: state.movies.loading,
+    error: state.lists.error,
     movieInfo: state.movies.movieInfo,
     watchedCheck: state.lists.watchedCheck,
     watchedStatus: state.lists.watchedStatus,
@@ -207,9 +221,9 @@ const mapDispatchToProps = (dispatch) => ({
   fetchMovieInfo: (movieId) => dispatch(fetchMovieInfo(movieId)),
   checkWatched: (movieId) => dispatch(checkWatched(movieId)),
   checkWatchlist: (movieId) => dispatch(checkWatchlist(movieId)),
-  removeWatched: (movieId) => dispatch(removeWatched(movieId)),
+  removeWatched: (dbId, movieId) => dispatch(removeWatched(dbId, movieId)),
   addWatchlist: (movieId) => dispatch(addWatchlist(movieId)),
-  removeWatchlist: (movieId) => dispatch(removeWatchlist(movieId)),
+  removeWatchlist: (dbId, movieId) => dispatch(removeWatchlist(dbId, movieId)),
   updateWatched: (movieId, reqBody) => dispatch(updateWatched(movieId, reqBody))
 });
 

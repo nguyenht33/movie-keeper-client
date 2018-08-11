@@ -2,14 +2,19 @@ import { CHECK_WATCHED_SUCCESS,
          CHECK_WATCHLIST_SUCCESS,
          ADD_WATCHED_REQUEST,
          ADD_WATCHED_SUCCESS,
+         ADD_WATCHED_ERROR,
          REMOVE_WATCHED_SUCCESS,
+         REMOVE_WATCHED_ERROR,
          ADD_WATCHLIST_SUCCESS,
+         ADD_WATCHLIST_ERROR,
          REMOVE_WATCHLIST_SUCCESS,
+         REMOVE_WATCHLIST_ERROR,
          GET_WATCHED_SUCCESS,
          GET_WATCHED_ERROR,
          GET_WATCHLIST_SUCCESS,
          GET_WATCHLIST_ERROR,
-         UPDATE_WATCHED_SUCCESS
+         UPDATE_WATCHED_SUCCESS,
+         UPDATE_WATCHED_ERROR
        } from '../actions/lists';
 
 const initialState = {
@@ -56,7 +61,6 @@ export default function reducer(state = initialState, action){
     }
 
     case ADD_WATCHED_SUCCESS: {
-      console.log(action.json)
       return Object.assign({}, state, {
         loading: false,
         watchedCheck: true,
@@ -64,6 +68,13 @@ export default function reducer(state = initialState, action){
         watchedMovieId: action.json.movieId,
         rating: action.json.rating,
         review: action.json.review
+      });
+    }
+
+    case ADD_WATCHED_ERROR: {
+      return Object.assign({}, state, {
+        loading: false,
+        error: action.error
       });
     }
 
@@ -77,11 +88,32 @@ export default function reducer(state = initialState, action){
       });
     }
 
+    case REMOVE_WATCHED_ERROR: {
+      return Object.assign({}, state, {
+        loading: false,
+        error: action.error
+      });
+    }
+
     case ADD_WATCHLIST_SUCCESS: {
       return Object.assign({}, state, {
         loading: false,
         watchlistStatus: action.json.status,
         watchlistMovieId: action.json.movieId
+      });
+    }
+
+    case REMOVE_WATCHLIST_ERROR: {
+      return Object.assign({}, state, {
+        loading: false,
+        error: action.error
+      });
+    }
+
+    case ADD_WATCHLIST_ERROR: {
+      return Object.assign({}, state, {
+        loading: false,
+        error: action.error
       });
     }
 
@@ -124,11 +156,17 @@ export default function reducer(state = initialState, action){
     }
 
     case UPDATE_WATCHED_SUCCESS: {
-      console.log(action.json)
       return Object.assign({}, state, {
         loading: false,
         rating: action.json.rating,
         review: action.json.review
+      });
+    }
+
+    case UPDATE_WATCHED_ERROR: {
+      return Object.assign({}, state, {
+        loading: false,
+        error: action.error
       });
     }
 

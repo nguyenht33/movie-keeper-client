@@ -36,9 +36,11 @@ class UsersLists extends Component {
     const perPage = 20;
     if (this.props.listType === 'watched') {
       this.props.getWatched(page, perPage)
+      this.props.history.push(`/watched?page=${page}`)
     }
     if (this.props.listType === 'watchlist') {
       this.props.getWatchlist(page, perPage)
+      this.props.history.push(`/watched?page=${page}`)
     }
   }
 

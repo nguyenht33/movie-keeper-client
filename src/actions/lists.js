@@ -42,7 +42,6 @@ export const checkWatchlist = (movieId) => (dispatch, getState) => {
       .then(res => normalizeResponseErrors(res))
       .then(res => res.json())
       .then(json => {
-        // console.log(json)
         dispatch(checkWatchlistSuccess(json));
       })
       .catch(err => {
@@ -61,14 +60,14 @@ export const addWatched = (reqBody) => (dispatch, getState) => {
   const authToken = getState().auth.authToken;
   const userId = getState().auth.currentUser.id;
   const body = JSON.stringify(reqBody);
-console.log(body)
+
   dispatch(addWatchedRequest);
   fetch(`${API_BASE_URL}/watched/${userId}`, {
       method: 'POST',
       headers: {
-       'Accept': 'application/json',
-       'Content-Type': 'application/json',
-       'Authorization': `Bearer ${authToken}`
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authToken}`
       },
       body: JSON.stringify(reqBody)
     })
@@ -78,7 +77,7 @@ console.log(body)
         dispatch(addWatchedSuccess(json));
       })
       .catch(err => {
-        console.log(err)
+        dispatch(addWatchedError(err))
       })
 }
 export const ADD_WATCHED_REQUEST = 'ADD_WATCHED_REQUEST';
@@ -90,6 +89,11 @@ export const addWatchedSuccess = json => ({
   type: ADD_WATCHED_SUCCESS,
   json
 });
+export const ADD_WATCHED_ERROR = 'ADD_WATCHED_ERROR';
+export const addWatchedError = error => ({
+  type: ADD_WATCHED_ERROR,
+  error
+});
 
 
 // add a movie to a user's watchlist collection
@@ -100,9 +104,9 @@ export const addWatchlist = (reqBody) => (dispatch, getState) => {
   fetch(`${API_BASE_URL}/watchlist/${userId}`, {
     method: 'POST',
     headers: {
-     'Accept': 'application/json',
-     'Content-Type': 'application/json',
-     'Authorization': `Bearer ${authToken}`
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${authToken}`
     },
     body: JSON.stringify(reqBody)
   })
@@ -111,8 +115,11 @@ export const addWatchlist = (reqBody) => (dispatch, getState) => {
     .then(json => {
       dispatch(addWatchlistSuccess(json))
     })
+    .then(() => {
+      dispatch(checkWatchlist(reqBody.movieId))
+    })
     .catch(err => {
-      console.log(err)
+      dispatch(addWatchlistError(err))
     })
 }
 export const ADD_WATCHLIST_SUCCESS = 'ADD_WATCHLIST_SUCCESS';
@@ -120,13 +127,18 @@ export const addWatchlistSuccess = json => ({
   type: ADD_WATCHLIST_SUCCESS,
   json
 });
+export const ADD_WATCHLIST_ERROR = 'ADD_WATCHLIST_ERROR';
+export const addWatchlistError = error => ({
+  type: ADD_WATCHLIST_ERROR,
+  error
+});
 
 // remove a movie from a user's watched collection
-export const removeWatched = (movieId) => (dispatch, getState) => {
+export const removeWatched = (dbId, movieId) => (dispatch, getState) => {
   const authToken = getState().auth.authToken;
   const userId = getState().auth.currentUser.id;
 
-  fetch(`${API_BASE_URL}/watched/${userId}/${movieId}`, {
+  fetch(`${API_BASE_URL}/watched/${userId}/${dbId}`, {
     method: 'DELETE',
     headers: {
      'Authorization': `Bearer ${authToken}`
@@ -137,8 +149,11 @@ export const removeWatched = (movieId) => (dispatch, getState) => {
     .then(status => {
       dispatch(removeWatchedSuccess(status));
     })
+    .then(() => {
+      dispatch(checkWatched(movieId))
+    })
     .catch(err => {
-      console.log(err)
+      dispatch(removeWatchedError(err))
     })
 }
 export const REMOVE_WATCHED_SUCCESS = 'REMOVE_WATCHED_SUCCESS';
@@ -146,13 +161,18 @@ export const removeWatchedSuccess = status => ({
   type: REMOVE_WATCHED_SUCCESS,
   status
 });
+export const REMOVE_WATCHED_ERROR = 'REMOVE_WATCHED_ERROR';
+export const removeWatchedError = error => ({
+  type: REMOVE_WATCHED_ERROR,
+  error
+});
 
 // remove a movie from a user's watchlist collection
-export const removeWatchlist = (movieId) => (dispatch, getState) => {
+export const removeWatchlist = (dbId, movieId) => (dispatch, getState) => {
   const authToken = getState().auth.authToken;
   const userId = getState().auth.currentUser.id;
 
-  fetch(`${API_BASE_URL}/watchlist/${userId}/${movieId}`, {
+  fetch(`${API_BASE_URL}/watchlist/${userId}/${dbId}`, {
     method: 'DELETE',
     headers: {
      'Authorization': `Bearer ${authToken}`
@@ -163,14 +183,22 @@ export const removeWatchlist = (movieId) => (dispatch, getState) => {
     .then(status => {
       dispatch(removeWatchlistSuccess(status));
     })
+    .then(() => {
+      dispatch(checkWatchlist(movieId))
+    })
     .catch(err => {
-      console.log(err)
+      dispatch(removeWatchlistError(err))
     })
 }
 export const REMOVE_WATCHLIST_SUCCESS = 'REMOVE_WATCHLIST_SUCCESS';
 export const removeWatchlistSuccess = status => ({
   type: REMOVE_WATCHLIST_SUCCESS,
   status
+});
+export const REMOVE_WATCHLIST_ERROR = 'REMOVE_WATCHLIST_ERROR';
+export const removeWatchlistError = error => ({
+  type: REMOVE_WATCHLIST_ERROR,
+  error
 });
 
 // get movies from user's watched collection
@@ -253,11 +281,16 @@ export const updateWatched = (movieId, reqBody) => (dispatch, getState) => {
       dispatch(updateWatchedSuccess(json));
     })
     .catch(err => {
-      console.log(err);
+      dispatch(updateWatchedError(err))
     });
 }
 export const UPDATE_WATCHED_SUCCESS = 'UPDATE_WATCHED_SUCCESS';
 export const updateWatchedSuccess = json => ({
   type: UPDATE_WATCHED_SUCCESS,
   json
+});
+export const UPDATE_WATCHED_ERROR = 'UPDATE_WATCHED_ERROR';
+export const updateWatchedError = error => ({
+  type: UPDATE_WATCHED_ERROR,
+  error
 });

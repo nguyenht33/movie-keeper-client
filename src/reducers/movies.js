@@ -1,5 +1,6 @@
 import { FETCH_MOVIES_REQUEST,
          FETCH_MOVIES_SUCCESS,
+         FETCH_MOVIES_ERROR,
          FETCH_MOVIE_INFO_REQUEST,
          FETCH_MOVIE_INFO_SUCCESS,
          SEARCH_MOVIE_REQUEST,
@@ -14,7 +15,8 @@ const initialState = {
   totalResults: null,
   resultsPages: null,
   resultsPageNumber: null,
-  loading: null
+  loading: null,
+  error: null
 }
 
 export default function reducer(state=initialState, action) {
@@ -30,6 +32,14 @@ export default function reducer(state=initialState, action) {
         loading: false,
         browseList: action.movies.results,
         browsePageNumber: action.movies.page
+      });
+    }
+
+    case FETCH_MOVIES_ERROR: {
+      console.log(action)
+      return Object.assign({}, state, {
+        loading: false,
+        error: action.error
       });
     }
 

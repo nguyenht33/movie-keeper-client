@@ -7,7 +7,6 @@ import LoginForm from './login-form';
 
 export function LoginPage(props) {
   if (props.loggedIn) {
-    console.log(props.loggedIn)
     return <Redirect to="/browse" />;
   }
   return (

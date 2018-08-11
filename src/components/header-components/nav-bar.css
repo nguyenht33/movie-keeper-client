@@ -13,12 +13,12 @@ nav button {
   color: white;
 }
 
-a {
+.nav-bar a {
   text-decoration: none;
   color: white;
 }
 
-a:visited { text-decoration: none; color: white; }
+.nav-bar a:visited { text-decoration: none; color: white; }
 
 nav img {
   height: 2em;

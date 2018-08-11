@@ -29,7 +29,7 @@ class AddMovie extends Component {
       title: this.props.title,
       year: this.props.year,
       poster_path: this.props.poster_path,
-      rating: this.state.rating,
+      rating: this.props.rating || this.state.rating,
       review: this.state.review,
       date: today.toISOString()
     }
@@ -46,7 +46,6 @@ class AddMovie extends Component {
   }
 
   render() {
-    console.log(this.props.rating)
     const ratingNumbers = [1, 2, 3, 4, 5];
     const ratingForm = ratingNumbers.map(rating => (
       <div key={rating} className="rating-btn">
