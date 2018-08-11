@@ -56,6 +56,7 @@ export default function reducer(state = initialState, action){
     }
 
     case ADD_WATCHED_SUCCESS: {
+      console.log(action.json)
       return Object.assign({}, state, {
         loading: false,
         watchedCheck: true,
@@ -123,6 +124,7 @@ export default function reducer(state = initialState, action){
     }
 
     case UPDATE_WATCHED_SUCCESS: {
+      console.log(action.json)
       return Object.assign({}, state, {
         loading: false,
         rating: action.json.rating,

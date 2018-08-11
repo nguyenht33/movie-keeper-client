@@ -61,7 +61,7 @@ export const addWatched = (reqBody) => (dispatch, getState) => {
   const authToken = getState().auth.authToken;
   const userId = getState().auth.currentUser.id;
   const body = JSON.stringify(reqBody);
-
+console.log(body)
   dispatch(addWatchedRequest);
   fetch(`${API_BASE_URL}/watched/${userId}`, {
       method: 'POST',
@@ -234,8 +234,9 @@ export const getWatchlistError = error => ({
 });
 
 // update movie watched with reviews or ratings
-export const updateWatched = (userId, movieId, reqBody) => (dispatch, getState) => {
+export const updateWatched = (movieId, reqBody) => (dispatch, getState) => {
   const authToken = getState().auth.authToken;
+  const userId = getState().auth.currentUser.id;
 
   fetch(`${API_BASE_URL}/watched/${userId}/${movieId}`, {
     method: 'PUT',

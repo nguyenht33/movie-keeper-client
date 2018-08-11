@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { TEST_USER } from '../config';
 import { addWatched } from '../actions/lists';
+import MovieRatings from './movie-ratings';
 import './add-movie.css';
 
 class AddMovie extends Component {
@@ -45,6 +46,30 @@ class AddMovie extends Component {
   }
 
   render() {
+    console.log(this.props.rating)
+    const ratingNumbers = [1, 2, 3, 4, 5];
+    const ratingForm = ratingNumbers.map(rating => (
+      <div key={rating} className="rating-btn">
+        <label htmlFor={`rating-${rating}`}>
+           {this.props.rating >= rating ?
+             <i className="icon-star-full"></i>
+             : (rating > this.state.rating ?
+                <i className="icon-star-empty"></i>
+                :
+                <i className="icon-star-full"></i>
+            )
+          }
+        </label>
+        <input name="rating"
+          component="input"
+          type="radio"
+          value={rating}
+          defaultChecked={this.props.rating ? this.props.rating === rating : null}
+          onChange={e => this.changeRating(e)}
+        />
+      </div>
+    ))
+
     return (
       <div className="add-movie">
         <h2>
@@ -60,30 +85,12 @@ class AddMovie extends Component {
           <div className="add-right">
             <h2>{this.props.title}</h2>
             <form className="add-movie-form" onSubmit={e => this.handleSubmit(e)}>
-              <fieldset>
-                <div className="rating-button">
-                  <input type="radio" name="rating" value="1" id="rating-1"
-                    onChange={e => this.changeRating(e)}
-                  />
-                  <input type="radio" name="rating" value="2" id="rating-2"
-                    onChange={e => this.changeRating(e)}
-                  />
-                  <input type="radio" name="rating" value="3" id="rating-3"
-                    onChange={e => this.changeRating(e)}
-                  />
-                  <input type="radio" name="rating" value="4" id="rating-4"
-                    onChange={e => this.changeRating(e)}
-                  />
-                  <input type="radio" name="rating" value="5" id="rating-5"
-                    onChange={e => this.changeRating(e)}
-                  />
-                </div>
+                {ratingForm}
                 <div>
                   <textarea placeholder="Write a review"
                     onChange={e => this.changeReview(e)} />
                 </div>
                 <input type="submit" className="add-movie-submit"/>
-              </fieldset>
             </form>
           </div>
         </div>

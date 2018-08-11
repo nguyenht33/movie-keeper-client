@@ -19,20 +19,19 @@ class MoviePage extends Component {
     this.state = {
       showForm: false,
       showMessage: false,
-      messageFor: ''
+      messageFor: '',
+      rating: ''
     };
   }
 
   componentDidMount() {
-    const movieId = this.props.match.params.movieId;
-    this.props.fetchMovieInfo(movieId);
+    this.props.fetchMovieInfo(this.props.movieId);
     this.checkUsersLists();
   }
 
   checkUsersLists() {
-    const movieId = this.props.match.params.movieId;
-    this.props.checkWatched(movieId);
-    this.props.checkWatchlist(movieId);
+    this.props.checkWatched(this.props.movieId);
+    this.props.checkWatchlist(this.props.movieId);
   }
 
   toggleAddForm() {
@@ -83,6 +82,9 @@ class MoviePage extends Component {
       const reqBody = {rating, review};
       this.props.updateWatched(movieId, reqBody);
     } else {
+      this.setState({
+        rating: parseInt(rating)
+      })
       this.toggleAddForm();
     }
   }
@@ -116,6 +118,8 @@ class MoviePage extends Component {
       </li>
     ))
 
+    console.log(this.props.rating)
+
     return (
       <div>
         <NavBar />
@@ -131,11 +135,10 @@ class MoviePage extends Component {
             <img src={loading ? '' : movie.poster}
                  alt={`${movie.title}-movie-poster`}/>
           </div>
-
           <div className="watch-container">
             <MovieRatings className="movie-rating"
               changeRating={e => this.changeRating(e)}
-              rating={this.props.rating}
+              rating={this.props.rating || ''}
             />
             <WatchButtons className="watch-btns"
               addWatched={this.toggleAddForm.bind(this)}
@@ -169,6 +172,7 @@ class MoviePage extends Component {
         {this.state.showForm ?
           <AddMovie
             movieId={this.props.match.params.movieId}
+            rating={this.state.rating}
             title={movie.title}
             poster={movie.poster}
             poster_path={movie.poster_path}
@@ -185,6 +189,7 @@ class MoviePage extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
+    movieId: ownProps.match.params.movieId,
     loading: state.movies.loading,
     movieInfo: state.movies.movieInfo,
     watchedCheck: state.lists.watchedCheck,
