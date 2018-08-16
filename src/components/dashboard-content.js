@@ -57,7 +57,7 @@ class DashboardContent extends Component {
     }
 
     return (
-      <div>
+      <div className="dashboard-content">
         <div>
           <h2>Recently added to Watched:</h2>
           <ul className="dashboard-list">

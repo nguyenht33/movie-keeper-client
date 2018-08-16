@@ -7,11 +7,11 @@ import App from './components/app';
 import store from './store';
 import { saveState } from './local-storage';
 
-store.subscribe(() => {
-  saveState({
-    movies: store.getState().movies
-  });
-});
+// store.subscribe(() => {
+//   saveState({
+//     movies: store.getState().movies
+//   });
+// });
 
 
 ReactDOM.render(

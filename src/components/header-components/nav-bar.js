@@ -2,16 +2,34 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './nav-bar.css'
 import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router';
 import SearchForm from './search-form';
 import { clearAuth } from '../../actions/auth';
 import { clearAuthToken } from '../../local-storage';
 
-class NavBar extends Component {
+export class NavBar extends Component {
   constructor() {
     super();
     this.state = {
-      searchBar: false
+      searchBar: false,
+      isMobile: false
     };
+    this.changeScreenSize = this.changeScreenSize.bind(this);
+  }
+
+  componentDidMount() {
+    this.changeScreenSize();
+    window.addEventListener("resize", this.changeScreenSize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.changeScreenSize);
+  }
+
+  changeScreenSize() {
+    this.setState({
+      isMobile: window.innerWidth < 640
+    });
   }
 
   logOut() {
@@ -26,36 +44,47 @@ class NavBar extends Component {
   }
 
   render() {
-    let userContent;
+    let navButtons;
     if (this.props.loggedIn) {
-      userContent =
-        <div>
+      navButtons =
+        <div className="nav-buttons">
           {!this.state.searchBar ?
-            <button onClick={() => this.toggleSearchBar()}>Search</button> : null
+            <button className="toggle-search" onClick={() => this.toggleSearchBar()}>
+              <i className="icon-search"></i>
+            </button> : null
           }
-          {!this.state.searchBar ?
-            <button><Link to='/dashboard'>Dashboard</Link></button> : null
+          {!this.state.searchBar || !this.state.isMobile ?
+            <button onClick={() => this.props.history.push('/dashboard')}>
+              <i className="icon-bookmark"></i>
+            </button> : null
           }
-          {!this.state.searchBar ?
-            <button onClick={() => this.logOut()}>Log Out</button> : null
+          {!this.state.searchBar || !this.state.isMobile ?
+            <button onClick={() => this.logOut()}>
+              <i className="icon-exit"></i>
+            </button> : null
           }
         </div>
     } else {
-      userContent = <button><Link to="/login">Login</Link></button>
+      navButtons = <button><Link to="/login">Login</Link></button>
     }
 
     return (
       <nav>
         <div>
             <Link to={this.props.loggedIn ? '/browse' : '/'}>
-              {!this.state.searchBar ?
+              {!this.state.searchBar || !this.state.isMobile ?
                 <img src={require('../../images/logo.svg')} /> :
                 null
               }
             </Link>
         </div>
-        {this.state.searchBar ? <SearchForm closeSearch={this.toggleSearchBar.bind(this)}/> : null}
-        {userContent}
+        {this.state.searchBar ?
+          <SearchForm
+            closeSearch={this.toggleSearchBar.bind(this)}
+            isMobile={this.state.isMobile}
+          />
+            : null}
+        {navButtons}
       </nav>
     )
   }
@@ -70,4 +99,4 @@ const mapDispatchToProps = dispatch => ({
   clearAuth: () => dispatch(clearAuth())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NavBar));

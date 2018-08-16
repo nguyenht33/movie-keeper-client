@@ -1,5 +1,13 @@
-.browse-list {
-  padding: .5em;
+.browse-container h3 {
+  font-weight: 400;
+  font-size: 1em;
+  color: white;
+}
+
+.browse-container a {
+  font-size: 1em;
+  text-decoration: none;
+  color: #01D277;
 }
 
 .browse-list li {
@@ -13,7 +21,7 @@
 
 @media only screen and (min-width: 640px) {
 	.browse-list {
-		width: 700px;
+		width: 640px;
 		margin: 0 auto;
 	}
 }

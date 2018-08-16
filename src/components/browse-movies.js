@@ -12,8 +12,7 @@ import { THUMBNAIL_URL} from '../config';
 import { Spinner } from './spinner';
 import { ErrorMessage } from './error-message';
 
-
-class BrowseMovies extends Component {
+export class BrowseMovies extends Component {
   componentDidMount() {
     const parsed = queryString.parse(this.props.location.search);
     const page = parsed.page;
@@ -51,24 +50,28 @@ class BrowseMovies extends Component {
       <div>
         <NavBar />
         <BrowseList />
-        <ReactPaginate
-          previousLabel={'<'}
-          nextLabel={'>'}
-          pageCount={200}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
-          onPageChange={this.handlePageClick.bind(this)}
-          containerClassName={"pagination"}
-          subContainerClassName={"pages pagination"}
-          activeClassName={"active"}
-          forcePage={this.props.pageNumber}
-        />
+        <div className="paginate-container">
+          <ReactPaginate
+            previousLabel={'<'}
+            nextLabel={'>'}
+            pageCount={200}
+            breakClassName={"break-label"}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={3}
+            onPageChange={this.handlePageClick.bind(this)}
+            containerClassName={"pagination"}
+            subContainerClassName={"pages pagination"}
+            activeClassName={"active"}
+            forcePage={this.props.pageNumber}
+          />
+        </div>
       </div>
     )
   };
 };
 
 const mapStateToProps = state => ({
+  error: state.movies.error,
   browseList: state.movies.browseList,
   pageNumber: state.movies.browsePageNumber - 1,
   loading: state.movies.loading

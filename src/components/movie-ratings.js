@@ -8,22 +8,21 @@ class MovieRatings extends Component {
     const ratingNumbers = [1, 2, 3, 4, 5];
     const ratingForm = ratingNumbers.map(rating => (
       <div key={rating} className="rating-btn">
-        <label htmlFor={`rating-${rating}`}>
-           {!this.props.rating ?
-             <i className="icon-star-empty"></i>
-             : (rating > this.props.rating ?
-                <i className="icon-star-empty"></i>
-                :
-                <i className="icon-star-full"></i>
-            )
-          }
-        </label>
-        <Field name="rating"
+        <Field
+          className="radio-item"
+          name="rating"
           component="input"
           type="radio"
           value={rating}
           checked={this.props.rating ? this.props.rating === rating : 0}
           onClick={e => this.props.changeRating(e)}
+        />
+        <label htmlFor={`rating-${rating}`}
+           className={!this.props.rating ?
+             "empty label-item"
+             :
+             (rating > this.props.rating ? "empty label-item" : "full label-item")
+           }
         />
       </div>
     ))
@@ -34,12 +33,6 @@ class MovieRatings extends Component {
     )
   };
 }
-
-// const mapStateToProps = (state) => {
-//   return {
-//     rating: state.lists.rating
-//   }
-// }
 
 MovieRatings = reduxForm({
   form: 'rating'

@@ -1,0 +1,10 @@
+.search-results li {
+  display: inline;
+  padding: .2em;
+}
+
+.results-container h2 {
+  font-weight: 400;
+  font-size: 1em;
+  color: white;
+}

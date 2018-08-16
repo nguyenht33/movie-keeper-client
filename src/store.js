@@ -16,7 +16,6 @@ const store = createStore(
     movies: moviesReducer,
     lists: listsReducer
   }),
-  persistedState,
   applyMiddleware(thunk)
 );
 

@@ -5,7 +5,7 @@ import { addWatched } from '../actions/lists';
 import MovieRatings from './movie-ratings';
 import './add-movie.css';
 
-class AddMovie extends Component {
+export class AddMovie extends Component {
   constructor() {
     super();
     this.state = {
@@ -59,7 +59,9 @@ class AddMovie extends Component {
             )
           }
         </label>
-        <input name="rating"
+        <input
+          id={`rating-${rating}`}
+          name="rating"
           component="input"
           type="radio"
           value={rating}
@@ -71,9 +73,6 @@ class AddMovie extends Component {
 
     return (
       <div className="add-movie">
-        <h2>
-          <em>I watched...</em>
-        </h2>
         <div className="add-container">
           <div className="add-left">
             <img
@@ -82,6 +81,9 @@ class AddMovie extends Component {
             />
           </div>
           <div className="add-right">
+          <h2>
+            <em>Adding to watched...</em>
+          </h2>
             <h2>{this.props.title}</h2>
             <form className="add-movie-form" onSubmit={e => this.handleSubmit(e)}>
                 {ratingForm}
@@ -89,14 +91,15 @@ class AddMovie extends Component {
                   <textarea placeholder="Write a review"
                     onChange={e => this.changeReview(e)} />
                 </div>
-                <input type="submit" className="add-movie-submit"/>
+                <input type="submit" className="add-movie-submit" value="add"/>
             </form>
           </div>
         </div>
         <button
           className="close-btn"
-          onClick={this.props.closeAddForm}>
-          X
+          onClick={this.props.closeAddForm}
+        >
+          <i className="icon-cross"></i>
         </button>
       </div>
     )

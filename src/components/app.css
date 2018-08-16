@@ -3,10 +3,6 @@
 	min-height: 100vh;
 }
 
-/* .App > div {
-	min-height: 95vh;
-} */
-
 fieldset {
   border: none;
 }
@@ -16,16 +12,53 @@ ul {
 	padding: 0;
 }
 
+.movie-poster{
+	width: 150px;
+}
+
+.paginate-container {
+	margin: 1em;
+}
+
+.pagination {
+	display: flex;
+	justify-content: center;
+}
+
 .pagination ul {
   display: inline-block;
   padding-left: 15px;
   padding-right: 15px;
+	margin: 0 .2em;
 }
 
 .pagination li {
   display: inline-block;
-	padding: .5em;
+	padding: .2em .6em;
 	border: 1px solid gainsboro;
+	background-color: white;
+}
+
+.pagination li:hover {
+	background-color: #C8C8C8;
+}
+
+.pagination li:first-child {
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-bottomleft: 5px;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+}
+
+.pagination li:last-child {
+	-webkit-border-top-right-radius: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+	-moz-border-radius-topright: 5px;
+	-moz-border-radius-bottomright: 5px;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
 }
 
 .pagination a {
@@ -37,5 +70,5 @@ ul {
 }
 
 .pagination .active {
-	background-color: coral;
+	background-color: #01D277;
 }

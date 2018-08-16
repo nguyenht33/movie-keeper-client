@@ -1,4 +1,35 @@
+.dashboard-content h2 {
+  color: #ffffff;
+  font-weight: 400;
+  font-size: 1.3em;
+}
+
 .dashboard-list li {
   display: inline;
   padding: .2em;
+}
+
+.dashboard-list {
+  margin-bottom: 1em;
+}
+
+.dashboard-content button {
+  background-color: #01D277;
+  border: none;
+  padding: .5em;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.dashboard-content a {
+  color: #303030;
+  text-decoration: none;
+}
+
+@media only screen and (min-width: 640px) {
+	.dashboard-content {
+		width: 640px;
+		margin: 0 auto;
+	}
 }

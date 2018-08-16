@@ -1,4 +1,5 @@
 .movie-page {
+  position: relative;
   text-align: center;
   background-color: white;
   width: 100%;
@@ -21,15 +22,15 @@
 }
 
 .backdrop::before {
-  background-image: linear-gradient( top,
+  background-image: linear-gradient( to bottom,
           rgba( 255, 255, 255, 0 ) 0%, rgba( 255, 255, 255, 1 ) 100% );
-      background-image: -moz-linear-gradient( top,
+      background-image: -moz-linear-gradient( to bottom,
           rgba( 255, 255, 255, 0 ) 0%, rgba( 255, 255, 255, 1 ) 100% );
-      background-image: -ms-linear-gradient( top,
+      background-image: -ms-linear-gradient( to bottom,
           rgba( 255, 255, 255, 0 ) 0%, rgba( 255, 255, 255, 1 ) 100% );
-      background-image: -o-linear-gradient( top,
+      background-image: -o-linear-gradient( to bottom,
           rgba( 255, 255, 255, 0 ) 0%, rgba( 255, 255, 255, 1 ) 100% );
-      background-image: -webkit-linear-gradient( top,
+      background-image: -webkit-linear-gradient( to bottom,
           rgba( 255, 255, 255, 0 ) 0%, rgba( 255, 255, 255, 1 ) 100% );
   content: "\00a0";
   height: 100%;

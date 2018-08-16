@@ -4,15 +4,18 @@ import requiresLogin from './requires-login';
 import { Link, Redirect } from 'react-router-dom';
 import NavBar from './header-components/nav-bar';
 import LoginForm from './login-form';
+import './login-page.css';
 
 export function LoginPage(props) {
   if (props.loggedIn) {
     return <Redirect to="/browse" />;
   }
   return (
-    <div>
+    <div className="login-page">
       <NavBar />
-      <LoginForm />
+      <div className="form-container login-container">
+        <LoginForm />
+      </div>
     </div>
   );
 }

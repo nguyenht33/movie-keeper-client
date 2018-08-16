@@ -3,8 +3,10 @@ import { FETCH_MOVIES_REQUEST,
          FETCH_MOVIES_ERROR,
          FETCH_MOVIE_INFO_REQUEST,
          FETCH_MOVIE_INFO_SUCCESS,
+         FETCH_MOVIE_INFO_ERROR,
          SEARCH_MOVIE_REQUEST,
-         SEARCH_MOVIE_SUCCESS } from '../actions/movies';
+         SEARCH_MOVIE_SUCCESS,
+         SEARCH_MOVIE_ERROR } from '../actions/movies';
 import { BACKDROP_URL, THUMBNAIL_URL} from '../config';
 
 const initialState = {
@@ -36,7 +38,6 @@ export default function reducer(state=initialState, action) {
     }
 
     case FETCH_MOVIES_ERROR: {
-      console.log(action)
       return Object.assign({}, state, {
         loading: false,
         error: action.error
@@ -71,6 +72,13 @@ export default function reducer(state=initialState, action) {
       });
     }
 
+    case FETCH_MOVIE_INFO_ERROR: {
+      return Object.assign({}, state, {
+        loading: false,
+        error: action.error
+      });
+    }
+
     case SEARCH_MOVIE_REQUEST: {
       return Object.assign({}, state, {
         loading: true
@@ -84,6 +92,13 @@ export default function reducer(state=initialState, action) {
         totalResults: action.movies.total_results,
         resultsPages: action.movies.total_pages,
         resultsPageNumber: action.movies.page
+      });
+    }
+
+    case SEARCH_MOVIE_ERROR: {
+      return Object.assign({}, state, {
+        loading: false,
+        error: action.error
       });
     }
 

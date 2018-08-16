@@ -104,21 +104,30 @@ class MoviePage extends Component {
   render() {
     const loading = this.props.loading,
           movie = this.props.movieInfo;
+
+    if (this.props.movieError) {
+      return (
+        <ErrorMessage
+          code={this.props.movieError.status_code}
+          message={this.props.movieError.status_message}
+        />
+      )
+    }
+
+    if (this.props.error) {
+      return (
+        <ErrorMessage
+          code={this.props.error.code}
+          message={this.props.error.message}
+        />
+      )
+    }
+
     if (!movie.id) {
       return (
         <div>
           <NavBar />
           <Spinner />
-        </div>
-      )
-    }
-    if (this.props.error) {
-      return (
-        <div>
-          <ErrorMessage
-            code={this.props.error.code}
-            message={this.props.error.message}
-          />
         </div>
       )
     }
@@ -131,6 +140,22 @@ class MoviePage extends Component {
 
     return (
       <div>
+        {this.state.showForm ?
+          <div className="lightbox">
+            <div className="add-movie-container">
+              <AddMovie
+                movieId={this.props.match.params.movieId}
+                rating={this.state.rating}
+                title={movie.title}
+                poster={movie.poster}
+                poster_path={movie.poster_path}
+                year={movie.year}
+                closeAddForm={this.toggleAddForm.bind(this)}
+                addWatchedSubmit={this.addWatchedSubmit.bind(this)}
+              />
+            </div>
+          </div> : null
+        }
         <NavBar />
         <div className="movie-page">
           <div className="backdrop">
@@ -182,19 +207,6 @@ class MoviePage extends Component {
             </ul>
           </div>
         </div>
-        {this.state.showForm ?
-          <AddMovie
-            movieId={this.props.match.params.movieId}
-            rating={this.state.rating}
-            title={movie.title}
-            poster={movie.poster}
-            poster_path={movie.poster_path}
-            year={movie.year}
-            closeAddForm={this.toggleAddForm.bind(this)}
-            addWatchedSubmit={this.addWatchedSubmit.bind(this)}
-          />
-          : null
-        }
       </div>
     )
   }
@@ -205,6 +217,7 @@ const mapStateToProps = (state, ownProps) => {
     movieId: ownProps.match.params.movieId,
     loading: state.movies.loading,
     error: state.lists.error,
+    movieError: state.movies.error,
     movieInfo: state.movies.movieInfo,
     watchedCheck: state.lists.watchedCheck,
     watchedStatus: state.lists.watchedStatus,

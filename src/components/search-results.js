@@ -7,8 +7,10 @@ import queryString from 'query-string';
 import NavBar from './header-components/nav-bar'
 import { Spinner } from './spinner';
 import { THUMBNAIL_URL} from '../config';
+import { ErrorMessage } from './error-message';
 import { NotFound } from './not-found';
 import ReactPaginate from 'react-paginate';
+import './search-results.css';
 
 class SearchResults extends Component {
   componentDidMount() {
@@ -20,7 +22,6 @@ class SearchResults extends Component {
     } else {
       query = queries.q.replace(/-/g, ' ');
       page = queries.page;
-      console.log(query)
       this.props.searchMovie(query, page)
     }
   }
@@ -33,7 +34,6 @@ class SearchResults extends Component {
     this.props.history.push(`/results?q=${query}&page=${page}`)
   }
 
-
   render() {
     const {searchResults, totalResults, resultsPages, loading} = this.props;
     const queries = this.props.queries;
@@ -42,7 +42,7 @@ class SearchResults extends Component {
     if (!queries.q) {
       return <NotFound />
     } else {
-      query = queries.q;
+      query = queries.q.replace(/-/g, ' ');
     }
 
     if (loading) {
@@ -53,14 +53,20 @@ class SearchResults extends Component {
         </div>
       )
     }
+    if (this.props.error) {
+      return (
+        <div>
+          <ErrorMessage
+            code={this.props.error.status_code}
+            message={this.props.error.status_message}
+          />
+        </div>
+      )
+    }
 
     const movieList = searchResults.map(movie => (
       <li key={movie.id}>
         <Link to={`/movie/${movie.id}`}>
-          <h3>
-            {movie.title}
-            <span> ({movie.release_date.slice(0, 4)})</span>
-          </h3>
           <img
             src={movie.poster_path ? `${THUMBNAIL_URL}${movie.poster_path}` : 'missing-thumbnail'}
             alt={movie.poster_path ? `${movie.title}-thumbnail` : 'missing-thumbnail'}
@@ -70,29 +76,32 @@ class SearchResults extends Component {
     ))
 
     return (
-      <div>
+      <div className="results-container">
         <NavBar />
         <h2>
           Found {totalResults} titles for "{query}"
         </h2>
-        <ul>
+        <ul className="search-results">
           {movieList}
         </ul>
         {movieList.length ?
-          <ReactPaginate
-            previousLabel={'<'}
-            nextLabel={'>'}
-            breakLabel={<a href="">...</a>}
-            breakClassName={'break-me'}
-            pageCount={this.props.resultsPages}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={5}
-            onPageChange={this.handlePageClick.bind(this)}
-            containerClassName={"pagination"}
-            subContainerClassName={"pages pagination"}
-            activeClassName={"active"}
-            forcePage={this.props.pageNumber}
-          /> : null
+          <div className="paginate-container">
+            <ReactPaginate
+              previousLabel={'<'}
+              nextLabel={'>'}
+              breakLabel={<a href="">...</a>}
+              breakClassName={'break-me'}
+              pageCount={this.props.resultsPages}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              onPageChange={this.handlePageClick.bind(this)}
+              containerClassName={"pagination"}
+              subContainerClassName={"pages pagination"}
+              activeClassName={"active"}
+              forcePage={this.props.pageNumber}
+            />
+          </div>
+          : null
         }
       </div>
     )
@@ -105,6 +114,7 @@ const mapStateToProps = (state, ownProps) => ({
   resultsPages: state.movies.resultsPages,
   pageNumber: state.movies.resultsPageNumber - 1,
   loading: state.movies.loading,
+  error: state.movies.error,
   queries: queryString.parse(ownProps.location.search)
 });
 

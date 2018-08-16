@@ -84,11 +84,13 @@ export const ADD_WATCHED_REQUEST = 'ADD_WATCHED_REQUEST';
 export const addWatchedRequest = () => ({
   type: ADD_WATCHED_REQUEST
 });
+
 export const ADD_WATCHED_SUCCESS = 'ADD_WATCHED_SUCCESS';
 export const addWatchedSuccess = json => ({
   type: ADD_WATCHED_SUCCESS,
   json
 });
+
 export const ADD_WATCHED_ERROR = 'ADD_WATCHED_ERROR';
 export const addWatchedError = error => ({
   type: ADD_WATCHED_ERROR,
@@ -127,6 +129,7 @@ export const addWatchlistSuccess = json => ({
   type: ADD_WATCHLIST_SUCCESS,
   json
 });
+
 export const ADD_WATCHLIST_ERROR = 'ADD_WATCHLIST_ERROR';
 export const addWatchlistError = error => ({
   type: ADD_WATCHLIST_ERROR,
@@ -161,6 +164,7 @@ export const removeWatchedSuccess = status => ({
   type: REMOVE_WATCHED_SUCCESS,
   status
 });
+
 export const REMOVE_WATCHED_ERROR = 'REMOVE_WATCHED_ERROR';
 export const removeWatchedError = error => ({
   type: REMOVE_WATCHED_ERROR,
@@ -195,6 +199,7 @@ export const removeWatchlistSuccess = status => ({
   type: REMOVE_WATCHLIST_SUCCESS,
   status
 });
+
 export const REMOVE_WATCHLIST_ERROR = 'REMOVE_WATCHLIST_ERROR';
 export const removeWatchlistError = error => ({
   type: REMOVE_WATCHLIST_ERROR,
@@ -225,6 +230,7 @@ export const getWatchedSuccess = json => ({
   type: GET_WATCHED_SUCCESS,
   json
 });
+
 export const GET_WATCHED_ERROR = 'GET_WATCHED_ERROR';
 export const getWatchedError = error => ({
   type: GET_WATCHED_ERROR,
@@ -255,6 +261,7 @@ export const getWatchlistSuccess = json => ({
   type: GET_WATCHLIST_SUCCESS,
   json
 });
+
 export const GET_WATCHLIST_ERROR = 'GET_WATCHLIST_ERROR';
 export const getWatchlistError = error => ({
   type: GET_WATCHLIST_ERROR,
@@ -289,6 +296,7 @@ export const updateWatchedSuccess = json => ({
   type: UPDATE_WATCHED_SUCCESS,
   json
 });
+
 export const UPDATE_WATCHED_ERROR = 'UPDATE_WATCHED_ERROR';
 export const updateWatchedError = error => ({
   type: UPDATE_WATCHED_ERROR,

@@ -8,7 +8,7 @@ import DashboardContent from './dashboard-content';
 import { TEST_USER } from '../config';
 import { Footer } from './footer';
 
-class Dashboard extends Component {
+export class Dashboard extends Component {
   constructor() {
     super();
     this.state = {

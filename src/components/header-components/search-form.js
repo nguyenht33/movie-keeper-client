@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { searchMovie } from '../../actions/movies';
 
-class SearchForm extends Component {
-  slugifiy(query) {
+export class SearchForm extends Component {
+  slugify(query) {
     return query
       .toLowerCase()
       .replace(/ /g,'-')
@@ -12,9 +12,11 @@ class SearchForm extends Component {
   }
 
   handleSubmit(event) {
+    console.log('handleSubmit here here')
     event.preventDefault();
     const query = this.textInput.value.trim();
-    const slug = this.slugifiy(query);
+    const slug = this.slugify(query);
+
     if (query) {
       this.props.searchMovie(query);
       this.props.history.push(`/results/?q=${slug}`);
@@ -25,8 +27,12 @@ class SearchForm extends Component {
   render() {
     return (
       <div className="search-bar">
-        <button onClick={this.props.closeSearch}>></button>
-        <form onSubmit={e => this.handleSubmit(e)}>
+        {this.props.isMobile ?
+          <button className="close-search" onClick={this.props.closeSearch}>
+            <i className="icon-arrow-left2"></i>
+          </button> : null
+        }
+        <form id="movie-search-form" onSubmit={e => this.handleSubmit(e)}>
             <input
               type="search"
               id="search"
@@ -34,7 +40,9 @@ class SearchForm extends Component {
               placeholder="search movie"
               ref={input => this.textInput = input}
             />
-            <input type="submit" value="search"/>
+            <button type="submit" className="search-button">
+              <i className="icon-search"></i>
+            </button>
         </form>
       </div>
     )

@@ -104,20 +104,22 @@ class UsersLists extends Component {
         <ul className="users-lists">
           {movies}
         </ul>
-        <ReactPaginate
-          previousLabel={'<'}
-          nextLabel={'>'}
-          breakLabel={<a href="">...</a>}
-          breakClassName={'break-me'}
-          pageCount={pages}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
-          onPageChange={this.handlePageClick.bind(this)}
-          containerClassName={"pagination"}
-          subContainerClassName={"pages pagination"}
-          activeClassName={"active"}
-          // forcePage={this.props.pageNumber}
-        />
+        <div className="paginate-container">
+          <ReactPaginate
+            previousLabel={'<'}
+            nextLabel={'>'}
+            breakLabel={<a href="">...</a>}
+            breakClassName={'break-me'}
+            pageCount={pages}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={this.handlePageClick.bind(this)}
+            containerClassName={"pagination"}
+            subContainerClassName={"pages pagination"}
+            activeClassName={"active"}
+            // forcePage={this.props.pageNumber}
+          />
+        </div>
       </div>
     )
   }
