@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect, Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import requiresLogin from './requires-login';
 import { searchMovie } from '../actions/movies';
@@ -12,18 +12,13 @@ import { NotFound } from './not-found';
 import ReactPaginate from 'react-paginate';
 import './search-results.css';
 
-class SearchResults extends Component {
+export class SearchResults extends Component {
   componentDidMount() {
     const queries = this.props.queries;
-    let query, page;
-
-    if (!queries.q) {
-      console.log('wrong');
-    } else {
-      query = queries.q.replace(/-/g, ' ');
-      page = queries.page;
-      this.props.searchMovie(query, page)
-    }
+    const query = queries.q.replace(/-/g, ' ');
+    const page = queries.page || 1;
+    console.log(page)
+    this.props.searchMovie(query, page)
   }
 
   handlePageClick(data) {
@@ -35,7 +30,7 @@ class SearchResults extends Component {
   }
 
   render() {
-    const {searchResults, totalResults, resultsPages, loading} = this.props;
+    const { error, searchResults, totalResults, resultsPages, loading } = this.props;
     const queries = this.props.queries;
     let query, page;
 
@@ -45,7 +40,7 @@ class SearchResults extends Component {
       query = queries.q.replace(/-/g, ' ');
     }
 
-    if (loading) {
+    if (loading && !searchResults.length) {
       return (
         <div>
           <NavBar />
@@ -53,19 +48,20 @@ class SearchResults extends Component {
         </div>
       )
     }
-    if (this.props.error) {
+
+    if (error && !searchResults.length) {
       return (
         <div>
           <ErrorMessage
-            code={this.props.error.status_code}
-            message={this.props.error.status_message}
+            code={error.status_code}
+            message={error.status_message}
           />
         </div>
       )
     }
 
     const movieList = searchResults.map(movie => (
-      <li key={movie.id}>
+      <li key={movie.id} className="poster">
         <Link to={`/movie/${movie.id}`}>
           <img
             src={movie.poster_path ? `${THUMBNAIL_URL}${movie.poster_path}` : 'missing-thumbnail'}

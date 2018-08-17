@@ -12,7 +12,6 @@ export class SearchForm extends Component {
   }
 
   handleSubmit(event) {
-    console.log('handleSubmit here here')
     event.preventDefault();
     const query = this.textInput.value.trim();
     const slug = this.slugify(query);

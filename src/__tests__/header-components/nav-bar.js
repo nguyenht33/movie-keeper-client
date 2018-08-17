@@ -16,15 +16,15 @@ describe('<NavBar />', () => {
     shallow(<NavBar />);
   });
 
-  it('Renders search form when click', () => {
-    const toggleSearch = jest.fn();
-    const wrapper = shallow(
-      <MemoryRouter>
-        <NavBar toggleSearch={toggleSearch} loggedIn={true} />
-      </MemoryRouter>
-    );
-    // wrapper.find('.toggle-search').simulate('click');
-    // wrapper.update();
-    // expect(toggleSearch).toHaveBeenCalledWith(toggleSearchBar)
-  })
+  // it('Renders search form when click', () => {
+  //   const toggleSearch = jest.fn();
+  //   const wrapper = shallow(
+  //     <MemoryRouter>
+  //       <NavBar toggleSearch={toggleSearch} loggedIn={true} />
+  //     </MemoryRouter>
+  //   );
+  //   // wrapper.find('.toggle-search').simulate('click');
+  //   // wrapper.update();
+  //   // expect(toggleSearch).toHaveBeenCalledWith(toggleSearchBar)
+  // })
 });

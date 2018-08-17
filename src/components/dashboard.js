@@ -18,7 +18,7 @@ export class Dashboard extends Component {
 
   render() {
     return (
-      <div>
+      <div className="dashboard">
         <NavBar />
         <DashboardHeader/>
         <DashboardContent/>
@@ -27,17 +27,4 @@ export class Dashboard extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    loading: state.lists.loading,
-    moviesWatched: state.lists.moviesWatched,
-    moviesWatchlist: state.lists.moviesWatchlist
-  }
-}
-
-const mapDispatchToProps = (dispatch) => ({
-  getWatched: (userId) => dispatch(getWatched(userId)),
-  getWatchlist: (userId) => dispatch(getWatchlist(userId)),
-});
-
-export default requiresLogin()(connect(mapStateToProps, mapDispatchToProps)(Dashboard));
+export default requiresLogin()(Dashboard);

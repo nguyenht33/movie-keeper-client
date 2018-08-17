@@ -32,7 +32,7 @@ export const fetchMoviesError = error => ({
 });
 
 export const searchMovie = (query, page) => dispatch => {
-  dispatch(searchMovierRequest());
+  dispatch(searchMovieRequest());
   fetch(`${MOVIE_URL}/search/movie?api_key=${API_KEY}&query=${query}&page=${page}`)
     .then(res => normalizeResponseErrors(res))
     .then(res => res.json())
@@ -45,7 +45,7 @@ export const searchMovie = (query, page) => dispatch => {
 }
 
 export const SEARCH_MOVIE_REQUEST = 'SEARCH_MOVIE_REQUEST';
-export const searchMovierRequest = () => ({
+export const searchMovieRequest = () => ({
   type: SEARCH_MOVIE_REQUEST,
 })
 

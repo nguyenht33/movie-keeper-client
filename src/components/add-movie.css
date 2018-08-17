@@ -28,6 +28,7 @@
 }
 
 .add-movie h2 {
+  margin-bottom: .2em;
   text-align: left;
   font-weight: 400;
   color: #D3D3D3;
@@ -53,6 +54,7 @@ textarea {
 
 .add-movie-submit {
   padding: .3em .5em;
+  margin-top: .5em;
   background-color: #E94B3C;
   float: right;
   border: none;
@@ -61,12 +63,12 @@ textarea {
 
 .close-btn {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 2px;
+  right: -2px;
   margin: .2em;
   background-color: transparent;
   border: none;
-  color: #D3D3D3;
+  color: #3D0600;
 }
 
 .lightbox {

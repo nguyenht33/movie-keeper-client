@@ -7,8 +7,7 @@ import { Spinner } from './spinner';
 import { THUMBNAIL_URL, TEST_USER} from '../config';
 import './dashboard-content.css';
 
-/// update this with recent activities for each list
-class DashboardContent extends Component {
+export class DashboardContent extends Component {
   componentDidMount() {
     this.props.getWatched(1, 6)
     this.props.getWatchlist(1, 6)
@@ -27,7 +26,7 @@ class DashboardContent extends Component {
     let moviesWatched;
     if (this.props.moviesWatched) {
       moviesWatched = this.props.moviesWatched.map((movie, index) => (
-        <li key={movie.movieId}>
+        <li key={movie.movieId} className="poster">
           <Link to={`/movie/${movie.movieId}`}>
             <img
               src={movie.poster_path ? `${THUMBNAIL_URL}${movie.poster_path}` : 'missing-thumbnail'}
@@ -43,7 +42,7 @@ class DashboardContent extends Component {
     let moviesWatchlist;
     if (this.props.moviesWatchlist) {
       moviesWatchlist = this.props.moviesWatchlist.map((movie, index) => (
-        <li key={movie.movieId}>
+        <li key={movie.movieId} className="poster">
           <Link to={`/movie/${movie.movieId}`}>
             <img
               src={movie.poster_path ? `${THUMBNAIL_URL}${movie.poster_path}` : 'missing-thumbnail'}
@@ -63,14 +62,14 @@ class DashboardContent extends Component {
           <ul className="dashboard-list">
             {moviesWatched}
           </ul>
-          <button><Link to={'/watched'}>See More</Link></button>
+          <button className="see-watched"><Link to={'/watched'}>See More</Link></button>
         </div>
         <div>
           <h2>Recently added to Watchlist:</h2>
           <ul className="dashboard-list">
             {moviesWatchlist}
           </ul>
-          <button><Link to={'/watchlist'}>See More</Link></button>
+          <button className="see-watchlist"><Link to={'/watchlist'}>See More</Link></button>
         </div>
       </div>
     )

@@ -90,6 +90,11 @@ class MoviePage extends Component {
     }
   }
 
+  closeAddForm() {
+    this.toggleAddForm();
+    this.setState({rating: ''});
+  }
+
   retrieveMovieInfo() {
     let today = new Date();
     return {
@@ -102,10 +107,10 @@ class MoviePage extends Component {
   }
 
   render() {
-    const loading = this.props.loading,
-          movie = this.props.movieInfo;
+    const { loading, movieError, error } = this.props;
+    const movie = this.props.movieInfo;
 
-    if (this.props.movieError) {
+    if (movieError && !movie.length) {
       return (
         <ErrorMessage
           code={this.props.movieError.status_code}
@@ -114,7 +119,7 @@ class MoviePage extends Component {
       )
     }
 
-    if (this.props.error) {
+    if (error) {
       return (
         <ErrorMessage
           code={this.props.error.code}
@@ -150,7 +155,7 @@ class MoviePage extends Component {
                 poster={movie.poster}
                 poster_path={movie.poster_path}
                 year={movie.year}
-                closeAddForm={this.toggleAddForm.bind(this)}
+                closeAddForm={this.closeAddForm.bind(this)}
                 addWatchedSubmit={this.addWatchedSubmit.bind(this)}
               />
             </div>
@@ -171,7 +176,7 @@ class MoviePage extends Component {
           </div>
           <div className="watch-container">
             <MovieRatings className="movie-rating"
-              changeRating={e => this.changeRating(e)}
+              changeRating={this.changeRating.bind(this)}
               rating={this.props.rating || ''}
             />
             <WatchButtons className="watch-btns"

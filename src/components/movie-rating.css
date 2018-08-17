@@ -1,37 +1,42 @@
 .radio-item {
-  /* border: 0;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
   position: absolute;
-  width: 1px; */
+  opacity: 0;
+  z-index: 20;
+  width: 1.5em;
+  height: 1.5em;
+}
+
+.rating-btn {
+  width: 1.5em;
+  height: 1.5em;
+  padding: .4em;
+}
+
+.rating-form {
+  position: relative;
+  padding-bottom: .4em;
 }
 
 .radio-item + .empty:before {
   font-family: 'icomoon';
   display: inline-block;
   content: "\e9d7";
-  letter-spacing: 10px;
-  font-size: 1.2em;
-  color: #535353;
+  font-size: 1.5em;
+  color: gold;
 }
 
 .radio-item + .full:before {
   font-family: 'icomoon';
   display: inline-block;
   content: "\e9d9";
-  letter-spacing: 10px;
-  font-size: 1.2em;
-  color: #535353;
+  font-size: 1.5em;
+  color: gold;
 }
 
 .radio-item:checked + label:before {
   font-family: 'icomoon';
   display: inline-block;
   content: "\e9d9";
-  letter-spacing: 10px;
-  font-size: 1.2em;
-  color: #535353;
+  font-size: 1.5em;
+  color: gold;
 }

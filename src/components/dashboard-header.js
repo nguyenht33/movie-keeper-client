@@ -6,9 +6,8 @@ import { getWatched, getWatchlist } from '../actions/lists';
 import { TEST_USER } from '../config';
 import './dashboard-header.css';
 
-class DashboardHeader extends Component {
+export class DashboardHeader extends Component {
   render() {
-    console.log(this.props.location);
     return (
       <div className="dashboard-header">
         <h2>{this.props.username}</h2>

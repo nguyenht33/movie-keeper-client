@@ -11,7 +11,7 @@ import { THUMBNAIL_URL, TEST_USER } from '../config';
 import ReactPaginate from 'react-paginate';
 import './users-lists.css';
 
-class UsersLists extends Component {
+export class UsersLists extends Component {
   componentDidMount() {
     this.requestAPI(this.props.listType);
   }

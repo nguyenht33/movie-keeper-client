@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-class WatchButtons extends Component {
+export class WatchButtons extends Component {
   render() {
     return (
       <div className="watch-btns">
-        <button
+        <button id="btn-watch"
           onClick={!this.props.watchedCheck ?
             this.props.addWatched
             :
@@ -13,7 +13,7 @@ class WatchButtons extends Component {
           }>
           {!this.props.watchedCheck ? 'Add Watched' : 'Remove Watched'}
         </button>
-        <button
+        <button id="btn-watchlist"
           onClick={!this.props.watchlistCheck ?
             this.props.addWatchlist
             :

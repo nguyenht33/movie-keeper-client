@@ -8,7 +8,6 @@ import {required, nonEmpty, matches, length, isTrimmed, isEmail} from '../valida
 const passwordLength = length({min: 6, max: 72});
 const matchesPassword = matches('password');
 
-
 export class RegistrationForm extends Component {
   onSubmit(values) {
     const {username, password, email, firstName, lastName} = values;

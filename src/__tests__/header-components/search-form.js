@@ -14,24 +14,12 @@ describe('<SearchForm />', () => {
     expect(wrapper.hasClass('search-bar')).toEqual(true);
   });
 
-  // it('Search on submit', () => {
-  //   // const fetchSearch = fetch.mockResponse(JSON.stringify({ testing: true }));
-  //   const callback = jest.fn();
-  //   const wrapper = shallow(<SearchForm searchMovie={callback}/>);
-  //   wrapper.setProps({ history: { push: callback } });
-  //   wrapper.find('input[type="search"]').value = 'movie';
-  //   wrapper.find('.search-button').simulate('submit');
-  //   expect(callback).toHaveBeenCalledWith('movie');
-  // });
-
   it('Search on submit', () => {
-    const wrapper = mount(<SearchForm />);
-    const promise = Promise.resolve({testing: true});
-    promise.then(() => {
-      wrapper.find('input[type="search"]').simulate('change', {target: {value: 'someThing'}});
-      wrapper.find('.search-button').simulate('submit');
-    }
-    ).then(() => expect(fetch.mock.calls.length).toEqual(1))
+    const callback = jest.fn();
+    const wrapper = mount(<SearchForm history={{push: callback}} searchMovie={callback}/>);
+    const input = wrapper.find('input[type="search"]').instance().value = "foo";
+    wrapper.find('.search-button').simulate('submit');
+    expect(callback).toHaveBeenCalledWith("foo")
   });
 
 });

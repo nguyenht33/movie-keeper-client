@@ -49,24 +49,23 @@ export class AddMovie extends Component {
     const ratingNumbers = [1, 2, 3, 4, 5];
     const ratingForm = ratingNumbers.map(rating => (
       <div key={rating} className="rating-btn">
-        <label htmlFor={`rating-${rating}`}>
-           {this.props.rating >= rating ?
-             <i className="icon-star-full"></i>
-             : (rating > this.state.rating ?
-                <i className="icon-star-empty"></i>
-                :
-                <i className="icon-star-full"></i>
-            )
-          }
-        </label>
         <input
           id={`rating-${rating}`}
+          className="radio-item"
           name="rating"
           component="input"
           type="radio"
           value={rating}
           defaultChecked={this.props.rating ? this.props.rating === rating : null}
           onChange={e => this.changeRating(e)}
+        />
+        <label htmlFor={`rating-${rating}`}
+          className={this.props.rating >= rating && !this.state.rating ?
+             "full label-item"
+             : (rating > this.state.rating ?
+                "empty label-item": "full label-item"
+             )
+          }
         />
       </div>
     ))
@@ -86,7 +85,9 @@ export class AddMovie extends Component {
           </h2>
             <h2>{this.props.title}</h2>
             <form className="add-movie-form" onSubmit={e => this.handleSubmit(e)}>
-                {ratingForm}
+                <div className="rating-form">
+                  {ratingForm}
+                </div>
                 <div>
                   <textarea placeholder="Write a review"
                     onChange={e => this.changeReview(e)} />

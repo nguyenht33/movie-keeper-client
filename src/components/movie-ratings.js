@@ -3,7 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import {connect} from 'react-redux';
 import './movie-rating.css';
 
-class MovieRatings extends Component {
+export class MovieRatings extends Component {
   render() {
     const ratingNumbers = [1, 2, 3, 4, 5];
     const ratingForm = ratingNumbers.map(rating => (
@@ -15,7 +15,9 @@ class MovieRatings extends Component {
           type="radio"
           value={rating}
           checked={this.props.rating ? this.props.rating === rating : 0}
-          onClick={e => this.props.changeRating(e)}
+          onClick={e => {
+            this.props.changeRating(e)
+          }}
         />
         <label htmlFor={`rating-${rating}`}
            className={!this.props.rating ?
@@ -27,7 +29,7 @@ class MovieRatings extends Component {
       </div>
     ))
     return (
-      <form>
+      <form className="rating-form">
         {ratingForm}
       </form>
     )

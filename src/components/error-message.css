@@ -1,0 +1,9 @@
+.error-page {
+  margin-top: 5em;
+  color: #d5d5d5;
+}
+
+.error-page h1 {
+  font-size: 5em;
+  margin: 0;
+}

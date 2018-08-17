@@ -30,6 +30,7 @@ export default function reducer(state=initialState, action) {
     }
 
     case FETCH_MOVIES_SUCCESS: {
+      console.log(action)
       return Object.assign({}, state, {
         loading: false,
         browseList: action.movies.results,

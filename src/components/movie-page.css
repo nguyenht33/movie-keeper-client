@@ -46,15 +46,17 @@
 }
 
 .watch-container {
-  padding: 1em;
-  margin: 0 auto;
+  padding: .5em 0 1em 0;
+  margin: 1em 0;
+  background-color: black;
 }
 
 .watch-container button {
   padding: .5em;
   margin-right: .3em;
-  background-color: pink;
+  background-color: red;
   border: none;
+  color: white;
 }
 
 .rating-btn {

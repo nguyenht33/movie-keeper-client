@@ -26,7 +26,7 @@ export class BrowseMovies extends Component {
   }
 
   render() {
-    const {loading} = this.props;
+    const { loading, error, browseList } = this.props;
     if(loading) {
       return (
         <div>
@@ -35,7 +35,7 @@ export class BrowseMovies extends Component {
         </div>
       )
     }
-    if (this.props.error) {
+    if (error && !browseList.length) {
       return (
         <div>
           <ErrorMessage
