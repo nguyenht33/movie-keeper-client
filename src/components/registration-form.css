@@ -14,6 +14,7 @@
 }
 
 .form-container h3 {
+  font-size: 1.5em;
   text-align: center;
   margin: .2em;
 }
@@ -67,5 +68,6 @@ label {
 	.form-container form {
 		width: 400px;
 		margin: 0 auto;
+    padding: 1.5em;
 	}
 }

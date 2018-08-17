@@ -61,9 +61,8 @@ body {
   margin: 0 !important;
   padding: 0 !important;
   font-family: 'Fira Sans', sans-serif;
-  background: #8E0E00;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to top, #1F1C18, #8E0E00);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to top, #1F1C18, #8E0E00); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: rgb(62,5,5);
+  background: linear-gradient(0deg, rgba(62,5,5,1) 0%, rgba(177,20,13,1) 94%, rgba(217,70,23,1) 100%);
 }
 
 button {

@@ -17,8 +17,16 @@ export class SearchResults extends Component {
     const queries = this.props.queries;
     const query = queries.q.replace(/-/g, ' ');
     const page = queries.page || 1;
-    console.log(page)
     this.props.searchMovie(query, page)
+  }
+
+  componentDidUpdate(prevProps) {
+    if(prevProps.queries.q !== this.props.queries.q ) {
+      const queries = this.props.queries;
+      const query = queries.q.replace(/-/g, ' ');
+      const page = queries.page || 1;
+      this.props.searchMovie(query, page)
+    }
   }
 
   handlePageClick(data) {

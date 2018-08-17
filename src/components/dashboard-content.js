@@ -9,8 +9,8 @@ import './dashboard-content.css';
 
 export class DashboardContent extends Component {
   componentDidMount() {
-    this.props.getWatched(1, 6)
-    this.props.getWatchlist(1, 6)
+    this.props.getWatched(1, 8)
+    this.props.getWatchlist(1, 8)
   }
 
   render() {
@@ -62,14 +62,14 @@ export class DashboardContent extends Component {
           <ul className="dashboard-list">
             {moviesWatched}
           </ul>
-          <button className="see-watched"><Link to={'/watched'}>See More</Link></button>
+          <button className="see-watched"><Link to={'/watched'}>See More >></Link></button>
         </div>
         <div>
           <h2>Recently added to Watchlist:</h2>
           <ul className="dashboard-list">
             {moviesWatchlist}
           </ul>
-          <button className="see-watchlist"><Link to={'/watchlist'}>See More</Link></button>
+          <button className="see-watchlist"><Link to={'/watchlist'}>See More >></Link></button>
         </div>
       </div>
     )

@@ -1,6 +1,7 @@
 .App {
 	text-align: center;
 	min-height: 100vh;
+	position: relative;
 }
 
 fieldset {
@@ -12,7 +13,7 @@ ul {
 	padding: 0;
 }
 
-.movie-poster{
+.movie-poster {
 	width: 150px;
 }
 
@@ -27,14 +28,12 @@ ul {
 
 .pagination ul {
   display: inline-block;
-  padding-left: 15px;
-  padding-right: 15px;
 	margin: 0 .2em;
 }
 
 .pagination li {
   display: inline-block;
-	padding: .2em .6em;
+	padding: .4em .6em;
 	border: 1px solid gainsboro;
 	background-color: white;
 }
@@ -71,4 +70,10 @@ ul {
 
 .pagination .active {
 	background-color: #01D277;
+}
+
+@media only screen and (min-width: 640px) {
+	.pagination li {
+		padding: .6em 1em;
+	}
 }

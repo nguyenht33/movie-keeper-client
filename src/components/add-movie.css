@@ -53,12 +53,17 @@ textarea {
 }
 
 .add-movie-submit {
-  padding: .3em .5em;
+  padding: .5em .8em;
   margin-top: .5em;
-  background-color: #E94B3C;
+  background-color: #01D252;
   float: right;
   border: none;
-  color: white;
+  color: #222222;
+  font-weight: 600;
+  border-radius: 4px 4px 4px 4px;
+  -moz-border-radius: 4px 4px 4px 4px;
+  -webkit-border-radius: 4px 4px 4px 4px;
+  border: 0px solid #000000;
 }
 
 .close-btn {
@@ -79,7 +84,6 @@ textarea {
   left:0;
   width: 100%;
   height: 100%;
-  background:black;
   z-index: 20;
   background: rgba(0,0,0,1);
   background: -moz-linear-gradient(top, rgba(0,0,0,1) 0%, rgba(134,14,1,0.85) 52%, rgba(19,19,19,0.72) 100%);

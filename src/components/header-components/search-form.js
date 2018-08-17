@@ -17,7 +17,6 @@ export class SearchForm extends Component {
     const slug = this.slugify(query);
 
     if (query) {
-      this.props.searchMovie(query);
       this.props.history.push(`/results/?q=${slug}`);
       this.textInput.value = ''
     }

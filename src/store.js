@@ -1,13 +1,12 @@
 import {createStore, applyMiddleware, combineReducers} from 'redux';
 import { reducer as formReducer } from 'redux-form';
 import thunk from 'redux-thunk';
-import { loadState, loadAuthToken } from './local-storage';
+import { loadAuthToken } from './local-storage';
 import authReducer from './reducers/auth';
 import moviesReducer from './reducers/movies';
 import listsReducer from './reducers/lists';
 import {setAuthToken, refreshAuthToken} from './actions/auth';
 
-const persistedState = loadState();
 
 const store = createStore(
   combineReducers({

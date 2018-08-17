@@ -117,7 +117,6 @@ export class UsersLists extends Component {
             containerClassName={"pagination"}
             subContainerClassName={"pages pagination"}
             activeClassName={"active"}
-            // forcePage={this.props.pageNumber}
           />
         </div>
       </div>

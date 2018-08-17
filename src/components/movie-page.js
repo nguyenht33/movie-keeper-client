@@ -166,13 +166,15 @@ class MoviePage extends Component {
           <div className="backdrop">
             <img
               src={loading || !movie.backdrop ? null : movie.backdrop}
-              alt={`${movie.title}-movie-backdrop`}
+              alt={!movie.backdrop ? null : `${movie.title}-movie-backdrop`}
             />
           </div>
           <div>
             <h1>{movie.title}<span> ({movie.year})</span></h1>
-            <img src={loading ? '' : movie.poster}
-                 alt={`${movie.title}-movie-poster`}/>
+            <img
+              className="poster"
+              src={loading ? '' : movie.poster}
+              alt={!movie.poster ? null: `${movie.title}-movie-poster`}/>
           </div>
           <div className="watch-container">
             <MovieRatings className="movie-rating"

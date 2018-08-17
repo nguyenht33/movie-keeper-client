@@ -16,6 +16,7 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
+          <div className="app-container">
           <Switch>
             <Route name="home" exact path="/" component={HomePage} />
             <Route exact path="/login" component={LoginPage} />
@@ -28,6 +29,8 @@ class App extends Component {
             <Route exact path="/notfound" component={NotFound} />
             <Route component={NotFound} />
           </Switch>
+          </div>
+          <Footer />
         </div>
       </Router>
     );

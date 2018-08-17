@@ -57,7 +57,7 @@ export class BrowseMovies extends Component {
             pageCount={200}
             breakClassName={"break-label"}
             marginPagesDisplayed={2}
-            pageRangeDisplayed={3}
+            pageRangeDisplayed={2}
             onPageChange={this.handlePageClick.bind(this)}
             containerClassName={"pagination"}
             subContainerClassName={"pages pagination"}
