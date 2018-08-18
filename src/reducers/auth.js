@@ -32,7 +32,7 @@ export default function reducer(state = initialState, action) {
           error: null
         });
 
-      case AUTH_SUCCESS: 
+      case AUTH_SUCCESS:
         return Object.assign({}, state, {
           loading: false,
           currentUser: action.currentUser
@@ -43,7 +43,6 @@ export default function reducer(state = initialState, action) {
           loading: false,
           error: action.error
         });
-
 
       default:
         return state;
