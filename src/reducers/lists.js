@@ -1,5 +1,7 @@
 import { CHECK_WATCHED_SUCCESS,
+         CHECK_WATCHED_ERROR,
          CHECK_WATCHLIST_SUCCESS,
+         CHECK_WATCHLIST_ERROR,
          ADD_WATCHED_REQUEST,
          ADD_WATCHED_SUCCESS,
          ADD_WATCHED_ERROR,
@@ -9,8 +11,10 @@ import { CHECK_WATCHED_SUCCESS,
          ADD_WATCHLIST_ERROR,
          REMOVE_WATCHLIST_SUCCESS,
          REMOVE_WATCHLIST_ERROR,
+         GET_WATCHED_REQUEST,
          GET_WATCHED_SUCCESS,
          GET_WATCHED_ERROR,
+         GET_WATCHLIST_REQUEST,
          GET_WATCHLIST_SUCCESS,
          GET_WATCHLIST_ERROR,
          UPDATE_WATCHED_SUCCESS,
@@ -46,11 +50,25 @@ export default function reducer(state = initialState, action){
       });
     }
 
+    case CHECK_WATCHED_ERROR: {
+      return Object.assign({}, state, {
+        loading: false,
+        error: action.error
+      });
+    }
+
     case CHECK_WATCHLIST_SUCCESS: {
       return Object.assign({}, state, {
         loading: false,
         watchlistCheck: action.json.watchlist,
         watchlistMovieId: action.json.id,
+      });
+    }
+
+    case CHECK_WATCHLIST_ERROR: {
+      return Object.assign({}, state, {
+        loading: false,
+        error: action.error
       });
     }
 
@@ -125,6 +143,12 @@ export default function reducer(state = initialState, action){
       });
     }
 
+    case GET_WATCHED_REQUEST: {
+      return Object.assign({}, state, {
+        loading: true
+      });
+    }
+
     case GET_WATCHED_SUCCESS: {
       return Object.assign({}, state, {
         loading: false,
@@ -137,6 +161,12 @@ export default function reducer(state = initialState, action){
       return Object.assign({}, state, {
         loading: false,
         error: action.error
+      });
+    }
+
+    case GET_WATCHLIST_REQUEST: {
+      return Object.assign({}, state, {
+        loading: true
       });
     }
 

@@ -18,7 +18,7 @@ export const checkWatched = (movieId) => (dispatch, getState) => {
         dispatch(checkWatchedSuccess(json));
       })
       .catch(err => {
-        console.log(err)
+        dispatch(checkWatchedError(err))
       })
 }
 
@@ -26,6 +26,12 @@ export const CHECK_WATCHED_SUCCESS = 'CHECK_WATCHED_SUCCESS';
 export const checkWatchedSuccess = json => ({
   type: CHECK_WATCHED_SUCCESS,
   json
+});
+
+export const CHECK_WATCHED_ERROR = 'CHECK_WATCHED_ERROR';
+export const checkWatchedError = error => ({
+  type: CHECK_WATCHED_ERROR,
+  error
 });
 
 // check if a user have a movie in their watchlist collection
@@ -45,7 +51,7 @@ export const checkWatchlist = (movieId) => (dispatch, getState) => {
         dispatch(checkWatchlistSuccess(json));
       })
       .catch(err => {
-        console.log(err)
+        dispatch(checkWatchedError(err));
       })
 }
 
@@ -53,6 +59,12 @@ export const CHECK_WATCHLIST_SUCCESS = 'CHECK_WATCHLIST_SUCCESS';
 export const checkWatchlistSuccess = json => ({
   type: CHECK_WATCHLIST_SUCCESS,
   json
+});
+
+export const CHECK_WATCHLIST_ERROR = 'CHECK_WATCHLIST_ERROR';
+export const checkWatchlistError = error => ({
+  type: CHECK_WATCHLIST_ERROR,
+  error
 });
 
 // add a movie to a user's watched collection
@@ -97,7 +109,6 @@ export const addWatchedError = error => ({
   error
 });
 
-
 // add a movie to a user's watchlist collection
 export const addWatchlist = (reqBody) => (dispatch, getState) => {
   const authToken = getState().auth.authToken;
@@ -124,6 +135,7 @@ export const addWatchlist = (reqBody) => (dispatch, getState) => {
       dispatch(addWatchlistError(err))
     })
 }
+
 export const ADD_WATCHLIST_SUCCESS = 'ADD_WATCHLIST_SUCCESS';
 export const addWatchlistSuccess = json => ({
   type: ADD_WATCHLIST_SUCCESS,
@@ -159,6 +171,7 @@ export const removeWatched = (dbId, movieId) => (dispatch, getState) => {
       dispatch(removeWatchedError(err))
     })
 }
+
 export const REMOVE_WATCHED_SUCCESS = 'REMOVE_WATCHED_SUCCESS';
 export const removeWatchedSuccess = status => ({
   type: REMOVE_WATCHED_SUCCESS,
@@ -194,6 +207,7 @@ export const removeWatchlist = (dbId, movieId) => (dispatch, getState) => {
       dispatch(removeWatchlistError(err))
     })
 }
+
 export const REMOVE_WATCHLIST_SUCCESS = 'REMOVE_WATCHLIST_SUCCESS';
 export const removeWatchlistSuccess = status => ({
   type: REMOVE_WATCHLIST_SUCCESS,
@@ -211,6 +225,7 @@ export const getWatched = (page, perPage) => (dispatch, getState) => {
   const authToken = getState().auth.authToken;
   const userId = getState().auth.currentUser.id;
 
+  dispatch(getWatchedRequest);
   fetch(`${API_BASE_URL}/watched/list/${userId}/${page}/${perPage}`, {
     headers: {
      'Authorization': `Bearer ${authToken}`
@@ -225,6 +240,12 @@ export const getWatched = (page, perPage) => (dispatch, getState) => {
       dispatch(getWatchedError(err))
     })
 }
+
+export const GET_WATCHED_REQUEST = 'GET_WATCHED_REQUEST';
+export const getWatchedRequest = () => ({
+  type: GET_WATCHED_REQUEST,
+});
+
 export const GET_WATCHED_SUCCESS = 'GET_WATCHED_SUCCESS';
 export const getWatchedSuccess = json => ({
   type: GET_WATCHED_SUCCESS,
@@ -242,6 +263,7 @@ export const getWatchlist = (page, perPage) => (dispatch, getState) => {
   const authToken = getState().auth.authToken;
   const userId = getState().auth.currentUser.id;
 
+  dispatch(getWatchlistRequest)
   fetch(`${API_BASE_URL}/watchlist/list/${userId}/${page}/${perPage}`, {
     headers: {
       'Authorization': `Bearer ${authToken}`
@@ -256,6 +278,12 @@ export const getWatchlist = (page, perPage) => (dispatch, getState) => {
       dispatch(getWatchlistError(err))
     })
 }
+
+export const GET_WATCHLIST_REQUEST = 'GET_WATCHED_REQUEST';
+export const getWatchlistRequest = () => ({
+  type: GET_WATCHLIST_REQUEST,
+});
+
 export const GET_WATCHLIST_SUCCESS = 'GET_WATCHLIST_SUCCESS';
 export const getWatchlistSuccess = json => ({
   type: GET_WATCHLIST_SUCCESS,
@@ -291,6 +319,7 @@ export const updateWatched = (movieId, reqBody) => (dispatch, getState) => {
       dispatch(updateWatchedError(err))
     });
 }
+
 export const UPDATE_WATCHED_SUCCESS = 'UPDATE_WATCHED_SUCCESS';
 export const updateWatchedSuccess = json => ({
   type: UPDATE_WATCHED_SUCCESS,
