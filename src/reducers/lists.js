@@ -96,6 +96,22 @@ export default function reducer(state = initialState, action){
       });
     }
 
+    case ADD_WATCHLIST_SUCCESS: {
+      return Object.assign({}, state, {
+        loading: false,
+        watchlistStatus: action.json.status,
+        watchlistMovieId: action.json.movieId,
+        watchlistCheck: true
+      });
+    }
+
+    case ADD_WATCHLIST_ERROR: {
+      return Object.assign({}, state, {
+        loading: false,
+        error: action.error
+      });
+    }
+
     case REMOVE_WATCHED_SUCCESS: {
       return Object.assign({}, state, {
         loading: false,
@@ -113,22 +129,7 @@ export default function reducer(state = initialState, action){
       });
     }
 
-    case ADD_WATCHLIST_SUCCESS: {
-      return Object.assign({}, state, {
-        loading: false,
-        watchlistStatus: action.json.status,
-        watchlistMovieId: action.json.movieId
-      });
-    }
-
     case REMOVE_WATCHLIST_ERROR: {
-      return Object.assign({}, state, {
-        loading: false,
-        error: action.error
-      });
-    }
-
-    case ADD_WATCHLIST_ERROR: {
       return Object.assign({}, state, {
         loading: false,
         error: action.error
