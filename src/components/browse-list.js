@@ -7,7 +7,7 @@ import './browse-list.css';
 export class BrowseList extends Component {
   render() {
     const movieList = this.props.browseList.map((movie, index) => (
-      <li key={movie.id}>
+      <li key={index}>
         <Link to={`/movie/${movie.id}`}>
           <img
             className="movie-poster"

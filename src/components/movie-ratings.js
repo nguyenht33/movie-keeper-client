@@ -9,6 +9,7 @@ export class MovieRatings extends Component {
     const ratingForm = ratingNumbers.map(rating => (
       <div key={rating} className="rating-btn">
         <Field
+          id={`rating-${rating}`}
           className="radio-item"
           name="rating"
           component="input"

@@ -35,6 +35,4 @@ describe('<AddMovie/>', () => {
     wrapper.find('#rating-1').simulate("change", { target: { value: 1 }});
     expect(wrapper.state().rating).toEqual(1);
   });
-
-
 });

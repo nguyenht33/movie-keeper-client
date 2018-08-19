@@ -1,30 +1,54 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
-
 import {NavBar} from '../../components/header-components/nav-bar';
 
 describe('<NavBar />', () => {
-  // const wrapper = shallow(
-  //   <MemoryRouter>
-  //     <NavBar loggedIn={true}/>
-  //   </MemoryRouter>
-  // );
-  // const instance = wrapper.dive().dive().instance();
-
   it('Renders search form without crashing', () => {
     shallow(<NavBar />);
   });
 
-  // it('Renders search form when click', () => {
-  //   const toggleSearch = jest.fn();
-  //   const wrapper = shallow(
+  it('Login to be called when click', () => {
+    const callback = jest.fn();
+    const wrapper = mount(
+      <MemoryRouter>
+        <NavBar/>
+      </MemoryRouter>
+    );
+    wrapper.find('a[href="/login"]').simulate('click');
+    expect(callback).toHaveBeenCalled;
+  })
+
+  it('Logout to be called when click', () => {
+    const callback = jest.fn();
+    const wrapper = mount(
+      <MemoryRouter>
+        <NavBar loggedIn={true} clearAuth={callback}/>
+      </MemoryRouter>
+    );
+    wrapper.find('.log-out').simulate('click');
+    expect(callback).toHaveBeenCalled;
+  })
+
+  // it('Searchbar to be called when click', () => {
+  //   const callback = jest.fn();
+  //   const wrapper = mount(
   //     <MemoryRouter>
-  //       <NavBar toggleSearch={toggleSearch} loggedIn={true} />
+  //       <NavBar loggedIn={true} toggleSearchBar={callback}/>
   //     </MemoryRouter>
   //   );
-  //   // wrapper.find('.toggle-search').simulate('click');
-  //   // wrapper.update();
-  //   // expect(toggleSearch).toHaveBeenCalledWith(toggleSearchBar)
+  //   wrapper.find('.icon-search').simulate('click');
+  //   expect(callback).toHaveBeenCalled;
   // })
+
+  it('Dashboard to be called when click', () => {
+    const callback = jest.fn();
+    const wrapper = mount(
+      <MemoryRouter>
+        <NavBar loggedIn={true} history={{push: callback}}/>
+      </MemoryRouter>
+    );
+    wrapper.find('.icon-bookmark').simulate('click');
+    expect(callback).toHaveBeenCalledWith("/dashboard")
+  })
 });

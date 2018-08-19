@@ -11,7 +11,7 @@ import UsersLists from './users-lists';
 import { NotFound} from './not-found';
 import { Footer } from './footer';
 
-class App extends Component {
+export class App extends Component {
   render() {
     return (
       <Router>

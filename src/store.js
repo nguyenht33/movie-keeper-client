@@ -7,7 +7,6 @@ import moviesReducer from './reducers/movies';
 import listsReducer from './reducers/lists';
 import {setAuthToken, refreshAuthToken} from './actions/auth';
 
-
 const store = createStore(
   combineReducers({
     form: formReducer,

@@ -5,6 +5,8 @@ import { BrowseList } from '../components/browse-list';
 
 describe('<BrowseList />', () => {
   it('Renders app without crashing', () => {
-    shallow(<BrowseList />);
+    const movie=[{movie: 'movie'}, {movie: 'movie2'}]
+    const wrapper = shallow(<BrowseList browseList={movie}/>);
+    expect(wrapper.find('.browse-list')).toHaveLength(1);
   });
 });

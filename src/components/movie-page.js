@@ -14,7 +14,7 @@ import MovieRatings from './movie-ratings';
 import AddMovie from './add-movie';
 import { API_BASE_URL } from '../config';
 
-class MoviePage extends Component {
+export class MoviePage extends Component {
   constructor() {
     super();
     this.state = {
@@ -137,8 +137,8 @@ class MoviePage extends Component {
       )
     }
 
-    const genres = movie.genres.map(genre => (
-      <li key={genre.id}>
+    const genres = movie.genres.map((genre, index) => (
+      <li key={index}>
         {genre.name}
       </li>
     ))

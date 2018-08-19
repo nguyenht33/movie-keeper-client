@@ -1,25 +1,30 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
+import configureStore from 'redux-mock-store';
+import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 
+const middlewares = [];
+const mockStore = configureStore(middlewares);
+const initialState = {
+  auth: {currentUser: 'user'},
+  movies: {browseList: []}
+};
+const store = mockStore(initialState);
+
 import { BrowseMovies } from '../components/browse-movies';
-import ReactPaginate from 'react-paginate';
 
 describe('<BrowseMovies />', () => {
   it('Renders app without crashing', () => {
     const fetchMovies = fetch.mockResponse(JSON.stringify({ testing: true }));
-    const location = { location: { search: 'foo' } }
-    shallow(<BrowseMovies location={location} fetchMovies={fetchMovies}/>);
+    const location = { location: { search: '?page=1' } }
+    const wrapper = mount(
+      <Provider store={store}>
+        <MemoryRouter>
+          <BrowseMovies location={location} fetchMovies={fetchMovies}/>
+        </MemoryRouter>
+      </Provider>
+    )
+    expect(fetchMovies).toHaveBeenCalled();
   });
-
-  // it('Shows next page of movie lists when page is clicked', () => {
-  //   const fetchMovies = fetch.mockResponse(JSON.stringify({ testing: true }));
-  //   const wrapper = mount(
-  //     <MemoryRouter>
-  //       <BrowseMovies location={location} fetchMovies={fetchMovies} pageNumer={1}/>
-  //     </MemoryRouter>
-  //   );
-  //   wrapper.find('.next').simulate('click');
-  //   expect(fetchMovies).toHaveBeenCalled();
-  // });
 });

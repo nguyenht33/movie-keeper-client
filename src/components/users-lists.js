@@ -63,7 +63,6 @@ export class UsersLists extends Component {
       )
     }
 
-
     const listType = this.props.listType;
     let moviesList;
     if (listType === 'watched' && this.props.moviesWatched) {
@@ -78,7 +77,7 @@ export class UsersLists extends Component {
     let movies;
     if (moviesList) {
       movies = moviesList.map((movie, index) => (
-        <li key={movie.movieId}>
+        <li key={index}>
           <Link to={`/movie/${movie.movieId}`}>
             <img
               src={movie.poster_path ? `${THUMBNAIL_URL}${movie.poster_path}` : 'missing-thumbnail'}

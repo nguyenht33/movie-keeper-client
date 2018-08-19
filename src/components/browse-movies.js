@@ -20,6 +20,7 @@ export class BrowseMovies extends Component {
   }
 
   handlePageClick(data) {
+    console.log('click')
     const page = data.selected + 1;
     this.props.fetchMovies(page);
     this.props.history.push(`/browse?page=${page}`);

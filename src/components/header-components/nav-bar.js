@@ -59,7 +59,7 @@ export class NavBar extends Component {
             </button> : null
           }
           {!this.state.searchBar || !this.state.isMobile ?
-            <button onClick={() => this.logOut()}>
+            <button className="log-out" onClick={() => this.logOut()}>
               <i className="icon-exit"></i>
             </button> : null
           }
