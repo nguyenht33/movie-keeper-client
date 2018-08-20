@@ -1,6 +1,6 @@
 import jwtDecode from 'jwt-decode';
 import { SubmissionError } from 'redux-form';
-import { API_BASE_URL } from '../config';
+import { API_BASE_URL, API_KEY } from '../config';
 import { normalizeResponseErrors } from './utils';
 import { saveAuthToken, clearAuthToken } from '../local-storage';
 
@@ -40,7 +40,8 @@ const storeAuthInfo = (authToken, dispatch) => {
 };
 
 export const login = (username, password) => dispatch => {
-  console.log(API_BASE_URL)
+  console.log(`${API_BASE_URL}/api/auth/login`)
+  console.log(API_KEY);
   dispatch(authRequest());
   return (
     fetch(`${API_BASE_URL}/api/auth/login`, {
