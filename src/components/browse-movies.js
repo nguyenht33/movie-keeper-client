@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import requiresLogin from './requires-login';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
-import queryString from 'query-string';
 import NavBar from './header-components/nav-bar';
 import BrowseList from './browse-list';
 import ReactPaginate from 'react-paginate';
@@ -11,16 +10,16 @@ import { fetchMovies } from '../actions/movies';
 import { THUMBNAIL_URL} from '../config';
 import { Spinner } from './spinner';
 import { ErrorMessage } from './error-message';
+const qs = require('qs');
 
 export class BrowseMovies extends Component {
   componentDidMount() {
-    const parsed = queryString.parse(this.props.location.search);
+    const parsed = qs.parse(this.props.location.search.slice(1));
     const page = parsed.page;
     page ? this.props.fetchMovies(page) : this.props.fetchMovies(1);
   }
 
   handlePageClick(data) {
-    console.log('click')
     const page = data.selected + 1;
     this.props.fetchMovies(page);
     this.props.history.push(`/browse?page=${page}`);

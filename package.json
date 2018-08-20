@@ -4,9 +4,8 @@
   "private": true,
   "dependencies": {
     "jwt-decode": "^2.2.0",
-    "lodash": "^4.17.10",
     "normalize.css": "^8.0.0",
-    "query-string": "^6.1.0",
+    "qs": "^6.5.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-paginate": "^5.2.3",

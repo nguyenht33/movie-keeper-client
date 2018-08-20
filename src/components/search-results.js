@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import requiresLogin from './requires-login';
 import { searchMovie } from '../actions/movies';
-import queryString from 'query-string';
 import NavBar from './header-components/nav-bar'
 import { Spinner } from './spinner';
 import { THUMBNAIL_URL} from '../config';
@@ -11,6 +10,7 @@ import { ErrorMessage } from './error-message';
 import { NotFound } from './not-found';
 import ReactPaginate from 'react-paginate';
 import './search-results.css';
+const qs = require('qs');
 
 export class SearchResults extends Component {
   componentDidMount() {
@@ -30,7 +30,7 @@ export class SearchResults extends Component {
   }
 
   handlePageClick(data) {
-    const parsed = queryString.parse(this.props.location.search);
+    const parsed = qs.parse(this.props.location.search.slice(1));
     const query = parsed.q.replace(/-/g, ' ');
     const page = data.selected + 1;
     this.props.searchMovie(query, page);
@@ -119,7 +119,7 @@ const mapStateToProps = (state, ownProps) => ({
   pageNumber: state.movies.resultsPageNumber - 1,
   loading: state.movies.loading,
   error: state.movies.error,
-  queries: queryString.parse(ownProps.location.search)
+  queries: qs.parse(ownProps.location.search.slice(1))
 });
 
 const mapDispatchToProps = (dispatch) => ({
