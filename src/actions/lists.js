@@ -6,7 +6,7 @@ export const checkWatched = (movieId) => (dispatch, getState) => {
   const authToken = getState().auth.authToken;
   const userId = getState().auth.currentUser.id;
 
-  fetch(`${API_BASE_URL}/watched/check/${userId}/${movieId}`, {
+  fetch(`${API_BASE_URL}/api/watched/check/${userId}/${movieId}`, {
       method: 'GET',
       headers: {
        'Authorization': `Bearer ${authToken}`
@@ -39,7 +39,7 @@ export const checkWatchlist = (movieId) => (dispatch, getState) => {
   const authToken = getState().auth.authToken;
   const userId = getState().auth.currentUser.id;
 
-  fetch(`${API_BASE_URL}/watchlist/check/${userId}/${movieId}`, {
+  fetch(`${API_BASE_URL}/api/watchlist/check/${userId}/${movieId}`, {
       method: 'GET',
       headers: {
        'Authorization': `Bearer ${authToken}`
@@ -74,7 +74,7 @@ export const addWatched = (reqBody) => (dispatch, getState) => {
   const body = JSON.stringify(reqBody);
 
   dispatch(addWatchedRequest);
-  fetch(`${API_BASE_URL}/watched/${userId}`, {
+  fetch(`${API_BASE_URL}/api/watched/${userId}`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -114,7 +114,7 @@ export const addWatchlist = (reqBody) => (dispatch, getState) => {
   const authToken = getState().auth.authToken;
   const userId = getState().auth.currentUser.id;
 
-  fetch(`${API_BASE_URL}/watchlist/${userId}`, {
+  fetch(`${API_BASE_URL}/api/watchlist/${userId}`, {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
@@ -153,7 +153,7 @@ export const removeWatched = (dbId, movieId) => (dispatch, getState) => {
   const authToken = getState().auth.authToken;
   const userId = getState().auth.currentUser.id;
 
-  fetch(`${API_BASE_URL}/watched/${userId}/${dbId}`, {
+  fetch(`${API_BASE_URL}/api/watched/${userId}/${dbId}`, {
     method: 'DELETE',
     headers: {
      'Authorization': `Bearer ${authToken}`
@@ -189,7 +189,7 @@ export const removeWatchlist = (dbId, movieId) => (dispatch, getState) => {
   const authToken = getState().auth.authToken;
   const userId = getState().auth.currentUser.id;
 
-  fetch(`${API_BASE_URL}/watchlist/${userId}/${dbId}`, {
+  fetch(`${API_BASE_URL}/api/watchlist/${userId}/${dbId}`, {
     method: 'DELETE',
     headers: {
      'Authorization': `Bearer ${authToken}`
@@ -226,7 +226,7 @@ export const getWatched = (page, perPage) => (dispatch, getState) => {
   const userId = getState().auth.currentUser.id;
 
   dispatch(getWatchedRequest);
-  fetch(`${API_BASE_URL}/watched/list/${userId}/${page}/${perPage}`, {
+  fetch(`${API_BASE_URL}/api/watched/list/${userId}/${page}/${perPage}`, {
     headers: {
      'Authorization': `Bearer ${authToken}`
     }
@@ -264,7 +264,7 @@ export const getWatchlist = (page, perPage) => (dispatch, getState) => {
   const userId = getState().auth.currentUser.id;
 
   dispatch(getWatchlistRequest)
-  fetch(`${API_BASE_URL}/watchlist/list/${userId}/${page}/${perPage}`, {
+  fetch(`${API_BASE_URL}/api/watchlist/list/${userId}/${page}/${perPage}`, {
     headers: {
       'Authorization': `Bearer ${authToken}`
     }
@@ -301,7 +301,7 @@ export const updateWatched = (movieId, reqBody) => (dispatch, getState) => {
   const authToken = getState().auth.authToken;
   const userId = getState().auth.currentUser.id;
 
-  fetch(`${API_BASE_URL}/watched/${userId}/${movieId}`, {
+  fetch(`${API_BASE_URL}/api/watched/${userId}/${movieId}`, {
     method: 'PUT',
     headers: {
      'Accept': 'application/json',
