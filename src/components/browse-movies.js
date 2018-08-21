@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import requiresLogin from './requires-login';
-import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import NavBar from './header-components/nav-bar';
 import BrowseList from './browse-list';
 import ReactPaginate from 'react-paginate';
 import { fetchMovies } from '../actions/movies';
-import { THUMBNAIL_URL} from '../config';
 import { Spinner } from './spinner';
 import { ErrorMessage } from './error-message';
 const qs = require('qs');

@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import NavBar from './header-components/nav-bar';
 import RegistrationForm from './registration-form';
-import { API_BASE_URL, API_KEY, MOVIE_URL } from '../config';
 import './home-page.css';
 
 export class HomePage extends Component {
   render() {
-    console.log(API_BASE_URL, API_KEY, MOVIE_URL, process.env)
     if (this.props.loggedIn) {
       return <Redirect to="/browse"/>
     }

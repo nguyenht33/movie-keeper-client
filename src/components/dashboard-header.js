@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import { getWatched, getWatchlist } from '../actions/lists';
-import { TEST_USER } from '../config';
 import './dashboard-header.css';
 
 export class DashboardHeader extends Component {

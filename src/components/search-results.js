@@ -38,9 +38,9 @@ export class SearchResults extends Component {
   }
 
   render() {
-    const { error, searchResults, totalResults, resultsPages, loading } = this.props;
+    const { error, searchResults, totalResults, loading } = this.props;
     const queries = this.props.queries;
-    let query, page;
+    let query;
 
     if (!queries.q) {
       return <NotFound />

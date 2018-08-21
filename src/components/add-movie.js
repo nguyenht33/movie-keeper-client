@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { TEST_USER } from '../config';
 import { addWatched } from '../actions/lists';
-import MovieRatings from './movie-ratings';
 import './add-movie.css';
 
 export class AddMovie extends Component {

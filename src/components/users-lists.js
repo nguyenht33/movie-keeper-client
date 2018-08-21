@@ -7,7 +7,7 @@ import NavBar from './header-components/nav-bar';
 import { Spinner } from './spinner';
 import { ErrorMessage } from './error-message';
 import DashboardHeader from './dashboard-header';
-import { THUMBNAIL_URL, TEST_USER } from '../config';
+import { THUMBNAIL_URL } from '../config';
 import ReactPaginate from 'react-paginate';
 import './users-lists.css';
 

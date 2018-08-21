@@ -73,7 +73,7 @@ export class NavBar extends Component {
         <div>
             <Link to={this.props.loggedIn ? '/browse' : '/'}>
               {!this.state.searchBar || !this.state.isMobile ?
-                <img src={require('../../images/logo.svg')} /> :
+                <img src={require('../../images/logo.svg')} alt="movie-keeper-logo"/> :
                 null
               }
             </Link>

@@ -1,4 +1,4 @@
-import { API_KEY, MOVIE_URL, API_BASE_URL } from '../config';
+import { API_BASE_URL } from '../config';
 import { normalizeResponseErrors } from './utils';
 
 // check if a user have a movie in their watched collection
@@ -71,7 +71,6 @@ export const checkWatchlistError = error => ({
 export const addWatched = (reqBody) => (dispatch, getState) => {
   const authToken = getState().auth.authToken;
   const userId = getState().auth.currentUser.id;
-  const body = JSON.stringify(reqBody);
 
   dispatch(addWatchedRequest);
   fetch(`${API_BASE_URL}/api/watched/${userId}`, {

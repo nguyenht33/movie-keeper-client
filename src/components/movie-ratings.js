@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
-import {connect} from 'react-redux';
 import './movie-rating.css';
 
 export class MovieRatings extends Component {

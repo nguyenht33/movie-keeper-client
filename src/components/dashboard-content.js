@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getWatched, getWatchlist } from '../actions/lists';
-import { Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import NavBar from './header-components/nav-bar';
 import { Spinner } from './spinner';
-import { THUMBNAIL_URL, TEST_USER} from '../config';
+import { THUMBNAIL_URL } from '../config';
 import './dashboard-content.css';
 
 export class DashboardContent extends Component {

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import requiresLogin from './requires-login';
-import { Route, Link } from 'react-router-dom';
 import './movie-page.css'
 import { fetchMovieInfo } from '../actions/movies';
 import { checkWatched, checkWatchlist, addWatchlist, removeWatched, removeWatchlist, updateWatched } from '../actions/lists';
@@ -12,7 +11,6 @@ import { StatusMessage } from './status-message';
 import WatchButtons from './watch-buttons';
 import MovieRatings from './movie-ratings';
 import AddMovie from './add-movie';
-import { API_BASE_URL } from '../config';
 
 export class MoviePage extends Component {
   constructor() {
@@ -47,7 +45,6 @@ export class MoviePage extends Component {
   }
 
   addWatchlistClick() {
-    const movieId = this.props.movieId;
     const reqBody = this.retrieveMovieInfo();
     this.props.addWatchlist(reqBody);
     this.showMessage('watchlist');
@@ -84,7 +81,7 @@ export class MoviePage extends Component {
       this.props.updateWatched(movieId, reqBody);
     } else {
       this.setState({
-        rating: parseInt(rating)
+        rating: parseInt(rating, 10)
       })
       this.toggleAddForm();
     }
