@@ -8,7 +8,7 @@ import './home-page.css';
 
 export class HomePage extends Component {
   render() {
-    console.log(API_BASE_URL, API_KEY, MOVIE_URL)
+    console.log(API_BASE_URL, API_KEY, MOVIE_URL, process.env)
     if (this.props.loggedIn) {
       return <Redirect to="/browse"/>
     }
