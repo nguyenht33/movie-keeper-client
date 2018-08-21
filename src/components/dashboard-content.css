@@ -17,18 +17,35 @@
   margin-bottom: 1em;
 }
 
-.dashboard-content button {
-  background-color: #01D277;
-  border: none;
-  padding: .5em;
+.see-watchlist, .see-watched {
+  display: flex;
+  justify-content: center;
+}
+
+.see-watched a , .see-watchlist a{
+  display: block;
+  width: 10em;
+  padding: .7em;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
+  background-color: gainsboro;
+  color: #CC3333;
+  font-weight: 600;
+  font-size: 1.1em;
+}
+
+.see-watched a:hover , .see-watchlist a:hover {
+  background-color: #01D277;
 }
 
 .dashboard-content a {
-  color: #303030;
   text-decoration: none;
+}
+
+.dashboard-content h3 {
+  margin: 2em;
+  color: #01D277;
 }
 
 @media only screen and (min-width: 660px) {

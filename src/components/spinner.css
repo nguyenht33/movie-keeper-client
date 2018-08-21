@@ -1,6 +1,8 @@
 .loader-bg {
   margin: auto;
   width: 100%;
+  position: absolute;
+  top: 30%;
 }
 
 .loader,

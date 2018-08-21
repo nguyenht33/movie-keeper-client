@@ -54,9 +54,9 @@ export class NavBar extends Component {
             </button> : null
           }
           {!this.state.searchBar || !this.state.isMobile ?
-            <button onClick={() => this.props.history.push('/dashboard')}>
-              <i className="icon-bookmark"></i>
-            </button> : null
+              <Link to={'/dashboard'}>
+                <i className="icon-bookmark"></i>
+              </Link> : null
           }
           {!this.state.searchBar || !this.state.isMobile ?
             <button className="log-out" onClick={() => this.logOut()}>
@@ -65,7 +65,7 @@ export class NavBar extends Component {
           }
         </div>
     } else {
-      navButtons = <button><Link to="/login">Login</Link></button>
+      navButtons = <Link to="/login">Login</Link>
     }
 
     return (

@@ -10,10 +10,12 @@ import DashboardHeader from './dashboard-header';
 import { THUMBNAIL_URL } from '../config';
 import ReactPaginate from 'react-paginate';
 import './users-lists.css';
+const qs = require('qs');
 
 export class UsersLists extends Component {
   componentDidMount() {
-    this.requestAPI(this.props.listType);
+    const page = this.props.queries.page || 1;
+    this.requestAPI(this.props.listType, page);
   }
 
   componentWillReceiveProps(nextProps){
@@ -24,10 +26,10 @@ export class UsersLists extends Component {
 
   requestAPI(listType, page) {
     if (listType === 'watched') {
-      this.props.getWatched(1, 20)
+      this.props.getWatched(page, 20)
     }
     if (listType === 'watchlist') {
-      this.props.getWatchlist(1, 20)
+      this.props.getWatchlist(page, 20)
     }
   }
 
@@ -67,8 +69,7 @@ export class UsersLists extends Component {
     let moviesList;
     if (listType === 'watched' && this.props.moviesWatched) {
       moviesList = this.props.moviesWatched
-    }
-    else if (listType === 'watchlist' && this.props.moviesWatchlist) {
+    } else if (listType === 'watchlist' && this.props.moviesWatchlist) {
       moviesList = this.props.moviesWatchlist
     } else {
       moviesList = null;
@@ -89,10 +90,10 @@ export class UsersLists extends Component {
     }
 
     let pages;
-    if (this.props.listType === 'watched' && this.props.moviesWatchedPages) {
+    if (listType === 'watched' && this.props.moviesWatchedPages) {
       pages = this.props.moviesWatchedPages;
     }
-    if (this.props.listType === 'watchlist' && this.props.moviesWatchlistPages) {
+    if (listType === 'watchlist' && this.props.moviesWatchlistPages) {
       pages = this.props.moviesWatchlistPages
     }
 
@@ -100,30 +101,41 @@ export class UsersLists extends Component {
       <div>
         <NavBar />
         <DashboardHeader />
-        <ul className="users-lists">
-          {movies}
-        </ul>
-        <div className="paginate-container">
-          <ReactPaginate
-            previousLabel={'<'}
-            nextLabel={'>'}
-            breakLabel={<a href="">...</a>}
-            breakClassName={'break-me'}
-            pageCount={pages}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={5}
-            onPageChange={this.handlePageClick.bind(this)}
-            containerClassName={"pagination"}
-            subContainerClassName={"pages pagination"}
-            activeClassName={"active"}
-          />
-        </div>
+        {!movies || !movies.length ?
+          <div className="no-content">
+            <h2>You have not added any movies to your {listType}</h2>
+            <p><Link to={'/browse'}>Go back to browsing...</Link></p>
+          </div> :
+          <ul className="users-lists">
+            {movies}
+          </ul>
+        }
+        {pages && pages > 1 ?
+          <div className="paginate-container">
+            <ReactPaginate
+              previousLabel={'<'}
+              nextLabel={'>'}
+              breakLabel={<a href="">...</a>}
+              breakClassName={'break-me'}
+              pageCount={pages}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              onPageChange={this.handlePageClick.bind(this)}
+              containerClassName={"pagination"}
+              subContainerClassName={"pages pagination"}
+              activeClassName={"active"}
+              forcePage={this.props.pageNumber}
+            />
+          </div>: null
+        }
       </div>
     )
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
+  const queries = qs.parse(ownProps.location.search.slice(1));
+  const pageNumber = (parseInt(queries.page, 10) - 1) || 0;
   return {
     loading: state.lists.loading,
     error: state.lists.error,
@@ -131,7 +143,9 @@ const mapStateToProps = (state, ownProps) => {
     moviesWatched: state.lists.moviesWatched,
     moviesWatchlist: state.lists.moviesWatchlist,
     moviesWatchedPages: state.lists.moviesWatchedPages,
-    moviesWatchlistPages: state.lists.moviesWatchlistPages
+    moviesWatchlistPages: state.lists.moviesWatchlistPages,
+    queries,
+    pageNumber
   }
 }
 

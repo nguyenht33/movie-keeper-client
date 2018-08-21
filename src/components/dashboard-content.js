@@ -57,20 +57,34 @@ export class DashboardContent extends Component {
 
     return (
       <div className="dashboard-content">
-        <div>
-          <h2>Recently added to Watched:</h2>
-          <ul className="dashboard-list">
-            {moviesWatched}
-          </ul>
-          <button className="see-watched"><Link to={'/watched'}>See More >></Link></button>
-        </div>
-        <div>
-          <h2>Recently added to Watchlist:</h2>
-          <ul className="dashboard-list">
-            {moviesWatchlist}
-          </ul>
-          <button className="see-watchlist"><Link to={'/watchlist'}>See More >></Link></button>
-        </div>
+        {!moviesWatched || !moviesWatched.length ?
+          <div>
+            <h2>Recently added to Watched:</h2>
+            <h3>No movies added yet.</h3>
+          </div>
+          :
+          <div>
+            <h2>Recently added to Watched:</h2>
+            <ul className="dashboard-list">
+              {moviesWatched}
+            </ul>
+            <div className="see-watched"><Link to={'/watched'}>See More >></Link></div>
+          </div>
+        }
+        {!moviesWatchlist || !moviesWatchlist.length ?
+          <div>
+            <h2>Recently added to Watched:</h2>
+            <h3>No movies added yet.</h3>
+          </div>
+          :
+          <div>
+            <h2>Recently added to Watchlist:</h2>
+            <ul className="dashboard-list">
+              {moviesWatchlist}
+            </ul>
+            <div className="see-watchlist"><Link to={'/watchlist'}>See More >></Link></div>
+          </div>
+        }
       </div>
     )
   }

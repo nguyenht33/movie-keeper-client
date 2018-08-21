@@ -9,15 +9,14 @@ export class DashboardHeader extends Component {
   render() {
     return (
       <div className="dashboard-header">
-        <h2>{this.props.username}</h2>
         <ul>
-          <li>
-            <Link to='/watched' className={this.props.location === 'watched' ? 'active' : 'inactive' }>
+          <li className={this.props.location === 'watched' ? 'active' : 'inactive' }>
+            <Link to='/watched'>
               Watched
             </Link>
           </li>
-          <li>
-            <Link to='/watchlist' className={this.props.location === 'watchlist' ? 'active' : 'inactive' }>
+          <li className={this.props.location === 'watchlist' ? 'active' : 'inactive' }>
+            <Link to='/watchlist'>
               Watchlist
             </Link>
           </li>

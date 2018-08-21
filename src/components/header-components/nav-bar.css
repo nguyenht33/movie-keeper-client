@@ -45,7 +45,7 @@ nav img {
 
 .search-bar input[type="search"] {
   min-width: 85%;
-  padding: .2em .2em;
+  padding: .3em .2em;
   height: 1.8em;
   border: none;
 }
@@ -67,31 +67,31 @@ nav img {
   margin-right: .2em;
 }
 
+nav i {
+  padding: 0 .3em;
+}
+
 .search-button {
   background-color: #E94B3C;
   height: 1.8em;
   min-width: 15%;
   min-height: 100%;
   padding: .2em 0;
-  border: .5px solid white;
+  border: .5px solid #d3d3d3;
 }
 
 .icon-search {
-  font-size: .8em;
+  font-size: 1em;
+}
+
+.icon-bookmark {
+  color: white;
 }
 
 @media only screen and (min-width: 640px) {
 	.search-bar {
-    width: 50%;
+    width: 60%;
 	}
-  .search-bar input[type="search"] {
-    height: 1.5em;
-    vertical-align: center;
-  }
-  .search-button {
-    height: 1.5em;
-    min-width: 40px;
-  }
   .search-bar ::placeholder {
     font-size: .8em;
   }

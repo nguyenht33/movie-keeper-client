@@ -1,5 +1,7 @@
 .users-lists {
-  margin-top: .4em;
+  margin-top: 1em;
+  padding-bottom: 2.7em;
+
 }
 
 .users-lists li {
@@ -7,9 +9,35 @@
   padding: .2em;
 }
 
+.no-content {
+  background-color: white;
+  margin: 1em;
+  padding: 1em;
+  margin-top: 4em;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.no-content h2 {
+  font-weight: 400;
+}
+
+.no-content a {
+  font-size: 1.2em;
+  color: red;
+}
+
+@media only screen and (min-width: 500px) {
+  .no-content {
+    width: 400px;
+    margin: 4em auto;
+  }
+}
+
 @media only screen and (min-width: 700px) {
 	.users-lists {
 		width: 700px;
-		margin: .4em auto;
+		margin: 1em auto;
 	}
 }

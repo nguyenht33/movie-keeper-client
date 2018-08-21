@@ -18,7 +18,11 @@ ul {
 }
 
 .paginate-container {
-	margin: 1em;
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	bottom: 3em;
+	width: 100%;
 }
 
 .pagination {
@@ -32,8 +36,7 @@ ul {
 }
 
 .pagination li {
-  display: inline-block;
-	padding: .4em .6em;
+  display: inline;
 	border: 1px solid gainsboro;
 	background-color: white;
 }
@@ -61,7 +64,9 @@ ul {
 }
 
 .pagination a {
+	display: block;
 	cursor: pointer;
+	padding: .5em .8em;
 }
 
 .pagination .break a {
@@ -72,8 +77,12 @@ ul {
 	background-color: #01D277;
 }
 
-@media only screen and (min-width: 640px) {
-	.pagination li {
-		padding: .6em 1em;
-	}
+.break-label {
+	padding: .5em .5em;
+}
+
+#not-found {
+	padding: 20%;
+	color: white;
+	font-size: 3em;
 }

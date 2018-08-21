@@ -26,7 +26,7 @@ export class HomePage extends Component {
             <header>
               <h3>Keep a record of your movie collection</h3>
             </header>
-              <p>[<em>placeholder for screenshot of user add movie interface</em>]</p>
+              <img scr={require("../images/screen-1.png")} alt="screenshot-1"/>
               <p>Make a collection of the movies you watched. Add reviews and ratings for each new addition to your collection.</p>
           </section>
           <section className="form-container">

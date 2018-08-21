@@ -261,7 +261,6 @@ export const getWatchedError = error => ({
 export const getWatchlist = (page, perPage) => (dispatch, getState) => {
   const authToken = getState().auth.authToken;
   const userId = getState().auth.currentUser.id;
-
   dispatch(getWatchlistRequest)
   fetch(`${API_BASE_URL}/api/watchlist/list/${userId}/${page}/${perPage}`, {
     headers: {
