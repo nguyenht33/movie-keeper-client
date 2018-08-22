@@ -4,6 +4,7 @@ import { getWatched, getWatchlist } from '../actions/lists';
 import { Link } from 'react-router-dom';
 import NavBar from './header-components/nav-bar';
 import { Spinner } from './spinner';
+import { ErrorMessage } from './error-message';
 import { THUMBNAIL_URL } from '../config';
 import './dashboard-content.css';
 
@@ -13,8 +14,52 @@ export class DashboardContent extends Component {
     this.props.getWatchlist(1, 8)
   }
 
+  createList(listType) {
+    let list;
+    if (listType === 'watched') {list = this.props.moviesWatched}
+    if (listType === 'watchlist') {list = this.props.moviesWatchlist}
+
+    if (list) {
+      const content = list.map((movie, index) => (
+        <li key={movie.movieId} className="poster">
+          <Link to={`/movie/${movie.movieId}`}>
+            <img
+              src={movie.poster_path ? `${THUMBNAIL_URL}${movie.poster_path}` : 'missing-thumbnail'}
+              alt={movie.poster_path ? `${movie.title}-thumbnail` : 'missing-thumbnail'}
+            />
+          </Link>
+        </li>))
+        return content;
+    } else {
+      return null;
+    }
+  }
+
+  createDiv(list, listType) {
+    if (!list || !list.length) {
+      return (
+        <div>
+          <h2>Recently added to {listType}:</h2>
+          <h3>No movies added yet.</h3>
+        </div>
+      )
+    } else {
+      return (
+        <div>
+          <h2>Recently added to {listType}:</h2>
+          <ul className="dashboard-list">
+            {list}
+          </ul>
+          <div className={`see-${listType}`}><Link to={`/${listType}`}>See More >></Link></div>
+        </div>
+      )
+    }
+  }
+
   render() {
-    if (this.props.loading) {
+    const { loading, error } = this.props;
+
+    if (loading) {
       return (
         <div>
           <NavBar />
@@ -23,68 +68,26 @@ export class DashboardContent extends Component {
       )
     }
 
-    let moviesWatched;
-    if (this.props.moviesWatched) {
-      moviesWatched = this.props.moviesWatched.map((movie, index) => (
-        <li key={movie.movieId} className="poster">
-          <Link to={`/movie/${movie.movieId}`}>
-            <img
-              src={movie.poster_path ? `${THUMBNAIL_URL}${movie.poster_path}` : 'missing-thumbnail'}
-              alt={movie.poster_path ? `${movie.title}-thumbnail` : 'missing-thumbnail'}
-            />
-          </Link>
-        </li>
-      ))
-    } else {
-      moviesWatched = null;
+    if (error) {
+      return (
+        <div>
+          <ErrorMessage
+            code={error.code}
+            message={error.message}
+          />
+        </div>
+      )
     }
 
-    let moviesWatchlist;
-    if (this.props.moviesWatchlist) {
-      moviesWatchlist = this.props.moviesWatchlist.map((movie, index) => (
-        <li key={movie.movieId} className="poster">
-          <Link to={`/movie/${movie.movieId}`}>
-            <img
-              src={movie.poster_path ? `${THUMBNAIL_URL}${movie.poster_path}` : 'missing-thumbnail'}
-              alt={movie.poster_path ? `${movie.title}-thumbnail` : 'missing-thumbnail'}
-            />
-          </Link>
-        </li>
-      ))
-    } else {
-      moviesWatchlist = null;
-    }
+    const watchedContent = this.createList('watched');
+    const watchlistContent = this.createList('watchlist');
+    const watched = this.createDiv(watchedContent, 'watched');
+    const watchlist = this.createDiv(watchlistContent, 'watchlist');
 
     return (
       <div className="dashboard-content">
-        {!moviesWatched || !moviesWatched.length ?
-          <div>
-            <h2>Recently added to Watched:</h2>
-            <h3>No movies added yet.</h3>
-          </div>
-          :
-          <div>
-            <h2>Recently added to Watched:</h2>
-            <ul className="dashboard-list">
-              {moviesWatched}
-            </ul>
-            <div className="see-watched"><Link to={'/watched'}>See More >></Link></div>
-          </div>
-        }
-        {!moviesWatchlist || !moviesWatchlist.length ?
-          <div>
-            <h2>Recently added to Watchlist:</h2>
-            <h3>No movies added yet.</h3>
-          </div>
-          :
-          <div>
-            <h2>Recently added to Watchlist:</h2>
-            <ul className="dashboard-list">
-              {moviesWatchlist}
-            </ul>
-            <div className="see-watchlist"><Link to={'/watchlist'}>See More >></Link></div>
-          </div>
-        }
+        {watched}
+        {watchlist}
       </div>
     )
   }
@@ -92,6 +95,7 @@ export class DashboardContent extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    error: state.lists.error,
     loading: state.lists.loading,
     moviesWatched: state.lists.moviesWatched,
     moviesWatchlist: state.lists.moviesWatchlist

@@ -7,19 +7,19 @@ import './dashboard-header.css';
 
 export class DashboardHeader extends Component {
   render() {
+    const links = ['watched', 'watchlist'];
+    const lists = links.map((link, index) => (
+      <li key={index} className={this.props.location === link ? 'active' : 'inactive' }>
+        <Link to={`/${link}`}>
+          {link}
+        </Link>
+      </li>
+    ))
+    
     return (
       <div className="dashboard-header">
         <ul>
-          <li className={this.props.location === 'watched' ? 'active' : 'inactive' }>
-            <Link to='/watched'>
-              Watched
-            </Link>
-          </li>
-          <li className={this.props.location === 'watchlist' ? 'active' : 'inactive' }>
-            <Link to='/watchlist'>
-              Watchlist
-            </Link>
-          </li>
+          {lists}
         </ul>
       </div>
     )
