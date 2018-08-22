@@ -1,5 +1,6 @@
 .form-container {
-  background-color: #ffffff;
+  min-height: 100vh;
+  background-color: #000000;
   padding: .4em;
   display: flex;
   justify-content: center;
@@ -11,6 +12,11 @@
   text-align: left;
   width: 100%;
   padding: .7em;
+  background-color: white;
+  border: 1px solid #BEBEBE;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
 }
 
 .form-container h3 {
@@ -28,10 +34,6 @@
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
-}
-
-.header-label {
-  color: #3c3c3c;
 }
 
 .form-error {

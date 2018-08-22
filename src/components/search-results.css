@@ -1,3 +1,7 @@
+.results-container {
+  padding-bottom: 4em;
+}
+
 .search-results li {
   display: inline;
   padding: .2em;

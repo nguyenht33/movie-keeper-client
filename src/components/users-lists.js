@@ -18,9 +18,12 @@ export class UsersLists extends Component {
     this.requestAPI(this.props.listType, page);
   }
 
-  componentWillReceiveProps(nextProps){
-    if (nextProps.listType !== this.props.listType) {
-      this.requestAPI(nextProps.listType);
+  componentDidUpdate(prevProps){
+    if (prevProps.listType !== this.props.listType) {
+      this.requestAPI(this.props.listType, this.props.pageNumber + 1);
+    }
+    if (prevProps.pageNumber !== this.props.pageNumber) {
+      this.requestAPI(this.props.listType, this.props.pageNumber + 1);
     }
   }
 
@@ -97,11 +100,12 @@ export class UsersLists extends Component {
       pages = this.props.moviesWatchlistPages
     }
 
+
     return (
       <div>
         <NavBar />
         <DashboardHeader />
-        {!movies || !movies.length ?
+        {this.props.count === 0 ?
           <div className="no-content">
             <h2>You have not added any movies to your {listType}</h2>
             <p><Link to={'/browse'}>Go back to browsing...</Link></p>
@@ -144,6 +148,7 @@ const mapStateToProps = (state, ownProps) => {
     moviesWatchlist: state.lists.moviesWatchlist,
     moviesWatchedPages: state.lists.moviesWatchedPages,
     moviesWatchlistPages: state.lists.moviesWatchlistPages,
+    count: state.lists.count,
     queries,
     pageNumber
   }

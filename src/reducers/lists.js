@@ -34,6 +34,7 @@ const initialState = {
   moviesWatchlist: null,
   moviesWatchedPages: null,
   moviesWatchlistPages: null,
+  count: null,
   loading: false,
   error: null
 }
@@ -154,7 +155,8 @@ export default function reducer(state = initialState, action){
       return Object.assign({}, state, {
         loading: false,
         moviesWatched: action.json.movies,
-        moviesWatchedPages: action.json.pages
+        moviesWatchedPages: action.json.pages,
+        count: action.json.count
       });
     }
 
@@ -175,7 +177,8 @@ export default function reducer(state = initialState, action){
       return Object.assign({}, state, {
         loading: false,
         moviesWatchlist: action.json.movies,
-        moviesWatchlistPages: action.json.pages
+        moviesWatchlistPages: action.json.pages,
+        count: action.json.count
       });
     }
 
