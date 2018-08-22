@@ -10,7 +10,6 @@ const matchesPassword = matches('password');
 
 export class RegistrationForm extends Component {
   onSubmit(values) {
-    console.log(values)
     const {username, password, email, firstName, lastName} = values;
     const user = {username, password, email, firstName, lastName};
     return this.props
@@ -19,13 +18,11 @@ export class RegistrationForm extends Component {
   }
 
     render() {
-      console.log(this.props.pristine, this.props.submitting)
       return (
       <form
           className="signup-form"
-          onSubmit={this.props.handleSubmit(values => {
-            console.log('submit')
-              this.onSubmit(values)}
+          onSubmit={this.props.handleSubmit(values =>
+              this.onSubmit(values)
           )}>
           <h3>Signup</h3>
           <label className="header-label" htmlFor="firstName">First name</label>
