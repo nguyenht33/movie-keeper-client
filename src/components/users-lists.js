@@ -100,7 +100,6 @@ export class UsersLists extends Component {
       pages = this.props.moviesWatchlistPages
     }
 
-
     return (
       <div>
         <NavBar />
@@ -114,7 +113,7 @@ export class UsersLists extends Component {
             {movies}
           </ul>
         }
-        {pages && pages > 1 ?
+        {pages ?
           <div className="paginate-container">
             <ReactPaginate
               previousLabel={'<'}

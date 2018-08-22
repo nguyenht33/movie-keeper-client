@@ -17,11 +17,10 @@ import { BrowseMovies } from '../components/browse-movies';
 describe('<BrowseMovies />', () => {
   it('Renders app without crashing', () => {
     const fetchMovies = fetch.mockResponse(JSON.stringify({ testing: true }));
-    const location = { location: { search: '?page=1' } }
     const wrapper = mount(
       <Provider store={store}>
         <MemoryRouter>
-          <BrowseMovies location={location} fetchMovies={fetchMovies}/>
+          <BrowseMovies location={{search: '?page=1'}} fetchMovies={fetchMovies}/>
         </MemoryRouter>
       </Provider>
     )

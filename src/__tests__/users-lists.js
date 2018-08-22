@@ -6,7 +6,7 @@ import {UsersLists} from '../components/users-lists';
 
 describe('<UsersLists />', () => {
   it('Renders UsersLists without crashing', () => {
-    shallow(<UsersLists />);
+    shallow(<UsersLists queries={{page: 1}}/>);
   });
 
   it('Calls getWatched callback', () => {
@@ -17,7 +17,9 @@ describe('<UsersLists />', () => {
         listType={'watched'}
         getWatched={callback}
         listType={'watched'}
-        moviesWatched={movie}/>
+        moviesWatched={movie}
+        queries={{page: 1}}
+      />
     );
     expect(callback).toHaveBeenCalled;
     expect(wrapper.find('.users-lists')).toHaveLength(1);
@@ -32,7 +34,9 @@ describe('<UsersLists />', () => {
         getWatchlist={callback}
         getWatched={callback}
         listType={'watched'}
-        moviesWatched={movie}/>
+        moviesWatched={movie}
+        queries={{page: 1}}
+      />
     );
     expect(callback).toHaveBeenCalled;
   });

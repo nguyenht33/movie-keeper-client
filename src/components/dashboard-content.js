@@ -73,7 +73,7 @@ export class DashboardContent extends Component {
         }
         {!moviesWatchlist || !moviesWatchlist.length ?
           <div>
-            <h2>Recently added to Watched:</h2>
+            <h2>Recently added to Watchlist:</h2>
             <h3>No movies added yet.</h3>
           </div>
           :

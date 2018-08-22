@@ -167,7 +167,9 @@ export class MoviePage extends Component {
             />
           </div>
           <div>
-            <h1>{movie.title}<span> ({movie.year})</span></h1>
+            <h1>{movie.title}
+              {movie.year ? <span> ({movie.year})</span> : null}
+            </h1>
             <img
               className="poster"
               src={loading ? '' : movie.poster}
@@ -204,12 +206,14 @@ export class MoviePage extends Component {
                 'No overview available for this title': movie.overview}
             </p>
           </div>
-          <div className="genres">
-            <h3>Genres:</h3>
-            <ul>
-              {genres}
-            </ul>
-          </div>
+          {!genres || !genres.length ? null:
+            <div className="genres">
+              <h3>Genres:</h3>
+              <ul>
+                {genres}
+              </ul>
+            </div>
+          }
         </div>
       </div>
     )
