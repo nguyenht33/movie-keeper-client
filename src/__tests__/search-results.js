@@ -32,9 +32,4 @@ describe('<SearchResults />', () => {
     const _wrapper = shallow(<SearchResults queries={{q:''}} searchMovie={callback}/>)
     expect(_wrapper.find(NotFound)).toHaveLength(1);
   });
-
-  // it('Renders SearchResults without crashing', () => {
-  //   wrapper.find('.poster').simulate('click');
-  // });
-
 });

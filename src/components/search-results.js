@@ -14,10 +14,12 @@ const qs = require('qs');
 
 export class SearchResults extends Component {
   componentDidMount() {
-    const queries = this.props.queries;
-    const query = queries.q.replace(/-/g, ' ');
-    const page = queries.page || 1;
-    this.props.searchMovie(query, page)
+    if (this.props.queries.q) {
+      const queries = this.props.queries;
+      const query = queries.q.replace(/-/g, ' ');
+      const page = queries.page || 1;
+      this.props.searchMovie(query, page)
+    }
   }
 
   componentDidUpdate(prevProps) {

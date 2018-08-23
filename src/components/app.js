@@ -8,7 +8,7 @@ import Dashboard from './dashboard';
 import LoginPage from './login-page';
 import SearchResults from './search-results';
 import UsersLists from './users-lists';
-import { NotFound} from './not-found';
+import { NotFound } from './not-found';
 import { Footer } from './footer';
 
 export class App extends Component {
