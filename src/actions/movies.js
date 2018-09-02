@@ -1,7 +1,7 @@
 import { API_KEY, MOVIE_URL } from '../config';
 import { normalizeResponseErrors } from './utils';
 
-export const fetchMovies = (page) => (dispatch, getState) => {
+export const fetchMovies = (page) => (dispatch) => {
   dispatch(fetchMoviesRequest());
   fetch(`${MOVIE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_video=false&page=${page}`)
     .then(res => normalizeResponseErrors(res))
