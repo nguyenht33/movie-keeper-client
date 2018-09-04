@@ -94,10 +94,7 @@ export class AddMovie extends Component {
             </form>
           </div>
         </div>
-        <button
-          className="close-btn"
-          onClick={this.props.closeAddForm}
-        >
+        <button className="close-btn" onClick={this.props.closeAddForm}>
           <i className="icon-cross"></i>
         </button>
       </div>

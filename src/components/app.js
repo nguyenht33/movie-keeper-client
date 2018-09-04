@@ -6,6 +6,7 @@ import BrowseMovies from './browse-movies';
 import MoviePage from './movie-page';
 import Dashboard from './dashboard';
 import LoginPage from './login-page';
+import { RegistrationPage } from './registration-page';
 import SearchResults from './search-results';
 import UsersLists from './users-lists';
 import { NotFound } from './not-found';
@@ -20,6 +21,7 @@ export class App extends Component {
           <Switch>
             <Route name="home" exact path="/" component={HomePage} />
             <Route exact path="/login" component={LoginPage} />
+            <Route exact path="/registration" component={RegistrationPage} />
             <Route path="/browse" component={BrowseMovies} />
             <Route exact path="/dashboard" component={Dashboard} />
             <Route exact path="/movie/:movieId" component={MoviePage} />

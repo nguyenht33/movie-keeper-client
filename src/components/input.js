@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-export default class Input extends React.Component {
+export default class Input extends Component {
   componentDidUpdate(prevProps) {
     if (!prevProps.meta.active && this.props.meta.active) {
       this.input.focus();
@@ -28,6 +28,7 @@ export default class Input extends React.Component {
           {warning}
         </label>
         <input
+          defaultValue={this.props.val}
           {...this.props.input}
           id={this.props.input.name}
           type={this.props.type}
