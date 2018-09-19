@@ -11,7 +11,7 @@ export class BrowseList extends Component {
         <Link to={`/movie/${movie.id}`}>
           <img
             className="movie-poster"
-            src={movie.poster_path ? `${THUMBNAIL_URL}${movie.poster_path}` : 'missing-thumbnail'}
+            src={movie.poster_path ? `${THUMBNAIL_URL}${movie.poster_path}` : require('../images/missing-poster.png')}
             alt={movie.poster_path ? `${movie.title}-thumbnail` : 'missing-thumbnail'}
           />
         </Link>

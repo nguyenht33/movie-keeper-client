@@ -172,7 +172,7 @@ export class MoviePage extends Component {
             </h1>
             <img
               className="poster"
-              src={loading ? '' : movie.poster}
+              src={!movie.poster ? require('../images/missing-poster.png') : movie.poster}
               alt={!movie.poster ? null: `${movie.title}-movie-poster`}/>
           </div>
           <div className="watch-container">

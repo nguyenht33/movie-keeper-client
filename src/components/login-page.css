@@ -11,3 +11,16 @@
   -moz-border-radius: 5px;
   border-radius: 5px;
 }
+
+.demo {
+  padding: .5em;
+  font-size: 14px;
+	text-align: center;
+}
+
+.demo span {
+	font-size: 13px;
+	font-weight: 600;
+	text-transform: uppercase;
+  color: gray;
+}

@@ -42,6 +42,9 @@ export class LoginForm extends Component {
               validate={[required, nonEmpty]}
             />
             {error}
+            <div class="demo">
+              <p><span>Demo User:</span> movieWatcher | <span>Password:</span> movies</p>
+            </div>
             <div className="button-container">
               <button id="login-btn" disabled={this.props.pristine || this.props.submitting}>
                 Log in

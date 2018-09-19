@@ -74,7 +74,7 @@ export class SearchResults extends Component {
       <li key={movie.id} className="poster">
         <Link to={`/movie/${movie.id}`}>
           <img
-            src={movie.poster_path ? `${THUMBNAIL_URL}${movie.poster_path}` : 'missing-thumbnail'}
+            src={movie.poster_path ? `${THUMBNAIL_URL}${movie.poster_path}` : require('../images/missing-poster.png')}
             alt={movie.poster_path ? `${movie.title}-thumbnail` : 'missing-thumbnail'}
           />
         </Link>
